@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Pause, Play } from "lucide-react";
 
-export interface PlaylistCardProps {
+interface PlaylistCardProps {
   playlist: Playlist;
   onPlay: (uri: string) => void;
   onPause: () => void;

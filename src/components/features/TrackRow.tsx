@@ -8,7 +8,6 @@ interface TrackRowProps {
 
 export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
   const navigate = useNavigate();
-  // Spotify images are ordered largest→smallest; prefer index 2 (~64px thumbnail), fall back to index 0 (largest)
   const imageUrl =
     track.album?.images?.[2]?.url ?? track.album?.images?.[0]?.url;
 
@@ -26,7 +25,6 @@ export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
       aria-label={`Play ${track.name}`}
       className="group flex items-center gap-3 p-2 rounded hover:bg-surface-hover transition-colors text-left w-full cursor-pointer"
     >
-      {/* Album art with decorative hover play overlay */}
       <div className="relative w-10 h-10 shrink-0">
         {imageUrl ? (
           <img
@@ -41,7 +39,6 @@ export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
             className="w-10 h-10 rounded bg-border"
           />
         )}
-        {/* Decorative overlay — pointer-events-none so clicks pass to the outer button */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/50 rounded opacity-0 group-hover:opacity-100 transition-opacity"
@@ -50,7 +47,6 @@ export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
         </div>
       </div>
 
-      {/* Track info — provides accessible name for the outer button */}
       <div className="flex flex-col min-w-0">
         <span className="text-text-primary text-sm truncate">{track.name}</span>
         <span className="text-text-muted text-xs truncate">

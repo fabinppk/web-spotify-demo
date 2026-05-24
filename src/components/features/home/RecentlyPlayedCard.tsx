@@ -1,11 +1,11 @@
-import { Pause, Play } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Pause, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
-export type RecentItem = {
+type RecentItem = {
   id: string;
   name: string;
   imageUrl?: string;
-  type: 'track';
+  type: "track";
   uri: string;
   navigationPath: string;
   subtitle: string;
@@ -19,7 +19,13 @@ interface RecentlyPlayedCardProps {
   isPlaying: boolean;
 }
 
-export function RecentlyPlayedCard({ item, onPlay, onPause, isActive, isPlaying }: Readonly<RecentlyPlayedCardProps>) {
+export function RecentlyPlayedCard({
+  item,
+  onPlay,
+  onPause,
+  isActive,
+  isPlaying,
+}: Readonly<RecentlyPlayedCardProps>) {
   const initials = item.name.slice(0, 2).toUpperCase();
 
   const handlePlayPause = (e: React.MouseEvent) => {
@@ -56,15 +62,21 @@ export function RecentlyPlayedCard({ item, onPlay, onPause, isActive, isPlaying 
 
         {/* Text */}
         <div className="flex-1 px-3 min-w-0">
-          <p className="text-text-primary text-sm font-medium truncate">{item.name}</p>
+          <p className="text-text-primary text-sm font-medium truncate">
+            {item.name}
+          </p>
           <p className="text-text-muted text-xs truncate">{item.subtitle}</p>
         </div>
       </Link>
 
       {/* Play/Pause button — sibling of card-body, not nested inside link */}
-      <div className={`pr-3 transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus-within:opacity-100'}`}>
+      <div
+        className={`pr-3 transition-opacity ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100 focus-within:opacity-100"}`}
+      >
         <button
-          aria-label={isActive && isPlaying ? `Pause ${item.name}` : `Play ${item.name}`}
+          aria-label={
+            isActive && isPlaying ? `Pause ${item.name}` : `Play ${item.name}`
+          }
           onClick={handlePlayPause}
           className="w-9 h-9 rounded-full bg-accent flex items-center justify-center shadow-lg hover:scale-105 transition-transform focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
         >

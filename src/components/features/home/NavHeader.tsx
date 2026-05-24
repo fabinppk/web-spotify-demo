@@ -38,7 +38,9 @@ export function NavHeader({
       {CHIPS.map((chip, i) => (
         <button
           key={chip}
-          ref={(el) => { refs.current[i] = el; }}
+          ref={(el) => {
+            refs.current[i] = el;
+          }}
           role="radio"
           aria-checked={active === chip}
           tabIndex={active === chip ? 0 : -1}
