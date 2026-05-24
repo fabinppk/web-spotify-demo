@@ -1,10 +1,6 @@
+import { getArtistsString } from "@/utils";
 import { Play, Pause } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-interface Artist {
-  id: string;
-  name: string;
-}
 
 interface AlbumTrack {
   id: string;
@@ -121,7 +117,7 @@ export function AlbumTrackRow({
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
-      aria-label={`${track.name} by ${track.artists.map((a) => a.name).join(", ")}`}
+      aria-label={`${track.name} by ${getArtistsString(track.artists)}`}
       className="grid grid-cols-[2rem_1fr_4rem] gap-4 px-2 py-2 rounded hover:bg-[#ffffff10] cursor-pointer group items-center"
     >
       <div className="flex items-center justify-end w-full">

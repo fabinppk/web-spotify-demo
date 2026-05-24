@@ -10,6 +10,7 @@ import {
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { SidebarHeader } from "@/components/layout/sidebar/SidebarHeader";
 import { LibraryList } from "@/components/layout/sidebar/LibraryList";
+import { getArtistsString } from "@/utils";
 
 export function Sidebar() {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ export function Sidebar() {
           id: album.id,
           name: album.name,
           imageUrl: album.images?.[0]?.url,
-          subtitle: `${t("COMPONENTS.SIDEBAR.albumSubtitle")} • ${album.artists?.map((a) => a.name).join(", ")}`,
+          subtitle: `${t("COMPONENTS.SIDEBAR.albumSubtitle")} • ${getArtistsString(album.artists)}`,
           type: "album",
           uri: `spotify:album:${album.id}`,
           isArtist: false,
