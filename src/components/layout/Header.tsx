@@ -1,15 +1,18 @@
-import { Input } from "../ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useCurrentUserProfile } from "../../hooks/useSpotifyQueries";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useCurrentUserProfile } from "@/hooks/useSpotifyQueries";
 import { useState } from "react";
-import { useContentStore } from "../../stores/useContentStore";
-import { MainContent } from "../../utils/enums";
-import { SpotifyLogo, BrowseIcon } from "../icons/home";
+import { useContentStore } from "@/stores/useContentStore";
+import { MainContent } from "@/utils";
+import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
   const { data: profile } = useCurrentUserProfile();
   const { setCurrentContent, setSearchQuery: setStoreSearchQuery } =
     useContentStore();
+  const navigate = useNavigate();
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
@@ -17,6 +20,7 @@ export function Header() {
     if (searchQuery.trim()) {
       setStoreSearchQuery(searchQuery.trim());
       setCurrentContent(MainContent.BROWSE);
+      navigate("/");
     }
   };
 
@@ -33,6 +37,10 @@ export function Header() {
         <button
           className="flex items-center justify-center"
           aria-label="Spotify"
+          onClick={() => {
+            setCurrentContent(MainContent.PLAYER);
+            navigate("/");
+          }}
         >
           <SpotifyLogo />
         </button>
@@ -49,7 +57,10 @@ export function Header() {
           />
           <button
             type="button"
-            onClick={() => setCurrentContent(MainContent.BROWSE)}
+            onClick={() => {
+              setCurrentContent(MainContent.BROWSE);
+              navigate("/");
+            }}
             className="absolute right-3 top-1/2 -translate-y-1/2 hover:opacity-80 transition-opacity"
             aria-label="Browse"
           >

@@ -1,26 +1,21 @@
-import {
-  // lazy,
-  Suspense,
-} from "react";
+import { lazy, Suspense } from "react";
 import { useOutlet } from "react-router-dom";
-import { Skeleton } from "../ui/skeleton";
-import { useContentStore } from "../../stores/useContentStore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
 import { NavHeader, useNavHeader } from "@/components/features/home/NavHeader";
 // import { RecentlyPlayedSection } from "@/components/features/home/RecentlyPlayedSection";
 import { MadeForYouSection } from "@/components/features/home/MadeForYouSection";
 import { FeaturedPlaylistSection } from "@/components/features/home/FeaturedPlaylistSection";
 
-// const Search = lazy(() =>
-//   import("@/components/features/Search").then((m) => ({ default: m.Search })),
-// );
+const Search = lazy(() =>
+  import("@/components/features/Search").then((m) => ({ default: m.Search })),
+);
 
 export function MainPanel() {
   const outlet = useOutlet();
   const { currentContent } = useContentStore();
   const { activeFilter, setActiveFilter } = useNavHeader();
-
-  if (outlet) return outlet;
 
   if (currentContent === MainContent.BROWSE) {
     return (
@@ -31,10 +26,12 @@ export function MainPanel() {
           </div>
         }
       >
-        {/* <Search /> */}
+        <Search />
       </Suspense>
     );
   }
+
+  if (outlet) return outlet;
 
   return (
     <>
