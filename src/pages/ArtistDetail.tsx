@@ -111,7 +111,7 @@ export default function ArtistDetail() {
           {albums.length > 0 ? (
             <>
               <div
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+                className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4"
                 data-testid="albums-scroll-container"
               >
                 {albums.map((album) => (

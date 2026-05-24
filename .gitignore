@@ -28,4 +28,5 @@ coverage/
 .env.worktrees/
 .env
 PLAN.md
+TEST_PLAN.md
 package-lock.json
