@@ -6,7 +6,7 @@ export function AlbumDetailSkeleton() {
       className="flex flex-col min-h-full"
       data-testid="album-detail-loading"
     >
-      <div className="bg-[linear-gradient(180deg,#1a4a6b_0%,#121212_100%)] p-8">
+      <div className="bg-[linear-gradient(180deg,var(--color-hero-album-start)_0%,var(--color-bg)_100%)] p-8">
         <div className="flex items-end gap-6">
           <Skeleton className="w-48 h-48 rounded-sm shrink-0" />
           <div className="flex flex-col gap-3 flex-1">
@@ -20,7 +20,7 @@ export function AlbumDetailSkeleton() {
           <Skeleton className="w-8 h-8 rounded-full" />
         </div>
       </div>
-      <div className="flex-1 bg-[#121212] px-6 py-4 flex flex-col gap-2">
+      <div className="flex-1 bg-bg px-6 py-4 flex flex-col gap-2">
         {["sk-0", "sk-1", "sk-2", "sk-3", "sk-4", "sk-5", "sk-6", "sk-7"].map(
           (key) => (
             <div key={key} className="flex items-center gap-4 py-2">
