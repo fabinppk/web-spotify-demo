@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock the auth service first
-vi.mock('../../auth/auth.service', () => ({
+vi.mock('@/services/auth.service', () => ({
   getRefreshToken: vi.fn(),
 }));
 
 import { getValidAccessToken } from '../tokenUtils';
-import { getRefreshToken } from '../../auth/auth.service';
+import { getRefreshToken } from '@/services/auth.service';
 
 const mockGetRefreshToken = vi.mocked(getRefreshToken);
 

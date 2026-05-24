@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { PlaylistService } from '../playlist.service';
 import { SpotifyApiClient } from '../base.service';
-import { 
-  Playlist,
-  UserPlaylists 
-} from '../../../types';
 
 // Mock the base service
 vi.mock('../base.service');
