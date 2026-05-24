@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Play } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
   useArtist,
   useArtistAlbums,
@@ -14,6 +15,7 @@ import { ScrollArrow } from "@/components/ui/ScrollArrow";
 
 export default function ArtistDetail() {
   const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
 
   const {
     data: artist,
@@ -46,7 +48,7 @@ export default function ArtistDetail() {
   if (isError || !artist) {
     return (
       <ErrorState
-        message="Failed to load artist."
+        message={t("PAGES.ARTIST_DETAIL.errorMessage")}
         onRetry={() => {
           refetchArtist();
           refetchAlbums();
@@ -59,7 +61,7 @@ export default function ArtistDetail() {
     <div className="flex flex-col min-h-full" data-testid="artist-detail">
       {/* Hero section */}
       <div className="bg-[linear-gradient(180deg,var(--color-hero-start)_0%,var(--color-bg)_100%)] p-8">
-        <div className="flex items-end gap-6">
+        <div className="flex items-center gap-6">
           {artistImage ? (
             <img
               src={artistImage}
@@ -77,9 +79,6 @@ export default function ArtistDetail() {
             <h1 className="text-text-primary text-4xl md:text-6xl font-bold truncate">
               {artist.name}
             </h1>
-            <p className="text-text-muted text-sm">
-              {artist.followers?.total.toLocaleString()} followers
-            </p>
           </div>
         </div>
 
@@ -97,7 +96,7 @@ export default function ArtistDetail() {
             aria-label="Follow artist"
             className="px-6 py-2 rounded-full border border-text-muted text-text-muted text-sm font-semibold hover:border-text-primary hover:text-text-primary transition-colors"
           >
-            Follow
+            {t("PAGES.ARTIST_DETAIL.follow")}
           </button>
         </div>
       </div>
@@ -142,7 +141,9 @@ export default function ArtistDetail() {
       {/* Albums section */}
       <div className="flex-1 bg-bg px-6 py-6">
         <section>
-          <h2 className="text-text-primary text-2xl font-bold mb-4">Albums</h2>
+          <h2 className="text-text-primary text-2xl font-bold mb-4">
+            {t("PAGES.ARTIST_DETAIL.albumsSection")}
+          </h2>
           <div className="relative overflow-hidden">
             {canScrollLeft && (
               <ScrollArrow

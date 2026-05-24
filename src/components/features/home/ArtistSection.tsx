@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { HomeSection } from "./HomeSection";
 import { ArtistCard } from "./ArtistCard";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -8,6 +9,7 @@ import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 const SKELETON_KEYS = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
 
 export function ArtistSection() {
+  const { t } = useTranslation();
   const {
     data,
     isLoading,
@@ -29,7 +31,7 @@ export function ArtistSection() {
 
   if (isLoading) {
     return (
-      <HomeSection title="Artists You Follow">
+      <HomeSection title={t("COMPONENTS.HOME.artistsYouFollow")}>
         <div className="flex gap-4 flex-wrap">
           {SKELETON_KEYS.map((key) => (
             <div

@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Play, Heart } from "lucide-react";
 import {
   useAlbum,
@@ -14,6 +15,7 @@ import { AlbumTrackRow } from "@/components/features/album/AlbumTrackRow";
 export default function AlbumDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Pagination note: currently fetches first 50 tracks only. Long albums (live recordings,
   // compilations) may exceed this. Implement useInfiniteQuery or load-more button.
@@ -39,7 +41,7 @@ export default function AlbumDetail() {
   if (isError || !album) {
     return (
       <ErrorState
-        message="Failed to load album."
+        message={t("PAGES.ALBUM_DETAIL.errorMessage")}
         onRetry={() => {
           refetchAlbum();
           refetchTracks();
@@ -81,7 +83,7 @@ export default function AlbumDetail() {
           )}
           <div className="flex flex-col gap-2 min-w-0">
             <span className="text-text-muted text-xs font-semibold uppercase tracking-widest">
-              Album
+              {t("PAGES.ALBUM_DETAIL.albumType")}
             </span>
             <h1 className="text-text-primary text-4xl md:text-5xl font-bold truncate">
               {album.name}
@@ -140,10 +142,10 @@ export default function AlbumDetail() {
             #
           </span>
           <span className="text-text-muted text-xs font-semibold uppercase tracking-wider">
-            Title
+            {t("PAGES.ALBUM_DETAIL.title")}
           </span>
           <span className="text-text-muted text-xs font-semibold uppercase tracking-wider text-right">
-            Duration
+            {t("PAGES.ALBUM_DETAIL.duration")}
           </span>
         </div>
 

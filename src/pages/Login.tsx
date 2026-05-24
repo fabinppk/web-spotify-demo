@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import IconSpotify from "@/assets/svg/spotify.svg";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const { login } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -15,7 +17,7 @@ const Login = () => {
         <div className="text-center">
           <h1 className="text-text-primary text-3xl font-bold">Spotify</h1>
           <p className="text-text-muted text-sm mt-1">
-            Enjoy your music to the fullest.
+            {t("PAGES.LOGIN.tagline")}
           </p>
         </div>
       </div>
@@ -24,7 +26,7 @@ const Login = () => {
         data-testid="login-button"
         className="bg-accent hover:bg-accent-muted text-bg font-semibold rounded-full text-lg py-6 px-12"
       >
-        Log in with Spotify
+        {t("PAGES.LOGIN.loginButton")}
       </Button>
     </div>
   );

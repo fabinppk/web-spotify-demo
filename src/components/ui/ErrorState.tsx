@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
+
 interface ErrorStateProps {
   message: string;
   onRetry?: () => void;
 }
 
 export function ErrorState({ message, onRetry }: Readonly<ErrorStateProps>) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center gap-3 py-12 text-center">
       <p className="text-text-muted text-sm">{message}</p>
@@ -12,7 +15,7 @@ export function ErrorState({ message, onRetry }: Readonly<ErrorStateProps>) {
           onClick={onRetry}
           className="text-xs text-accent hover:text-accent-muted underline"
         >
-          Try again
+          {t("COMPONENTS.ERROR_STATE.retry")}
         </button>
       )}
     </div>

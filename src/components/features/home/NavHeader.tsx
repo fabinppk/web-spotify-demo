@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export type FilterChip = "All" | "Music" | "Podcasts";
 
@@ -11,6 +12,7 @@ export function NavHeader({
   active: FilterChip;
   onChange: (chip: FilterChip) => void;
 }>) {
+  const { t } = useTranslation();
   const refs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
@@ -48,7 +50,7 @@ export function NavHeader({
               : "bg-surface-hover text-text-primary hover:bg-neutral-600"
           }`}
         >
-          {chip}
+          {t(`COMPONENTS.NAV_HEADER.${chip.toLowerCase()}`)}
         </button>
       ))}
     </div>
