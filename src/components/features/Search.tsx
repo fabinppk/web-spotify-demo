@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSearchQuery } from "@/hooks/useSpotifyQueries";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -7,6 +6,8 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
+import { SearchArtistCard } from "@/components/features/search/SearchArtistCard";
+import { SearchAlbumCard } from "@/components/features/search/SearchAlbumCard";
 
 function useDebounced(value: string, delay: number): string {
   const [debounced, setDebounced] = useState(value);
@@ -18,13 +19,18 @@ function useDebounced(value: string, delay: number): string {
 }
 
 export function Search() {
-  const navigate = useNavigate();
   const { searchQuery: initialQuery, setCurrentContent } = useContentStore();
-
+  const handleNavigate = () => setCurrentContent(MainContent.ALBUMS);
   const debouncedQuery = useDebounced(initialQuery, 300);
   const { t } = useTranslation();
 
-  const { data, isLoading, error, refetch } = useSearchQuery(debouncedQuery, ["artist", "album"]);
+  const { data, isLoading, error, refetch } = useSearchQuery(debouncedQuery, [
+    "artist",
+    "album",
+  ]);
+
+  const artists = (data?.artists?.items ?? []).filter(Boolean) as Artist[];
+  const albums = (data?.albums?.items ?? []).filter(Boolean) as Album[];
 
   return (
     <div className="p-6 flex flex-col gap-6">
@@ -50,80 +56,47 @@ export function Search() {
       )}
 
       {debouncedQuery && error && (
-        <ErrorState message={t("COMPONENTS.SEARCH.errorMessage")} onRetry={() => refetch()} />
+        <ErrorState
+          message={t("COMPONENTS.SEARCH.errorMessage")}
+          onRetry={() => refetch()}
+        />
       )}
 
       {debouncedQuery && data && (
         <div className="flex flex-col gap-8">
-          {(data?.artists?.items?.length ?? 0) > 0 && (
+          {artists.length > 0 && (
             <section>
-              <h2 className="text-text-primary font-bold mb-3">{t("COMPONENTS.SEARCH.artistsSection")}</h2>
+              <h2 className="text-text-primary font-bold mb-3">
+                {t("COMPONENTS.SEARCH.artistsSection")}
+              </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(data?.artists?.items ?? []).filter(Boolean).map((artist: Artist) => (
-                  <button
+                {artists.map((artist) => (
+                  <SearchArtistCard
                     key={artist.id}
-                    type="button"
-                    onClick={() => {
-                      navigate("/artist/" + artist.id);
-                      setCurrentContent(MainContent.ALBUMS);
-                    }}
-                    className="flex flex-col items-center gap-2 p-4 bg-surface-hover rounded-lg hover:bg-border transition-colors cursor-pointer text-left"
-                  >
-                    {artist.images?.[0]?.url ? (
-                      <img
-                        src={artist.images[0].url}
-                        alt={artist.name}
-                        className="w-24 h-24 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-24 h-24 rounded-full bg-border" />
-                    )}
-                    <span className="text-text-primary text-sm font-medium text-center truncate w-full">
-                      {artist.name}
-                    </span>
-                    <span className="text-text-muted text-xs">{t("COMPONENTS.SEARCH.artistLabel")}</span>
-                  </button>
+                    artist={artist}
+                    onNavigate={handleNavigate}
+                  />
                 ))}
               </div>
             </section>
           )}
 
-          {(data?.albums?.items?.length ?? 0) > 0 && (
+          {albums.length > 0 && (
             <section>
-              <h2 className="text-text-primary font-bold mb-3">{t("COMPONENTS.SEARCH.albumsSection")}</h2>
+              <h2 className="text-text-primary font-bold mb-3">
+                {t("COMPONENTS.SEARCH.albumsSection")}
+              </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(data?.albums?.items ?? []).filter(Boolean).map((album: Album) => (
-                  <button
+                {albums.map((album) => (
+                  <SearchAlbumCard
                     key={album.id}
-                    type="button"
-                    onClick={() => {
-                      navigate("/album/" + album.id);
-                      setCurrentContent(MainContent.ALBUMS);
-                    }}
-                    className="flex flex-col gap-2 p-3 bg-surface-hover rounded-lg hover:bg-border transition-colors cursor-pointer text-left w-full"
-                  >
-                    {album.images?.[0]?.url ? (
-                      <img
-                        src={album.images[0].url}
-                        alt={album.name}
-                        className="w-full aspect-square object-cover rounded"
-                      />
-                    ) : (
-                      <div className="w-full aspect-square bg-border rounded" />
-                    )}
-                    <span className="text-text-primary text-sm font-medium truncate">
-                      {album.name}
-                    </span>
-                    <span className="text-text-muted text-xs truncate">
-                      {album.artists.map((a) => a.name).join(", ")}
-                    </span>
-                  </button>
+                    album={album}
+                    onNavigate={handleNavigate}
+                  />
                 ))}
               </div>
             </section>
           )}
-
-
         </div>
       )}
     </div>
