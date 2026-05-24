@@ -27,3 +27,4 @@ coverage/
 *.tsbuildinfo
 .env.worktrees/
 .env
+PLAN.md

@@ -1,0 +1,68 @@
+{
+  "PAGES": {
+    "DASHBOARD": {
+      "title": "Meus Artistas Mais Ouvidos",
+      "searchPlaceholder": "Buscar por artistas, álbuns...",
+      "loading": "Carregando suas músicas...",
+      "albumsSection": "Álbuns e Singles",
+      "relatedArtists": "Fãs também gostam"
+    },
+    "LOGIN": {
+      "tagline": "Curta sua música ao máximo.",
+      "loginButton": "Entrar com Spotify"
+    },
+    "ARTIST_DETAIL": {
+      "errorMessage": "Falha ao carregar artista.",
+      "follow": "Seguir",
+      "albumsSection": "Álbuns"
+    },
+    "ALBUM_DETAIL": {
+      "errorMessage": "Falha ao carregar álbum.",
+      "albumType": "Álbum",
+      "title": "Título",
+      "duration": "Duração"
+    }
+  },
+  "COMPONENTS": {
+    "HEADER": {
+      "searchPlaceholder": "O que você quer ouvir?"
+    },
+    "SEARCH": {
+      "emptyTitle": "Buscar músicas",
+      "emptyDescription": "Encontre músicas, artistas, álbuns e playlists",
+      "errorMessage": "Falha na busca",
+      "artistsSection": "Artistas",
+      "artistLabel": "Artista",
+      "albumsSection": "Álbuns",
+      "loading": "Carregando...",
+      "loadMore": "Ver mais"
+    },
+    "ERROR_STATE": {
+      "retry": "Tentar novamente"
+    },
+    "HOME": {
+      "madeForYou": "Feito Para Você",
+      "featuredPlaylists": "Playlists em Destaque",
+      "artistsYouFollow": "Artistas que Você Segue"
+    },
+    "NAV_HEADER": {
+      "all": "Tudo",
+      "music": "Músicas",
+      "podcasts": "Podcasts"
+    },
+    "SIDEBAR": {
+      "yourLibrary": "Sua Biblioteca",
+      "create": "Criar",
+      "filterPlaylists": "Playlists",
+      "filterArtists": "Artistas",
+      "filterAlbums": "Álbuns",
+      "searchPlaceholder": "Buscar na sua biblioteca",
+      "recentlyAdded": "Adicionado recentemente",
+      "noResults": "Nenhum resultado encontrado",
+      "emptyLibrary": "Nenhum item na sua biblioteca",
+      "playlistSubtitle": "Playlist",
+      "artistSubtitle": "Artista",
+      "albumSubtitle": "Álbum"
+    }
+  }
+}

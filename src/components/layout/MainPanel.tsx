@@ -7,6 +7,7 @@ import { NavHeader, useNavHeader } from "@/components/features/home/NavHeader";
 // import { RecentlyPlayedSection } from "@/components/features/home/RecentlyPlayedSection";
 import { MadeForYouSection } from "@/components/features/home/MadeForYouSection";
 import { FeaturedPlaylistSection } from "@/components/features/home/FeaturedPlaylistSection";
+import { ArtistSection } from "@/components/features/home/ArtistSection";
 
 const Search = lazy(() =>
   import("@/components/features/Search").then((m) => ({ default: m.Search })),
@@ -40,6 +41,7 @@ export function MainPanel() {
         {/* <RecentlyPlayedSection /> */}
         <MadeForYouSection />
         <FeaturedPlaylistSection />
+        <ArtistSection />
       </div>
     </>
   );

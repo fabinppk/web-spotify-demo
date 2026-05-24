@@ -7,10 +7,17 @@ import { MainContent } from "@/utils";
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/hooks";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Languages } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function Header() {
   const { data: profile } = useCurrentUserProfile();
+  const { t, i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "pt" ? "en" : "pt");
+  };
+
   const { setCurrentContent, setSearchQuery: setStoreSearchQuery } =
     useContentStore();
   const navigate = useNavigate();
@@ -54,7 +61,7 @@ export function Header() {
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="What do you want to play?"
+            placeholder={t("COMPONENTS.HEADER.searchPlaceholder")}
             className="pl-4 pr-10 bg-surface border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent h-10 rounded-full"
             data-testid="searchbar-element"
           />
@@ -76,6 +83,14 @@ export function Header() {
         className="flex items-center gap-3 pr-2"
         data-testid="accountbar-element"
       >
+        <button
+          onClick={toggleLanguage}
+          aria-label="Toggle language"
+          className="flex items-center gap-1 px-2 h-8 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-text-primary"
+        >
+          <Languages size={16} />
+          <span className="text-xs font-medium uppercase">{i18n.language}</span>
+        </button>
         <button
           onClick={toggleTheme}
           aria-label="Toggle theme"

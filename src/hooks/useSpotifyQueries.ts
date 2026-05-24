@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useSpotifyApi } from "./useSpotifyApi";
 
 function requireApi<T>(api: T | null): T {
@@ -152,6 +152,28 @@ export const useSearchQuery = (
   });
 };
 
+export const useInfiniteSearchQuery = (
+  query: string,
+  types: ("track" | "artist" | "album" | "playlist" | "show" | "episode")[] = ["artist"],
+  limit = 10,
+) => {
+  const api = useSpotifyApi();
+  return useInfiniteQuery({
+    queryKey: ["spotify", "search", "infinite", query, types, limit],
+    queryFn: ({ pageParam }) =>
+      requireApi(api).search.search(query, types, { limit, offset: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: SearchResult) => {
+      const next = lastPage.artists?.next ?? lastPage.albums?.next;
+      if (!next) return undefined;
+      return Number(new URL(next).searchParams.get("offset"));
+    },
+    enabled: api !== null && query.length > 0,
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+};
+
 export const useArtist = (artistId: string) => {
   const api = useSpotifyApi();
   return useQuery({
@@ -228,6 +250,23 @@ export const useFollowedArtists = (limit = 50) => {
   return useQuery({
     queryKey: ["spotify", "me", "following", "artists", limit],
     queryFn: () => requireApi(api).artists.getFollowedArtists({ limit }),
+    enabled: api !== null,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+export const useInfiniteFollowedArtists = (limit = 20) => {
+  const api = useSpotifyApi();
+  return useInfiniteQuery({
+    queryKey: ["spotify", "me", "following", "artists", "infinite", limit],
+    queryFn: ({ pageParam }: { pageParam: string | undefined }) =>
+      requireApi(api).artists.getFollowedArtists({ limit, after: pageParam }),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage: { artists: PaginatedResponse<Artist> }) => {
+      const next = lastPage.artists.next;
+      if (!next) return undefined;
+      return new URL(next).searchParams.get("after") ?? undefined;
+    },
     enabled: api !== null,
     staleTime: 5 * 60 * 1000,
   });
