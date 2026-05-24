@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useInfiniteSearchQuery } from "@/hooks/useSpotifyQueries";
+import { useTranslation } from "react-i18next";
+import { useSearchQuery } from "@/hooks/useSpotifyQueries";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -21,26 +22,16 @@ export function Search() {
   const { searchQuery: initialQuery, setCurrentContent } = useContentStore();
 
   const debouncedQuery = useDebounced(initialQuery, 300);
+  const { t } = useTranslation();
 
-  const {
-    data,
-    isLoading,
-    error,
-    refetch,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteSearchQuery(debouncedQuery, ["artist", "album"]);
-
-  const artists = data?.pages.flatMap((p) => p.artists?.items ?? []) ?? [];
-  const albums = data?.pages.flatMap((p) => p.albums?.items ?? []) ?? [];
+  const { data, isLoading, error, refetch } = useSearchQuery(debouncedQuery, ["artist", "album"]);
 
   return (
     <div className="p-6 flex flex-col gap-6">
       {!debouncedQuery && (
         <EmptyState
-          title="Search for music"
-          description="Find songs, artists, albums, and playlists"
+          title={t("COMPONENTS.SEARCH.emptyTitle")}
+          description={t("COMPONENTS.SEARCH.emptyDescription")}
         />
       )}
 
@@ -59,16 +50,16 @@ export function Search() {
       )}
 
       {debouncedQuery && error && (
-        <ErrorState message="Search failed" onRetry={() => refetch()} />
+        <ErrorState message={t("COMPONENTS.SEARCH.errorMessage")} onRetry={() => refetch()} />
       )}
 
       {debouncedQuery && data && (
         <div className="flex flex-col gap-8">
-          {artists.length > 0 && (
+          {(data?.artists?.items?.length ?? 0) > 0 && (
             <section>
-              <h2 className="text-text-primary font-bold mb-3">Artists</h2>
+              <h2 className="text-text-primary font-bold mb-3">{t("COMPONENTS.SEARCH.artistsSection")}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {artists.filter(Boolean).map((artist: Artist) => (
+                {(data?.artists?.items ?? []).filter(Boolean).map((artist: Artist) => (
                   <button
                     key={artist.id}
                     type="button"
@@ -90,18 +81,18 @@ export function Search() {
                     <span className="text-text-primary text-sm font-medium text-center truncate w-full">
                       {artist.name}
                     </span>
-                    <span className="text-text-muted text-xs">Artist</span>
+                    <span className="text-text-muted text-xs">{t("COMPONENTS.SEARCH.artistLabel")}</span>
                   </button>
                 ))}
               </div>
             </section>
           )}
 
-          {albums.length > 0 && (
+          {(data?.albums?.items?.length ?? 0) > 0 && (
             <section>
-              <h2 className="text-text-primary font-bold mb-3">Albums</h2>
+              <h2 className="text-text-primary font-bold mb-3">{t("COMPONENTS.SEARCH.albumsSection")}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {albums.filter(Boolean).map((album: Album) => (
+                {(data?.albums?.items ?? []).filter(Boolean).map((album: Album) => (
                   <button
                     key={album.id}
                     type="button"
@@ -132,18 +123,7 @@ export function Search() {
             </section>
           )}
 
-          {hasNextPage && (
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={() => fetchNextPage()}
-                disabled={isFetchingNextPage}
-                className="px-6 py-2 rounded-full bg-surface-hover hover:bg-border text-text-primary text-sm font-medium transition-colors disabled:opacity-50"
-              >
-                {isFetchingNextPage ? "Carregando..." : "Ver mais"}
-              </button>
-            </div>
-          )}
+
         </div>
       )}
     </div>
