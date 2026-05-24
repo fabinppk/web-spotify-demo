@@ -6,12 +6,15 @@ import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@/hooks";
+import { Sun, Moon } from "lucide-react";
 
 export function Header() {
   const { data: profile } = useCurrentUserProfile();
   const { setCurrentContent, setSearchQuery: setStoreSearchQuery } =
     useContentStore();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -73,6 +76,13 @@ export function Header() {
         className="flex items-center gap-3 pr-2"
         data-testid="accountbar-element"
       >
+        <button
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+          className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-text-primary"
+        >
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
         <Avatar className="w-10 h-10">
           <AvatarImage src={avatarUrl} alt={displayName} />
           <AvatarFallback className="bg-accent text-bg text-xs font-bold">

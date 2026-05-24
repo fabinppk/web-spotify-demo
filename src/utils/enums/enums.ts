@@ -7,3 +7,13 @@ export enum MainContent {
   BROWSE = "BROWSE",
   PLAYER = "PLAYER",
 }
+
+export enum Theme {
+  Dark = "dark",
+  Light = "light",
+}
+
+export enum ThemeActionType {
+  Toggle = "TOGGLE_THEME",
+  Set = "SET_THEME",
+}

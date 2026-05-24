@@ -64,7 +64,7 @@ export default function AlbumDetail() {
   return (
     <div className="flex flex-col min-h-full" data-testid="album-detail">
       {/* Gradient header */}
-      <div className="bg-[linear-gradient(180deg,#1a4a6b_0%,#121212_100%)] p-8">
+      <div className="bg-[linear-gradient(180deg,var(--color-hero-album-start)_0%,var(--color-bg)_100%)] p-8">
         <div className="flex items-end gap-6">
           {coverImage ? (
             <img
@@ -134,8 +134,8 @@ export default function AlbumDetail() {
       </div>
 
       {/* Track list */}
-      <div className="flex-1 bg-[#121212] px-6 py-4">
-        <div className="sticky top-0 z-10 bg-[#121212] grid grid-cols-[2rem_1fr_4rem] gap-4 px-2 py-2 border-b border-border mb-2">
+      <div className="flex-1 bg-bg px-6 py-4">
+        <div className="sticky top-0 z-10 bg-bg grid grid-cols-[2rem_1fr_4rem] gap-4 px-2 py-2 border-b border-border mb-2">
           <span className="text-text-muted text-xs font-semibold text-right">
             #
           </span>

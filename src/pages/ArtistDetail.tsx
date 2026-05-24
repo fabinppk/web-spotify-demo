@@ -58,7 +58,7 @@ export default function ArtistDetail() {
   return (
     <div className="flex flex-col min-h-full" data-testid="artist-detail">
       {/* Hero section */}
-      <div className="bg-[linear-gradient(180deg,#1a5a4a_0%,#121212_100%)] p-8">
+      <div className="bg-[linear-gradient(180deg,var(--color-hero-start)_0%,var(--color-bg)_100%)] p-8">
         <div className="flex items-end gap-6">
           {artistImage ? (
             <img
@@ -140,7 +140,7 @@ export default function ArtistDetail() {
       </div> */}
 
       {/* Albums section */}
-      <div className="flex-1 bg-[#121212] px-6 py-6">
+      <div className="flex-1 bg-bg px-6 py-6">
         <section>
           <h2 className="text-text-primary text-2xl font-bold mb-4">Albums</h2>
           <div className="relative overflow-hidden">
@@ -148,7 +148,7 @@ export default function ArtistDetail() {
               <ScrollArrow
                 dir="left"
                 onClick={() => scroll("left")}
-                fromColor="from-[#121212]"
+                fromColor="from-bg"
               />
             )}
             <div
@@ -165,7 +165,7 @@ export default function ArtistDetail() {
               <ScrollArrow
                 dir="right"
                 onClick={() => scroll("right")}
-                fromColor="from-[#121212]"
+                fromColor="from-bg"
               />
             )}
           </div>

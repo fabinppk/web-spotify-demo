@@ -64,6 +64,8 @@
   --color-surface-hover: #242424;
   --color-accent: #1ed760;
   --color-accent-muted: #158a3e;
+  --color-hero-start: #1a5a4a;
+  --color-hero-album-start: #1a4a6b;
   --color-text: #ffffff;
   --color-text-muted: #a3a3a3;
   --color-border: #2a2a2a;
@@ -93,6 +95,8 @@
   --color-surface-hover: #e8e8e8;
   --color-accent: #1db954;
   --color-accent-muted: #158a3e;
+  --color-hero-start: #c8eeda;
+  --color-hero-album-start: #c8daf0;
   --color-text: #121212;
   --color-text-muted: #6a6a6a;
   --color-border: #d4d4d4;
