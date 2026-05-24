@@ -1,12 +1,12 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSpotifyApi } from './useSpotifyApi';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSpotifyApi } from "./useSpotifyApi";
 
 export const usePlaybackControls = () => {
   const api = useSpotifyApi();
   const queryClient = useQueryClient();
 
   const invalidatePlayback = () => {
-    queryClient.invalidateQueries({ queryKey: ['spotify', 'playback'] });
+    queryClient.invalidateQueries({ queryKey: ["spotify", "playback"] });
   };
 
   const play = useMutation({
@@ -17,7 +17,7 @@ export const usePlaybackControls = () => {
       offset?: { position?: number; uri?: string };
       position_ms?: number;
     }) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.playback.startResumePlayback(options);
     },
     onSuccess: invalidatePlayback,
@@ -25,7 +25,7 @@ export const usePlaybackControls = () => {
 
   const pause = useMutation({
     mutationFn: (deviceId?: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.playback.pausePlayback(deviceId);
     },
     onSuccess: invalidatePlayback,
@@ -33,7 +33,7 @@ export const usePlaybackControls = () => {
 
   const next = useMutation({
     mutationFn: (deviceId?: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.playback.skipToNext(deviceId);
     },
     onSuccess: invalidatePlayback,
@@ -41,56 +41,96 @@ export const usePlaybackControls = () => {
 
   const previous = useMutation({
     mutationFn: (deviceId?: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.playback.skipToPrevious(deviceId);
     },
     onSuccess: invalidatePlayback,
   });
 
   const seek = useMutation({
-    mutationFn: ({ positionMs, deviceId }: { positionMs: number; deviceId?: string }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      positionMs,
+      deviceId,
+    }: {
+      positionMs: number;
+      deviceId?: string;
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playback.seekToPosition(positionMs, deviceId);
     },
     onSuccess: invalidatePlayback,
   });
 
   const setVolume = useMutation({
-    mutationFn: ({ volumePercent, deviceId }: { volumePercent: number; deviceId?: string }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      volumePercent,
+      deviceId,
+    }: {
+      volumePercent: number;
+      deviceId?: string;
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playback.setPlaybackVolume(volumePercent, deviceId);
     },
     onSuccess: invalidatePlayback,
   });
 
   const setRepeat = useMutation({
-    mutationFn: ({ state, deviceId }: { state: 'track' | 'context' | 'off'; deviceId?: string }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      state,
+      deviceId,
+    }: {
+      state: "track" | "context" | "off";
+      deviceId?: string;
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playback.setRepeatMode(state, deviceId);
     },
     onSuccess: invalidatePlayback,
   });
 
   const setShuffle = useMutation({
-    mutationFn: ({ state, deviceId }: { state: boolean; deviceId?: string }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      state,
+      deviceId,
+    }: {
+      state: boolean;
+      deviceId?: string;
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playback.toggleShuffle(state, deviceId);
     },
     onSuccess: invalidatePlayback,
   });
 
   const transferPlayback = useMutation({
-    mutationFn: ({ deviceIds, play: autoPlay }: { deviceIds: string[]; play?: boolean }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      deviceIds,
+      play: autoPlay,
+    }: {
+      deviceIds: string[];
+      play?: boolean;
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playback.transferPlayback(deviceIds, autoPlay);
     },
     onSuccess: () => {
       invalidatePlayback();
-      queryClient.invalidateQueries({ queryKey: ['spotify', 'devices'] });
+      queryClient.invalidateQueries({ queryKey: ["spotify", "devices"] });
     },
   });
 
-  return { play, pause, next, previous, seek, setVolume, setRepeat, setShuffle, transferPlayback };
+  return {
+    play,
+    pause,
+    next,
+    previous,
+    seek,
+    setVolume,
+    setRepeat,
+    setShuffle,
+    transferPlayback,
+  };
 };
 
 export const useLibraryControls = () => {
@@ -98,12 +138,12 @@ export const useLibraryControls = () => {
   const queryClient = useQueryClient();
 
   const invalidateLibrary = () => {
-    queryClient.invalidateQueries({ queryKey: ['spotify', 'me'] });
+    queryClient.invalidateQueries({ queryKey: ["spotify", "me"] });
   };
 
   const saveTrack = useMutation({
     mutationFn: (trackId: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.tracks.saveTracks([trackId]);
     },
     onSuccess: invalidateLibrary,
@@ -111,7 +151,7 @@ export const useLibraryControls = () => {
 
   const removeTrack = useMutation({
     mutationFn: (trackId: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.tracks.removeTracks([trackId]);
     },
     onSuccess: invalidateLibrary,
@@ -119,7 +159,7 @@ export const useLibraryControls = () => {
 
   const saveAlbum = useMutation({
     mutationFn: (albumId: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.albums.saveAlbums([albumId]);
     },
     onSuccess: invalidateLibrary,
@@ -127,7 +167,7 @@ export const useLibraryControls = () => {
 
   const removeAlbum = useMutation({
     mutationFn: (albumId: string) => {
-      if (!api) throw new Error('Not authenticated');
+      if (!api) throw new Error("Not authenticated");
       return api.albums.removeAlbums([albumId]);
     },
     onSuccess: invalidateLibrary,
@@ -141,20 +181,32 @@ export const usePlaylistControls = () => {
   const queryClient = useQueryClient();
 
   const invalidatePlaylists = () => {
-    queryClient.invalidateQueries({ queryKey: ['spotify', 'playlists'] });
+    queryClient.invalidateQueries({ queryKey: ["spotify", "playlists"] });
   };
 
   const addToPlaylist = useMutation({
-    mutationFn: ({ playlistId, uris }: { playlistId: string; uris: string[] }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      playlistId,
+      uris,
+    }: {
+      playlistId: string;
+      uris: string[];
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playlists.addItemsToPlaylist(playlistId, { uris });
     },
     onSuccess: invalidatePlaylists,
   });
 
   const removeFromPlaylist = useMutation({
-    mutationFn: ({ playlistId, tracks }: { playlistId: string; tracks: Array<{ uri: string }> }) => {
-      if (!api) throw new Error('Not authenticated');
+    mutationFn: ({
+      playlistId,
+      tracks,
+    }: {
+      playlistId: string;
+      tracks: Array<{ uri: string }>;
+    }) => {
+      if (!api) throw new Error("Not authenticated");
       return api.playlists.removeItemsFromPlaylist(playlistId, tracks);
     },
     onSuccess: invalidatePlaylists,

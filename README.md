@@ -27,42 +27,47 @@
 ## Stack
 
 ### Core
-| Tecnologia | Versão | Papel |
-|---|---|---|
-| React | 18.3 | UI framework |
-| TypeScript | 5.5 | Type safety |
-| Vite | 5.4 | Build tool e dev server |
-| React Router v6 | 6.26 | Roteamento SPA com lazy loading |
+
+| Tecnologia      | Versão | Papel                           |
+| --------------- | ------ | ------------------------------- |
+| React           | 18.3   | UI framework                    |
+| TypeScript      | 5.5    | Type safety                     |
+| Vite            | 5.4    | Build tool e dev server         |
+| React Router v6 | 6.26   | Roteamento SPA com lazy loading |
 
 ### Estado
-| Tecnologia | Papel |
-|---|---|
-| TanStack Query v5 | Server state — cache, stale time, retry |
-| Zustand | Client state — player, content atual |
-| Context API + `useReducer` | Auth state e Theme state |
+
+| Tecnologia                 | Papel                                   |
+| -------------------------- | --------------------------------------- |
+| TanStack Query v5          | Server state — cache, stale time, retry |
+| Zustand                    | Client state — player, content atual    |
+| Context API + `useReducer` | Auth state e Theme state                |
 
 ### UI
-| Tecnologia | Papel |
-|---|---|
-| Tailwind CSS v4 | Utility-first CSS com tokens de tema via CSS custom properties |
+
+| Tecnologia            | Papel                                                                |
+| --------------------- | -------------------------------------------------------------------- |
+| Tailwind CSS v4       | Utility-first CSS com tokens de tema via CSS custom properties       |
 | shadcn/ui (base-nova) | Componentes acessíveis (Avatar, Button, Input, ScrollArea, Skeleton) |
-| Lucide React | Ícones |
+| Lucide React          | Ícones                                                               |
 
 ### Outros
-| Tecnologia | Papel |
-|---|---|
-| Axios | HTTP client |
-| i18next + react-i18next | Internacionalização PT-BR / EN-US |
-| Spotify Web Playback SDK | Streaming in-browser |
+
+| Tecnologia               | Papel                             |
+| ------------------------ | --------------------------------- |
+| Axios                    | HTTP client                       |
+| i18next + react-i18next  | Internacionalização PT-BR / EN-US |
+| Spotify Web Playback SDK | Streaming in-browser              |
 
 ### Qualidade
-| Tecnologia | Papel |
-|---|---|
-| Vitest + Testing Library | Testes unitários e de componente |
-| ESLint + typescript-eslint | Linting |
-| Prettier | Formatação |
-| Husky | Git hooks (pre-commit e commit-msg) |
-| commitlint | Conventional commits enforced |
+
+| Tecnologia                 | Papel                               |
+| -------------------------- | ----------------------------------- |
+| Vitest + Testing Library   | Testes unitários e de componente    |
+| ESLint + typescript-eslint | Linting                             |
+| Prettier                   | Formatação                          |
+| Husky                      | Git hooks (pre-commit e commit-msg) |
+| commitlint                 | Conventional commits enforced       |
 
 ---
 
@@ -173,14 +178,14 @@ QueryClientProvider
 
 ### Gerenciamento de estado
 
-| Dado | Onde vive | Por quê |
-|---|---|---|
-| Dados da API Spotify | TanStack Query | Cache automático, deduplicação, stale time |
-| Player (device_id, estado) | Zustand `usePlayerStore` | Acesso global sem prop drilling |
-| Conteúdo atual (aba, query) | Zustand `useContentStore` | Simples, sem side effects |
-| Tema | Context + `useReducer` + localStorage | Precisa aplicar classe no `<html>` |
-| Auth | Context + `useState` + localStorage | Token compartilhado em toda a app |
-| Idioma | i18next + localStorage | Padrão da lib |
+| Dado                        | Onde vive                             | Por quê                                    |
+| --------------------------- | ------------------------------------- | ------------------------------------------ |
+| Dados da API Spotify        | TanStack Query                        | Cache automático, deduplicação, stale time |
+| Player (device_id, estado)  | Zustand `usePlayerStore`              | Acesso global sem prop drilling            |
+| Conteúdo atual (aba, query) | Zustand `useContentStore`             | Simples, sem side effects                  |
+| Tema                        | Context + `useReducer` + localStorage | Precisa aplicar classe no `<html>`         |
+| Auth                        | Context + `useState` + localStorage   | Token compartilhado em toda a app          |
+| Idioma                      | i18next + localStorage                | Padrão da lib                              |
 
 ---
 
@@ -275,9 +280,9 @@ npm run coverage   # run + relatório de cobertura
 
 ## Variáveis de Ambiente
 
-| Variável | Obrigatória | Descrição |
-|---|---|---|
-| `VITE_CLIENT_ID` | ✅ | Client ID do app no Spotify Developer Dashboard |
-| `VITE_REDIRECT_URI` | ✅ | URI de redirecionamento OAuth (deve ser idêntica à cadastrada no Spotify) |
+| Variável            | Obrigatória | Descrição                                                                 |
+| ------------------- | ----------- | ------------------------------------------------------------------------- |
+| `VITE_CLIENT_ID`    | ✅          | Client ID do app no Spotify Developer Dashboard                           |
+| `VITE_REDIRECT_URI` | ✅          | URI de redirecionamento OAuth (deve ser idêntica à cadastrada no Spotify) |
 
 > A ausência de qualquer uma delas lança erro em `App.tsx` na inicialização.

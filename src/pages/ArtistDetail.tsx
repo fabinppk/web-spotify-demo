@@ -41,7 +41,9 @@ export default function ArtistDetail() {
   const isLoading = artistLoading || albumsLoading;
   const isError = artistError || albumsError;
 
-  const albums = (albumsData?.pages.flatMap((p) => p.items ?? []) ?? []).filter(Boolean) as Album[];
+  const albums = (albumsData?.pages.flatMap((p) => p.items ?? []) ?? []).filter(
+    Boolean,
+  ) as Album[];
   const artistImage = artist?.images?.[0]?.url;
 
   if (isLoading) return <ArtistDetailSkeleton />;
@@ -116,7 +118,11 @@ export default function ArtistDetail() {
                   <SearchAlbumCard
                     key={album.id}
                     album={album}
-                    subtitle={album.release_date ? album.release_date.slice(0, 4) : undefined}
+                    subtitle={
+                      album.release_date
+                        ? album.release_date.slice(0, 4)
+                        : undefined
+                    }
                   />
                 ))}
               </div>

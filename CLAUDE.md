@@ -13,6 +13,7 @@ npm run coverage   # vitest run with coverage report
 ```
 
 Run a single test file:
+
 ```bash
 npx vitest run src/app/tests/App.test.tsx
 ```
@@ -20,6 +21,7 @@ npx vitest run src/app/tests/App.test.tsx
 ## Environment
 
 Requires `.env` with:
+
 - `VITE_CLIENT_ID` — Spotify app client ID
 - `VITE_REDIRECT_URI` — OAuth redirect URI (must match `http://127.0.0.1:3000/`)
 
@@ -32,6 +34,7 @@ React 18 + TypeScript SPA using Spotify Web API with PKCE OAuth.
 **Provider stack** (`App.tsx`): `QueryClientProvider` → `AuthProvider` → `RouterProvider` → `ThemeProvider`
 
 **State layers:**
+
 - Server state: TanStack Query (5 min stale time, 1 retry)
 - Client state: Zustand — `usePlayerStore` (device_id, player state), `useContentStore` (current tab, search query)
 - Auth state: `AuthProvider` context with `useState` + localStorage
@@ -39,6 +42,7 @@ React 18 + TypeScript SPA using Spotify Web API with PKCE OAuth.
 - Language: i18next + localStorage (`"language"` key) — persisted via `i18n.on("languageChanged")` event in `i18n.service.ts`
 
 **Routing** (`src/app/`): React Router v6 browser router. All pages lazy-loaded with `Suspense`/`PageLoader`. `ProtectedRoute` wraps all authenticated routes. Route tree:
+
 - `/` → Dashboard (protected, layout shell)
   - `playlist/:id`, `album/:id`, `artist/:id`, `profile`, `settings`
 - `/login` → Login
@@ -50,6 +54,7 @@ React 18 + TypeScript SPA using Spotify Web API with PKCE OAuth.
 ## Authentication
 
 PKCE flow implemented in `src/services/auth.service.ts`:
+
 1. `redirectToSpotifyAuthorize()` — generates `code_verifier` + `code_challenge` (SHA-256 via Web Crypto API), stores verifier in localStorage, redirects to Spotify
 2. `getToken(code)` — exchanges code for `access_token` + `refresh_token`
 3. `getRefreshToken(refreshToken)` — refreshes expired tokens
@@ -61,6 +66,7 @@ PKCE flow implemented in `src/services/auth.service.ts`:
 ## API Layer
 
 All Spotify API calls go through service classes in `src/api/`:
+
 - `AlbumService` — album detail, tracks, saved albums
 - `ArtistService` — artist, top tracks, albums, followed artists, follow/unfollow
 - `BrowseService` — categories, featured playlists, new releases
@@ -75,6 +81,7 @@ All services extend `SpotifyApiClient` (base Axios instance with auth header inj
 ## React Query Hooks
 
 All server state goes through `src/hooks/useSpotifyQueries.ts`:
+
 - `useSearchQuery(query, types, limit)` — standard search
 - `useInfiniteSearchQuery(query, types, limit)` — infinite scroll search (offset-based, uses `next` URL from Spotify response to get next page param)
 - `useInfiniteFollowedArtists(limit)` — cursor-based infinite scroll (uses `after` param from `next` URL)
@@ -100,6 +107,7 @@ Mutations in `src/hooks/useSpotifyMutations.ts`: `usePlaybackControls` (play/pau
 Two themes: `dark` (default) and `light`.
 
 CSS custom properties defined in `src/index.css`:
+
 - `--color-bg`, `--color-surface`, `--color-surface-hover` — backgrounds
 - `--color-accent`, `--color-accent-muted` — green accent
 - `--color-hero-start`, `--color-hero-album-start` — gradient start colors for artist/album detail pages
@@ -116,6 +124,7 @@ Two languages: `pt` (default) and `en`. Configured in `src/services/i18n.service
 Translation files: `src/utils/texts/texts.pt.json` and `texts.en.json`.
 
 Key structure:
+
 ```
 PAGES.LOGIN.*
 PAGES.DASHBOARD.*
@@ -136,6 +145,7 @@ Init reads from localStorage: if no saved lang, defaults to `"pt"`.
 ## Dashboard Layout
 
 Home (`/`) renders `MainPanel` which shows three sections:
+
 1. `MadeForYouSection` — playlist carousel (search "for me")
 2. `FeaturedPlaylistSection` — playlist carousel (search "featured")
 3. `ArtistSection` — infinite scroll grid using `useInfiniteSearchQuery("top", ["artist"], 2)` with `IntersectionObserver` sentinel
@@ -145,6 +155,7 @@ Search mode (`MainContent.BROWSE`) replaces the home with `<Search />` (lazy loa
 ## Infinite Scroll Pattern
 
 Sentinel element approach using `useIntersectionObserver`:
+
 ```tsx
 const onIntersect = useCallback(() => {
   if (hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -152,8 +163,10 @@ const onIntersect = useCallback(() => {
 
 const sentinelRef = useIntersectionObserver(onIntersect);
 // ...
-<div ref={sentinelRef} className="h-4" />
-{isFetchingNextPage && <spinner />}
+<div ref={sentinelRef} className="h-4" />;
+{
+  isFetchingNextPage && <spinner />;
+}
 ```
 
 Offset-based pagination: `getNextPageParam` parses offset from `next` URL returned by Spotify.
@@ -178,10 +191,12 @@ Test files override: `@typescript-eslint/no-explicit-any` and `no-unused-vars` a
 ## Deploy
 
 Vercel is the target. `vercel.json` is configured with:
+
 - `outputDirectory: "dist"`
 - SPA rewrites (`/(.*) → /index.html`) so React Router works on all routes
 
 Required environment variables in Vercel dashboard:
+
 - `VITE_CLIENT_ID`
 - `VITE_REDIRECT_URI` (must match the URL added to Spotify app's redirect URIs)
 

@@ -33,7 +33,9 @@ export function ArtistCard({ artist }: Readonly<ArtistCardProps>) {
           <p className="text-text-primary text-sm font-semibold truncate">
             {artist.name}
           </p>
-          <p className="text-text-muted text-xs mt-0.5">{t("COMPONENTS.SEARCH.artistLabel")}</p>
+          <p className="text-text-muted text-xs mt-0.5">
+            {t("COMPONENTS.SEARCH.artistLabel")}
+          </p>
         </div>
       </Link>
     </div>

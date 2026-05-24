@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from "react";
 
 const CARD_WIDTH = 168;
 
@@ -17,17 +17,19 @@ export function useCarouselScroll(dependency: unknown) {
     };
 
     updateArrows();
-    el.addEventListener('scroll', updateArrows);
-    globalThis.addEventListener('resize', updateArrows);
+    el.addEventListener("scroll", updateArrows);
+    globalThis.addEventListener("resize", updateArrows);
     return () => {
-      el.removeEventListener('scroll', updateArrows);
-      globalThis.removeEventListener('resize', updateArrows);
+      el.removeEventListener("scroll", updateArrows);
+      globalThis.removeEventListener("resize", updateArrows);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dependency]);
 
-  const scroll = (dir: 'left' | 'right') => {
-    scrollRef.current?.scrollBy({ left: dir === 'left' ? -CARD_WIDTH * 2 : CARD_WIDTH * 2, behavior: 'smooth' });
+  const scroll = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({
+      left: dir === "left" ? -CARD_WIDTH * 2 : CARD_WIDTH * 2,
+      behavior: "smooth",
+    });
   };
 
   return { scrollRef, canScrollLeft, canScrollRight, scroll };
