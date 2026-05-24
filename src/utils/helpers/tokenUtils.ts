@@ -1,4 +1,4 @@
-import { getRefreshToken } from "../../services/auth.service";
+import { getRefreshToken } from "@/services/auth.service";
 
 export const isTokenExpired = (): boolean => {
   const expiresString = localStorage.getItem("expires");

@@ -1,12 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import { 
-  Categories,
-  Category,
-  FeaturedPlaylists,
-  NewReleases,
-  PaginatedResponse,
-  Playlist
-} from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class BrowseService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -21,7 +13,7 @@ export class BrowseService {
     limit?: number;
     offset?: number;
   }): Promise<Categories> {
-    return this.apiClient.get<Categories>('/browse/categories', options);
+    return this.apiClient.get<Categories>("/browse/categories", options);
   }
 
   /**
@@ -29,11 +21,17 @@ export class BrowseService {
    * @param categoryId The Spotify category ID for the category.
    * @param options Optional parameters for the request.
    */
-  async getCategory(categoryId: string, options?: {
-    country?: string;
-    locale?: string;
-  }): Promise<Category> {
-    return this.apiClient.get<Category>(`/browse/categories/${categoryId}`, options);
+  async getCategory(
+    categoryId: string,
+    options?: {
+      country?: string;
+      locale?: string;
+    },
+  ): Promise<Category> {
+    return this.apiClient.get<Category>(
+      `/browse/categories/${categoryId}`,
+      options,
+    );
   }
 
   /**
@@ -47,9 +45,12 @@ export class BrowseService {
       country?: string;
       limit?: number;
       offset?: number;
-    }
+    },
   ): Promise<{ message?: string; playlists: PaginatedResponse<Playlist> }> {
-    return this.apiClient.get<{ message?: string; playlists: PaginatedResponse<Playlist> }>(`/browse/categories/${categoryId}/playlists`, options);
+    return this.apiClient.get<{
+      message?: string;
+      playlists: PaginatedResponse<Playlist>;
+    }>(`/browse/categories/${categoryId}/playlists`, options);
   }
 
   /**
@@ -62,7 +63,10 @@ export class BrowseService {
     offset?: number;
     timestamp?: string;
   }): Promise<FeaturedPlaylists> {
-    return this.apiClient.get<FeaturedPlaylists>('/browse/featured-playlists', options);
+    return this.apiClient.get<FeaturedPlaylists>(
+      "/browse/featured-playlists",
+      options,
+    );
   }
 
   /**
@@ -74,13 +78,15 @@ export class BrowseService {
     limit?: number;
     offset?: number;
   }): Promise<NewReleases> {
-    return this.apiClient.get<NewReleases>('/browse/new-releases', options);
+    return this.apiClient.get<NewReleases>("/browse/new-releases", options);
   }
 
   /**
    * Get available genre seeds for recommendations.
    */
   async getAvailableGenreSeeds(): Promise<{ genres: string[] }> {
-    return this.apiClient.get<{ genres: string[] }>('/recommendations/available-genre-seeds');
+    return this.apiClient.get<{ genres: string[] }>(
+      "/recommendations/available-genre-seeds",
+    );
   }
 }

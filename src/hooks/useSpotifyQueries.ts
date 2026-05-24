@@ -51,6 +51,10 @@ export const useMadeForYouPlaylists = (limit = 20) => {
       requireApi(api).search.search("for me", ["playlist"], { market }),
     enabled: api !== null && profile !== undefined,
     staleTime: 10 * 60 * 1000,
+    // refetchInterval: (query) => {
+    //   const items = (query.state.data?.playlists?.items ?? []).filter(Boolean);
+    //   return items.length < limit ? 3000 : false;
+    // },
   });
   return { ...query, isLoading: query.isLoading || profileLoading };
 };
@@ -229,6 +233,16 @@ export const useFollowedArtists = (limit = 50) => {
   });
 };
 
+export const useTopArtists = (limit = 20) => {
+  const api = useSpotifyApi();
+  return useQuery({
+    queryKey: ["spotify", "me", "top", "artists", limit],
+    queryFn: () => requireApi(api).artists.getTopArtists({ limit }),
+    enabled: api !== null,
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
 export const useArtistAlbums = (artistId: string, limit = 10, offset = 0) => {
   const api = useSpotifyApi();
   return useQuery({
@@ -242,6 +256,38 @@ export const useArtistAlbums = (artistId: string, limit = 10, offset = 0) => {
     enabled: api !== null && !!artistId,
     staleTime: 10 * 60 * 1000,
   });
+};
+
+export const useArtistTopTracks = (artistId: string) => {
+  const api = useSpotifyApi();
+  const { data: profile, isLoading: profileLoading } = useCurrentUserProfile();
+  const market = profile?.country;
+  console.log("queries", artistId);
+  const query = useQuery({
+    queryKey: ["spotify", "artist", artistId, "top-tracks", market],
+    queryFn: () =>
+      requireApi(api).artists.getArtistTopTracks(artistId, { market }),
+    enabled: api !== null && !!artistId && profile !== undefined,
+    staleTime: 10 * 60 * 1000,
+  });
+  return { ...query, isLoading: query.isLoading || profileLoading };
+};
+
+export const useUserTopTracks = (artistId: string) => {
+  const api = useSpotifyApi();
+  const { data: profile, isLoading: profileLoading } = useCurrentUserProfile();
+  const market = profile?.country;
+  const query = useQuery({
+    queryKey: ["spotify", "me", artistId, "top-tracks", market],
+    queryFn: () =>
+      requireApi(api).tracks.getUserTopTracks({
+        time_range: "medium_term",
+        limit: 10,
+      }),
+    enabled: api !== null && !!artistId && profile !== undefined,
+    staleTime: 10 * 60 * 1000,
+  });
+  return { ...query, isLoading: query.isLoading || profileLoading };
 };
 
 export const useRecentlyPlayed = (limit = 20) => {

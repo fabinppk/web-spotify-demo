@@ -1,5 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import type { ProfileInterface } from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class UserService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -8,6 +7,6 @@ export class UserService {
    * Get the current user's profile information.
    */
   async getCurrentUserProfile(): Promise<ProfileInterface> {
-    return this.apiClient.get<ProfileInterface>('/me');
+    return this.apiClient.get<ProfileInterface>("/me");
   }
 }

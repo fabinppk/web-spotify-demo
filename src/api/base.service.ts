@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { getValidAccessToken } from "../utils/helpers/tokenUtils";
+import { getValidAccessToken } from "@/utils";
 
 const SPOTIFY_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

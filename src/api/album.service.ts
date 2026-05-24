@@ -1,10 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import { 
-  Album, 
-  Track,
-  PaginatedResponse,
-  UserSavedAlbums
-} from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class AlbumService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -24,10 +18,13 @@ export class AlbumService {
    * @param albumIds Array of Spotify album IDs. Maximum: 20 IDs.
    * @param market An ISO 3166-1 alpha-2 country code.
    */
-  async getAlbums(albumIds: string[], market?: string): Promise<{ albums: Album[] }> {
-    const ids = albumIds.slice(0, 20).join(',');
+  async getAlbums(
+    albumIds: string[],
+    market?: string,
+  ): Promise<{ albums: Album[] }> {
+    const ids = albumIds.slice(0, 20).join(",");
     const params = market ? { ids, market } : { ids };
-    return this.apiClient.get<{ albums: Album[] }>('/albums', params);
+    return this.apiClient.get<{ albums: Album[] }>("/albums", params);
   }
 
   /**
@@ -36,14 +33,17 @@ export class AlbumService {
    * @param options Optional parameters for the request.
    */
   async getAlbumTracks(
-    albumId: string, 
+    albumId: string,
     options?: {
       market?: string;
       limit?: number;
       offset?: number;
-    }
+    },
   ): Promise<PaginatedResponse<Track>> {
-    return this.apiClient.get<PaginatedResponse<Track>>(`/albums/${albumId}/tracks`, options);
+    return this.apiClient.get<PaginatedResponse<Track>>(
+      `/albums/${albumId}/tracks`,
+      options,
+    );
   }
 
   /**
@@ -55,7 +55,7 @@ export class AlbumService {
     offset?: number;
     market?: string;
   }): Promise<UserSavedAlbums> {
-    return this.apiClient.get<UserSavedAlbums>('/me/albums', options);
+    return this.apiClient.get<UserSavedAlbums>("/me/albums", options);
   }
 
   /**
@@ -63,9 +63,9 @@ export class AlbumService {
    * @param albumIds Array of Spotify album IDs. Maximum: 50 IDs.
    */
   async saveAlbums(albumIds: string[]): Promise<void> {
-    const ids = albumIds.slice(0, 50).join(',');
-    return this.apiClient.put('/me/albums', null, {
-      params: { ids }
+    const ids = albumIds.slice(0, 50).join(",");
+    return this.apiClient.put("/me/albums", null, {
+      params: { ids },
     });
   }
 
@@ -74,7 +74,7 @@ export class AlbumService {
    * @param albumIds Array of Spotify album IDs. Maximum: 50 IDs.
    */
   async removeAlbums(albumIds: string[]): Promise<void> {
-    const ids = albumIds.slice(0, 50).join(',');
+    const ids = albumIds.slice(0, 50).join(",");
     return this.apiClient.delete(`/me/albums?ids=${ids}`);
   }
 
@@ -83,8 +83,8 @@ export class AlbumService {
    * @param albumIds Array of Spotify album IDs. Maximum: 50 IDs.
    */
   async checkSavedAlbums(albumIds: string[]): Promise<boolean[]> {
-    const ids = albumIds.slice(0, 50).join(',');
-    return this.apiClient.get<boolean[]>('/me/albums/contains', { ids });
+    const ids = albumIds.slice(0, 50).join(",");
+    return this.apiClient.get<boolean[]>("/me/albums/contains", { ids });
   }
 
   /**
@@ -96,6 +96,9 @@ export class AlbumService {
     limit?: number;
     offset?: number;
   }): Promise<{ albums: PaginatedResponse<Album> }> {
-    return this.apiClient.get<{ albums: PaginatedResponse<Album> }>('/browse/new-releases', options);
+    return this.apiClient.get<{ albums: PaginatedResponse<Album> }>(
+      "/browse/new-releases",
+      options,
+    );
   }
 }

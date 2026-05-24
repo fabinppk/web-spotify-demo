@@ -1,10 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import { 
-  Track,
-  UserSavedTracks,
-  AudioFeatures,
-  Recommendations
-} from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class TrackService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -24,10 +18,13 @@ export class TrackService {
    * @param trackIds Array of Spotify track IDs. Maximum: 50 IDs.
    * @param market An ISO 3166-1 alpha-2 country code.
    */
-  async getTracks(trackIds: string[], market?: string): Promise<{ tracks: Track[] }> {
-    const ids = trackIds.slice(0, 50).join(',');
+  async getTracks(
+    trackIds: string[],
+    market?: string,
+  ): Promise<{ tracks: Track[] }> {
+    const ids = trackIds.slice(0, 50).join(",");
     const params = market ? { ids, market } : { ids };
-    return this.apiClient.get<{ tracks: Track[] }>('/tracks', params);
+    return this.apiClient.get<{ tracks: Track[] }>("/tracks", params);
   }
 
   /**
@@ -39,7 +36,7 @@ export class TrackService {
     limit?: number;
     offset?: number;
   }): Promise<UserSavedTracks> {
-    return this.apiClient.get<UserSavedTracks>('/me/tracks', options);
+    return this.apiClient.get<UserSavedTracks>("/me/tracks", options);
   }
 
   /**
@@ -47,10 +44,22 @@ export class TrackService {
    * @param trackIds Array of Spotify track IDs. Maximum: 50 IDs.
    */
   async saveTracks(trackIds: string[]): Promise<void> {
-    const ids = trackIds.slice(0, 50).join(',');
-    return this.apiClient.put('/me/tracks', null, {
-      params: { ids }
+    const ids = trackIds.slice(0, 50).join(",");
+    return this.apiClient.put("/me/tracks", null, {
+      params: { ids },
     });
+  }
+
+  /**
+   * Get a list of the current user's top tracks based on calculated affinity.
+   * @param options Optional parameters for the request.
+   */
+  async getUserTopTracks(options?: {
+    time_range?: "short_term" | "medium_term" | "long_term";
+    limit?: number;
+    offset?: number;
+  }): Promise<{ items: Track[] }> {
+    return this.apiClient.get<{ items: Track[] }>("/me/top/tracks", options);
   }
 
   /**
@@ -58,7 +67,7 @@ export class TrackService {
    * @param trackIds Array of Spotify track IDs. Maximum: 50 IDs.
    */
   async removeTracks(trackIds: string[]): Promise<void> {
-    const ids = trackIds.slice(0, 50).join(',');
+    const ids = trackIds.slice(0, 50).join(",");
     return this.apiClient.delete(`/me/tracks?ids=${ids}`);
   }
 
@@ -67,8 +76,8 @@ export class TrackService {
    * @param trackIds Array of Spotify track IDs. Maximum: 50 IDs.
    */
   async checkSavedTracks(trackIds: string[]): Promise<boolean[]> {
-    const ids = trackIds.slice(0, 50).join(',');
-    return this.apiClient.get<boolean[]>('/me/tracks/contains', { ids });
+    const ids = trackIds.slice(0, 50).join(",");
+    return this.apiClient.get<boolean[]>("/me/tracks/contains", { ids });
   }
 
   /**
@@ -83,9 +92,14 @@ export class TrackService {
    * Get audio features for multiple tracks based on their Spotify IDs.
    * @param trackIds Array of Spotify track IDs. Maximum: 100 IDs.
    */
-  async getTracksAudioFeatures(trackIds: string[]): Promise<{ audio_features: AudioFeatures[] }> {
-    const ids = trackIds.slice(0, 100).join(',');
-    return this.apiClient.get<{ audio_features: AudioFeatures[] }>('/audio-features', { ids });
+  async getTracksAudioFeatures(
+    trackIds: string[],
+  ): Promise<{ audio_features: AudioFeatures[] }> {
+    const ids = trackIds.slice(0, 100).join(",");
+    return this.apiClient.get<{ audio_features: AudioFeatures[] }>(
+      "/audio-features",
+      { ids },
+    );
   }
 
   /**
@@ -145,37 +159,41 @@ export class TrackService {
     const seeds = [
       ...(options.seed_artists || []),
       ...(options.seed_tracks || []),
-      ...(options.seed_genres || [])
+      ...(options.seed_genres || []),
     ];
-    
+
     if (seeds.length === 0) {
-      throw new Error('At least one seed must be provided');
-    }
-    
-    if (seeds.length > 5) {
-      throw new Error('Maximum of 5 seeds allowed in total');
+      throw new Error("At least one seed must be provided");
     }
 
-    const params: Record<string, string | number | undefined> = { ...options } as Record<string, string | number | undefined>;
-    
+    if (seeds.length > 5) {
+      throw new Error("Maximum of 5 seeds allowed in total");
+    }
+
+    const params: Record<string, string | number | undefined> = {
+      ...options,
+    } as Record<string, string | number | undefined>;
+
     // Convert arrays to comma-separated strings
     if (options.seed_artists) {
-      params.seed_artists = options.seed_artists.join(',');
+      params.seed_artists = options.seed_artists.join(",");
     }
     if (options.seed_tracks) {
-      params.seed_tracks = options.seed_tracks.join(',');
+      params.seed_tracks = options.seed_tracks.join(",");
     }
     if (options.seed_genres) {
-      params.seed_genres = options.seed_genres.join(',');
+      params.seed_genres = options.seed_genres.join(",");
     }
 
-    return this.apiClient.get<Recommendations>('/recommendations', params);
+    return this.apiClient.get<Recommendations>("/recommendations", params);
   }
 
   /**
    * Get available genre seeds for recommendations.
    */
   async getAvailableGenreSeeds(): Promise<{ genres: string[] }> {
-    return this.apiClient.get<{ genres: string[] }>('/recommendations/available-genre-seeds');
+    return this.apiClient.get<{ genres: string[] }>(
+      "/recommendations/available-genre-seeds",
+    );
   }
 }

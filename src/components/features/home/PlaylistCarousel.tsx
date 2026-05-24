@@ -2,7 +2,7 @@ import { HomeSection } from "./HomeSection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PlaylistCard } from "./PlaylistCard";
 import { ScrollArrow } from "@/components/ui/ScrollArrow";
-import { useCarouselScroll } from "../../../hooks/useCarouselScroll";
+import { useCarouselScroll } from "@/hooks/useCarouselScroll";
 
 const SKELETON_KEYS = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
 

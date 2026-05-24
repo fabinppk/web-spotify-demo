@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useAuth } from "./useAuth";
-import { SpotifyApi } from "../api";
+import { SpotifyApi } from "@/api";
 
 export function useSpotifyApi(): SpotifyApi | null {
   const { accessToken, isLoading } = useAuth();

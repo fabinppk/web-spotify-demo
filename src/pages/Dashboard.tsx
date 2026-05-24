@@ -6,8 +6,8 @@ import { MainPanel } from "@/components/layout/MainPanel";
 // import { PlayerBar } from "../components/layout/PlayerBar";
 // import { MobileTabBar } from "../components/layout/MobileTabBar";
 // import { NowPlaying } from "../components/features/NowPlaying";
-import { useSpotifyPlayer } from "../hooks/useSpotifyPlayer";
-import { usePlayerStore } from "../stores/usePlayerStore";
+import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
+import { usePlayerStore } from "@/stores/usePlayerStore";
 
 const Dashboard = () => {
   const { playerState } = useSpotifyPlayer();

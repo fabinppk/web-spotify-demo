@@ -1,5 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import { SearchResult } from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class SearchService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -12,21 +11,21 @@ export class SearchService {
    */
   async search(
     query: string,
-    types: ('album' | 'artist' | 'playlist' | 'track' | 'show' | 'episode')[],
+    types: ("album" | "artist" | "playlist" | "track" | "show" | "episode")[],
     options?: {
       market?: string;
       limit?: number;
       offset?: number;
-      include_external?: 'audio';
-    }
+      include_external?: "audio";
+    },
   ): Promise<SearchResult> {
     const params: Record<string, string | number> = {
       q: query,
-      type: types.join(','),
-      ...options
+      type: types.join(","),
+      ...options,
     };
 
-    return this.apiClient.get<SearchResult>('/search', params);
+    return this.apiClient.get<SearchResult>("/search", params);
   }
 
   /**
@@ -40,10 +39,10 @@ export class SearchService {
       market?: string;
       limit?: number;
       offset?: number;
-      include_external?: 'audio';
-    }
+      include_external?: "audio";
+    },
   ) {
-    return this.search(query, ['album'], options);
+    return this.search(query, ["album"], options);
   }
 
   /**
@@ -57,10 +56,10 @@ export class SearchService {
       market?: string;
       limit?: number;
       offset?: number;
-      include_external?: 'audio';
-    }
+      include_external?: "audio";
+    },
   ) {
-    return this.search(query, ['artist'], options);
+    return this.search(query, ["artist"], options);
   }
 
   /**
@@ -74,10 +73,10 @@ export class SearchService {
       market?: string;
       limit?: number;
       offset?: number;
-      include_external?: 'audio';
-    }
+      include_external?: "audio";
+    },
   ) {
-    return this.search(query, ['playlist'], options);
+    return this.search(query, ["playlist"], options);
   }
 
   /**
@@ -91,9 +90,9 @@ export class SearchService {
       market?: string;
       limit?: number;
       offset?: number;
-      include_external?: 'audio';
-    }
+      include_external?: "audio";
+    },
   ) {
-    return this.search(query, ['track'], options);
+    return this.search(query, ["track"], options);
   }
 }

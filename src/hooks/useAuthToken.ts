@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import {
-  getValidAccessToken,
-  isTokenExpired,
-} from "../utils/helpers/tokenUtils";
-import { redirectToSpotifyAuthorize } from "../services/auth.service";
+import { getValidAccessToken, isTokenExpired } from "@/utils";
+import { redirectToSpotifyAuthorize } from "@/services/auth.service";
 
 export const useAuthToken = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);

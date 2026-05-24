@@ -1,6 +1,6 @@
-import { Button } from "../components/ui/button";
-import { useAuth } from "../hooks/useAuth";
-import IconSpotify from "../assets/svg/spotify.svg";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import IconSpotify from "@/assets/svg/spotify.svg";
 
 const Login = () => {
   const { login } = useAuth();

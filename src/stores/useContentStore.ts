@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { MainContent } from "../utils/enums";
+import { MainContent } from "@/utils";
 
 export const useContentStore = create<{
   currentContent: MainContent;

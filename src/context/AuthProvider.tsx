@@ -3,9 +3,9 @@ import {
   getToken,
   redirectToSpotifyAuthorize,
   REQUIRED_SCOPES,
-} from "../services/auth.service";
+} from "@/services/auth.service";
 import { AuthContext } from "./AuthContext";
-import { getValidAccessToken } from "../utils/helpers/tokenUtils";
+import { getValidAccessToken } from "@/utils";
 
 function hasRequiredScopes(): boolean {
   const stored = localStorage.getItem("token_scope");

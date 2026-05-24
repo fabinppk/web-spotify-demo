@@ -1,9 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import { 
-  Artist, 
-  ArtistAlbums,
-  PaginatedResponse 
-} from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class ArtistService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -21,8 +16,8 @@ export class ArtistService {
    * @param artistIds Array of Spotify artist IDs. Maximum: 50 IDs.
    */
   async getArtists(artistIds: string[]): Promise<{ artists: Artist[] }> {
-    const ids = artistIds.slice(0, 50).join(',');
-    return this.apiClient.get<{ artists: Artist[] }>('/artists', { ids });
+    const ids = artistIds.slice(0, 50).join(",");
+    return this.apiClient.get<{ artists: Artist[] }>("/artists", { ids });
   }
 
   /**
@@ -37,9 +32,30 @@ export class ArtistService {
       market?: string;
       limit?: number;
       offset?: number;
-    }
+    },
   ): Promise<ArtistAlbums> {
-    return this.apiClient.get<ArtistAlbums>(`/artists/${artistId}/albums`, options);
+    return this.apiClient.get<ArtistAlbums>(
+      `/artists/${artistId}/albums`,
+      options,
+    );
+  }
+
+  /**
+   * Get Spotify catalog information about an artist's top tracks by country.
+   * @param artistId The Spotify ID for the artist.
+   * @param options Optional parameters for the request.
+   */
+  async getArtistTopTracks(
+    artistId: string,
+    options?: {
+      market?: string;
+    },
+  ): Promise<{ tracks: Track[] }> {
+    console.log("api artistId:", artistId, "options:", options);
+    return this.apiClient.get<{ tracks: Track[] }>(
+      `/artists/${artistId}/top-tracks`,
+      options,
+    );
   }
 
   /**
@@ -47,7 +63,9 @@ export class ArtistService {
    * @param artistId The Spotify ID for the artist.
    */
   async getRelatedArtists(artistId: string): Promise<{ artists: Artist[] }> {
-    return this.apiClient.get<{ artists: Artist[] }>(`/artists/${artistId}/related-artists`);
+    return this.apiClient.get<{ artists: Artist[] }>(
+      `/artists/${artistId}/related-artists`,
+    );
   }
 
   /**
@@ -55,14 +73,17 @@ export class ArtistService {
    * @param options Optional parameters for the request.
    */
   async getFollowedArtists(options?: {
-    type?: 'artist';
+    type?: "artist";
     after?: string;
     limit?: number;
   }): Promise<{ artists: PaginatedResponse<Artist> }> {
-    return this.apiClient.get<{ artists: PaginatedResponse<Artist> }>('/me/following', {
-      type: 'artist',
-      ...options
-    });
+    return this.apiClient.get<{ artists: PaginatedResponse<Artist> }>(
+      "/me/following",
+      {
+        type: "artist",
+        ...options,
+      },
+    );
   }
 
   /**
@@ -70,10 +91,24 @@ export class ArtistService {
    * @param artistIds Array of Spotify artist IDs. Maximum: 50 IDs.
    */
   async followArtists(artistIds: string[]): Promise<void> {
-    const ids = artistIds.slice(0, 50).join(',');
-    return this.apiClient.put('/me/following', null, {
-      params: { type: 'artist', ids }
+    const ids = artistIds.slice(0, 50).join(",");
+    return this.apiClient.put("/me/following", null, {
+      params: { type: "artist", ids },
     });
+  }
+
+  /**
+   *
+   * @param options
+   * @returns
+   */
+  async getTopArtists(options?: {
+    limit?: number;
+  }): Promise<{ artists: Artist[] }> {
+    return this.apiClient.get<{ artists: Artist[] }>(
+      "/me/top/artists",
+      options,
+    );
   }
 
   /**
@@ -81,7 +116,7 @@ export class ArtistService {
    * @param artistIds Array of Spotify artist IDs. Maximum: 50 IDs.
    */
   async unfollowArtists(artistIds: string[]): Promise<void> {
-    const ids = artistIds.slice(0, 50).join(',');
+    const ids = artistIds.slice(0, 50).join(",");
     return this.apiClient.delete(`/me/following?type=artist&ids=${ids}`);
   }
 
@@ -90,10 +125,10 @@ export class ArtistService {
    * @param artistIds Array of Spotify artist IDs. Maximum: 50 IDs.
    */
   async checkFollowingArtists(artistIds: string[]): Promise<boolean[]> {
-    const ids = artistIds.slice(0, 50).join(',');
-    return this.apiClient.get<boolean[]>('/me/following/contains', { 
-      type: 'artist', 
-      ids 
+    const ids = artistIds.slice(0, 50).join(",");
+    return this.apiClient.get<boolean[]>("/me/following/contains", {
+      type: "artist",
+      ids,
     });
   }
 }

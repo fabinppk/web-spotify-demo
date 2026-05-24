@@ -1,15 +1,15 @@
 import { lazy, Suspense } from "react";
 import { RouteObject } from "react-router-dom";
-import ProtectedRoute from "../components/ProtectedRoute";
-import { PageLoader } from "../components/ui/PageLoader";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { PageLoader } from "@/components/ui/PageLoader";
 
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Login = lazy(() => import("../pages/Login"));
 // const Profile = lazy(() => import("../pages/Profile"));
 // const Settings = lazy(() => import("../pages/Settings"));
 // const PlaylistDetail = lazy(() => import("../pages/PlaylistDetail"));
-// const AlbumDetail = lazy(() => import("../pages/AlbumDetail"));
-// const ArtistDetail = lazy(() => import("../pages/ArtistDetail"));
+const AlbumDetail = lazy(() => import("../pages/AlbumDetail"));
+const ArtistDetail = lazy(() => import("../pages/ArtistDetail"));
 
 export function getRoutes(): RouteObject[] {
   return [
@@ -31,22 +31,22 @@ export function getRoutes(): RouteObject[] {
         //     </Suspense>
         //   ),
         // },
-        // {
-        //   path: "album/:id",
-        //   element: (
-        //     <Suspense fallback={<PageLoader />}>
-        //       <AlbumDetail />
-        //     </Suspense>
-        //   ),
-        // },
-        // {
-        //   path: "artist/:id",
-        //   element: (
-        //     <Suspense fallback={<PageLoader />}>
-        //       <ArtistDetail />
-        //     </Suspense>
-        //   ),
-        // },
+        {
+          path: "album/:id",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <AlbumDetail />
+            </Suspense>
+          ),
+        },
+        {
+          path: "artist/:id",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <ArtistDetail />
+            </Suspense>
+          ),
+        },
         // {
         //   path: "profile",
         //   element: (

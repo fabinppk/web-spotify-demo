@@ -1,9 +1,4 @@
-import { SpotifyApiClient } from './base.service';
-import { 
-  Playlist,
-  PaginatedResponse,
-  UserPlaylists
-} from '../../types';
+import { SpotifyApiClient } from "./base.service";
 
 export class PlaylistService {
   constructor(private readonly apiClient: SpotifyApiClient) {}
@@ -19,7 +14,7 @@ export class PlaylistService {
       market?: string;
       fields?: string;
       additional_types?: string;
-    }
+    },
   ): Promise<Playlist> {
     return this.apiClient.get<Playlist>(`/playlists/${playlistId}`, options);
   }
@@ -32,7 +27,7 @@ export class PlaylistService {
     limit?: number;
     offset?: number;
   }): Promise<UserPlaylists> {
-    return this.apiClient.get<UserPlaylists>('/me/playlists', options);
+    return this.apiClient.get<UserPlaylists>("/me/playlists", options);
   }
 
   /**
@@ -45,9 +40,12 @@ export class PlaylistService {
     options?: {
       limit?: number;
       offset?: number;
-    }
+    },
   ): Promise<UserPlaylists> {
-    return this.apiClient.get<UserPlaylists>(`/users/${userId}/playlists`, options);
+    return this.apiClient.get<UserPlaylists>(
+      `/users/${userId}/playlists`,
+      options,
+    );
   }
 
   /**
@@ -62,9 +60,12 @@ export class PlaylistService {
       description?: string;
       public?: boolean;
       collaborative?: boolean;
-    }
+    },
   ): Promise<Playlist> {
-    return this.apiClient.post<Playlist>(`/users/${userId}/playlists`, playlistData);
+    return this.apiClient.post<Playlist>(
+      `/users/${userId}/playlists`,
+      playlistData,
+    );
   }
 
   /**
@@ -77,9 +78,12 @@ export class PlaylistService {
     data: {
       uris?: string[];
       position?: number;
-    }
+    },
   ): Promise<{ snapshot_id: string }> {
-    return this.apiClient.post<{ snapshot_id: string }>(`/playlists/${playlistId}/tracks`, data);
+    return this.apiClient.post<{ snapshot_id: string }>(
+      `/playlists/${playlistId}/tracks`,
+      data,
+    );
   }
 
   /**
@@ -89,9 +93,12 @@ export class PlaylistService {
    */
   async removeItemsFromPlaylist(
     playlistId: string,
-    tracks: { uri: string; positions?: number[] }[]
+    tracks: { uri: string; positions?: number[] }[],
   ): Promise<{ snapshot_id: string }> {
-    return this.apiClient.delete<{ snapshot_id: string }>(`/playlists/${playlistId}/tracks`, { tracks });
+    return this.apiClient.delete<{ snapshot_id: string }>(
+      `/playlists/${playlistId}/tracks`,
+      { tracks },
+    );
   }
 
   /**
@@ -101,9 +108,9 @@ export class PlaylistService {
    */
   async replacePlaylistItems(
     playlistId: string,
-    uris: string[]
+    uris: string[],
   ): Promise<void> {
-    return this.apiClient.put('/playlists/' + playlistId + '/tracks', { uris });
+    return this.apiClient.put("/playlists/" + playlistId + "/tracks", { uris });
   }
 
   /**
@@ -118,7 +125,7 @@ export class PlaylistService {
       description?: string;
       public?: boolean;
       collaborative?: boolean;
-    }
+    },
   ): Promise<void> {
     return this.apiClient.put(`/playlists/${playlistId}`, data);
   }
@@ -128,8 +135,13 @@ export class PlaylistService {
    * @param playlistId The Spotify ID for the playlist.
    * @param publicFollow If true, the playlist will be included in user's public playlists.
    */
-  async followPlaylist(playlistId: string, publicFollow: boolean = true): Promise<void> {
-    return this.apiClient.put(`/playlists/${playlistId}/followers`, { public: publicFollow });
+  async followPlaylist(
+    playlistId: string,
+    publicFollow: boolean = true,
+  ): Promise<void> {
+    return this.apiClient.put(`/playlists/${playlistId}/followers`, {
+      public: publicFollow,
+    });
   }
 
   /**
@@ -150,7 +162,10 @@ export class PlaylistService {
     offset?: number;
     timestamp?: string;
   }): Promise<{ message?: string; playlists: PaginatedResponse<Playlist> }> {
-    return this.apiClient.get<{ message?: string; playlists: PaginatedResponse<Playlist> }>('/browse/featured-playlists', options);
+    return this.apiClient.get<{
+      message?: string;
+      playlists: PaginatedResponse<Playlist>;
+    }>("/browse/featured-playlists", options);
   }
 
   /**
@@ -164,9 +179,12 @@ export class PlaylistService {
       country?: string;
       limit?: number;
       offset?: number;
-    }
+    },
   ): Promise<{ message?: string; playlists: PaginatedResponse<Playlist> }> {
-    return this.apiClient.get<{ message?: string; playlists: PaginatedResponse<Playlist> }>(`/browse/categories/${categoryId}/playlists`, options);
+    return this.apiClient.get<{
+      message?: string;
+      playlists: PaginatedResponse<Playlist>;
+    }>(`/browse/categories/${categoryId}/playlists`, options);
   }
 
   /**
@@ -181,8 +199,11 @@ export class PlaylistService {
       insert_before: number;
       range_length?: number;
       snapshot_id?: string;
-    }
+    },
   ): Promise<{ snapshot_id: string }> {
-    return this.apiClient.put<{ snapshot_id: string }>(`/playlists/${playlistId}/tracks`, data);
+    return this.apiClient.put<{ snapshot_id: string }>(
+      `/playlists/${playlistId}/tracks`,
+      data,
+    );
   }
 }
