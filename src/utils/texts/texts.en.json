@@ -14,7 +14,8 @@
     "ARTIST_DETAIL": {
       "errorMessage": "Failed to load artist.",
       "follow": "Follow",
-      "albumsSection": "Albums"
+      "albumsSection": "Albums",
+      "noAlbums": "No albums found."
     },
     "ALBUM_DETAIL": {
       "errorMessage": "Failed to load album.",

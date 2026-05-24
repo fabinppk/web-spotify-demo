@@ -154,7 +154,9 @@ export const useSearchQuery = (
 
 export const useInfiniteSearchQuery = (
   query: string,
-  types: ("track" | "artist" | "album" | "playlist" | "show" | "episode")[] = ["artist"],
+  types: ("track" | "artist" | "album" | "playlist" | "show" | "episode")[] = [
+    "artist",
+  ],
   limit = 10,
 ) => {
   const api = useSpotifyApi();
@@ -292,6 +294,26 @@ export const useArtistAlbums = (artistId: string, limit = 10, offset = 0) => {
         limit,
         ...(offset > 0 && { offset }),
       }),
+    enabled: api !== null && !!artistId,
+    staleTime: 10 * 60 * 1000,
+  });
+};
+
+export const useInfiniteArtistAlbums = (artistId: string, limit = 8) => {
+  const api = useSpotifyApi();
+  return useInfiniteQuery({
+    queryKey: ["spotify", "artist", artistId, "albums", "infinite", limit],
+    queryFn: ({ pageParam }) =>
+      requireApi(api).artists.getArtistAlbums(artistId, {
+        include_groups: "album,single,compilation",
+        limit,
+        offset: pageParam,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: PaginatedResponse<Album>) => {
+      if (!lastPage.next) return undefined;
+      return Number(new URL(lastPage.next).searchParams.get("offset"));
+    },
     enabled: api !== null && !!artistId,
     staleTime: 10 * 60 * 1000,
   });

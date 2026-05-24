@@ -14,7 +14,8 @@
     "ARTIST_DETAIL": {
       "errorMessage": "Falha ao carregar artista.",
       "follow": "Seguir",
-      "albumsSection": "Álbuns"
+      "albumsSection": "Álbuns",
+      "noAlbums": "Nenhum álbum encontrado."
     },
     "ALBUM_DETAIL": {
       "errorMessage": "Falha ao carregar álbum.",
