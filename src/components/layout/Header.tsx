@@ -19,6 +19,7 @@ import {
   Moon,
   Languages,
   LogOut,
+  Heart,
   useTranslation,
 } from "@/modules";
 
@@ -132,6 +133,13 @@ export function Header() {
             >
               <Languages className="w-4 h-4 mr-2" />
               {i18n.language === "pt" ? "English" : "Português"}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => navigate("/favorites")}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <Heart className="w-4 h-4 mr-2" />
+              {t("COMPONENTS.HEADER.favorites")}
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuItem

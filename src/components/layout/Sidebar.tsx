@@ -1,12 +1,6 @@
 import { useState, useMemo } from "react";
-import { useNavigate, useTranslation, Heart } from "@/modules";
-import {
-  useUserPlaylists,
-  useSavedAlbums,
-  useFollowedArtists,
-  usePlaybackControls,
-} from "@/hooks";
-import { usePlayerStore } from "@/stores/usePlayerStore";
+import { useNavigate, useTranslation, toast } from "@/modules";
+import { useUserPlaylists, useSavedAlbums, useFollowedArtists } from "@/hooks";
 import { SidebarHeader } from "@/components/layout/sidebar/SidebarHeader";
 import { LibraryList } from "@/components/layout/sidebar/LibraryList";
 import { getArtistsString } from "@/utils";
@@ -23,9 +17,6 @@ export function Sidebar() {
   const { data: albumsData, isLoading: albumsLoading } = useSavedAlbums(50);
   const { data: artistsData, isLoading: artistsLoading } =
     useFollowedArtists(50);
-  const { play } = usePlaybackControls();
-  const { deviceId } = usePlayerStore();
-
   const isLoading = playlistsLoading || albumsLoading || artistsLoading;
 
   const allItems = useMemo<LibraryItem[]>(() => {
@@ -86,9 +77,9 @@ export function Sidebar() {
     else navigate("/album/" + item.id);
   };
 
-  const handlePlay = (item: LibraryItem, e: React.MouseEvent) => {
+  const handlePlay = (_item: LibraryItem, e: React.MouseEvent) => {
     e.stopPropagation();
-    play.mutate({ context_uri: item.uri, device_id: deviceId ?? undefined });
+    toast.info(t("COMPONENTS.PLAYER.comingSoon"));
   };
 
   return (
@@ -96,13 +87,6 @@ export function Sidebar() {
       className="hidden md:flex flex-col w-72 lg:w-80 shrink-0 h-full bg-surface rounded-lg overflow-hidden"
       data-testid="sidebar-element"
     >
-      <button
-        onClick={() => navigate("/favorites")}
-        className="flex items-center gap-3 mx-3 mt-2 px-3 py-2 rounded-md text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
-      >
-        <Heart size={16} />
-        {t("COMPONENTS.SIDEBAR.favorites")}
-      </button>
       <SidebarHeader
         filter={filter}
         searchOpen={searchOpen}

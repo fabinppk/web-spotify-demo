@@ -1,9 +1,9 @@
-import { QueryClient, QueryClientProvider } from "@/modules";
-import { RouterProvider } from "@/modules";
+import { QueryClient, QueryClientProvider, RouterProvider, Toaster } from "@/modules";
 import { AuthProvider } from "@/context/AuthProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { FavoritesProvider } from "@/context/FavoritesProvider";
 import { router } from "./routes";
+import { getInitialTheme, queryRetry, queryStaleTime } from "@/utils";
 
 if (!import.meta.env.VITE_CLIENT_ID) {
   throw new Error("VITE_CLIENT_ID environment variable is required");
@@ -13,18 +13,14 @@ if (!import.meta.env.VITE_REDIRECT_URI) {
 }
 
 // Apply saved theme immediately to avoid flash of wrong theme
-const savedTheme =
-  localStorage.getItem("theme") ??
-  (globalThis.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light");
+const savedTheme = getInitialTheme();
 document.documentElement.classList.add(savedTheme);
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 1,
-      staleTime: 5 * 60 * 1000,
+      retry: queryRetry,
+      staleTime: queryStaleTime,
     },
   },
 });
@@ -36,6 +32,7 @@ function App() {
         <ThemeProvider>
           <FavoritesProvider>
             <RouterProvider router={router} />
+            <Toaster position="bottom-center" richColors />
           </FavoritesProvider>
         </ThemeProvider>
       </AuthProvider>

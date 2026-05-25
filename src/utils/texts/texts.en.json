@@ -47,7 +47,8 @@
       "searchPlaceholder": "What do you want to play?",
       "lightMode": "Light mode",
       "darkMode": "Dark mode",
-      "logout": "Log out"
+      "logout": "Log out",
+      "favorites": "Favorites"
     },
     "SEARCH": {
       "emptyTitle": "Search for music",
@@ -62,6 +63,9 @@
     "ERROR_STATE": {
       "retry": "Try again"
     },
+    "PLAYER": {
+      "comingSoon": "Playback coming soon 🎵"
+    },
     "HOME": {
       "topArtists": "Your Top Artists",
       "madeForYou": "Made For You",
@@ -70,8 +74,8 @@
     },
     "NAV_HEADER": {
       "all": "All",
-      "music": "Music",
-      "podcasts": "Podcasts"
+      "playlists": "Playlists",
+      "artists": "Artists"
     },
     "SIDEBAR": {
       "yourLibrary": "Your Library",

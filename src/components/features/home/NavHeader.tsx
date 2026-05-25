@@ -1,7 +1,7 @@
 import { useTranslation } from "@/modules";
 import { Chip } from "@/components/ui/Chip";
 
-const CHIPS: FilterChip[] = ["All", "Music", "Podcasts"];
+const CHIPS: FilterChip[] = ["All", "Playlists", "Artists"];
 
 export function NavHeader({
   active,
