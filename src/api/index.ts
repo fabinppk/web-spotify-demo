@@ -1,11 +1,11 @@
-import { SpotifyApiClient } from "./base.service";
-import { ArtistService } from "./artist.service";
-import { AlbumService } from "./album.service";
-import { TrackService } from "./track.service";
-import { PlaylistService } from "./playlist.service";
-import { PlaybackService } from "./playback.service";
-import { SearchService } from "./search.service";
-import { BrowseService } from "./browse.service";
+import { SpotifyApiClient } from "./base.api";
+import { ArtistService } from "./artist.api";
+import { AlbumService } from "./album.api";
+import { TrackService } from "./track.api";
+import { PlaylistService } from "./playlist.api";
+import { PlaybackService } from "./playback.api";
+import { SearchService } from "./search.api";
+import { BrowseService } from "./browse.api";
 
 export class SpotifyApi {
   private readonly apiClient: SpotifyApiClient;

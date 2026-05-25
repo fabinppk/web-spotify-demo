@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { PlaylistService } from "../playlist.service";
-import { SpotifyApiClient } from "../base.service";
+import { PlaylistService } from "../playlist.api";
+import { SpotifyApiClient } from "../base.api";
 
 // Mock the base service
-vi.mock("../base.service");
+vi.mock("../base.api");
 
 const mockApiClient = {
   get: vi.fn(),

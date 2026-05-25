@@ -6,10 +6,10 @@ import {
   beforeEach,
   type MockedFunction,
 } from "vitest";
-import { TrackService } from "../track.service";
+import { TrackService } from "../track.api";
 
 // Mock the base service
-vi.mock("../base.service");
+vi.mock("../base.api");
 
 describe("TrackService", () => {
   let trackService: TrackService;

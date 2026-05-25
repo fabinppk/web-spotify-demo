@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { BrowseService } from "../browse.service";
-import { SpotifyApiClient } from "../base.service";
+import { BrowseService } from "../browse.api";
+import { SpotifyApiClient } from "../base.api";
 
 // Mock SpotifyApiClient
-vi.mock("../base.service");
+vi.mock("../base.api");
 
 describe("BrowseService", () => {
   let browseService: BrowseService;

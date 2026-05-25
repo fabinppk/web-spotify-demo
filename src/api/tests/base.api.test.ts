@@ -5,7 +5,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { SpotifyApiClient } from "../base.service";
+import { SpotifyApiClient } from "../base.api";
 import * as tokenUtils from "@/utils/helpers/tokenUtils";
 
 // Mock axios

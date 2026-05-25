@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { PlaybackService } from "../playback.service";
-import type { SpotifyApiClient } from "../base.service";
+import { PlaybackService } from "../playback.api";
+import type { SpotifyApiClient } from "../base.api";
 
 const mockApiClient = {
   get: vi.fn(),

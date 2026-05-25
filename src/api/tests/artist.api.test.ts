@@ -6,10 +6,10 @@ import {
   beforeEach,
   type MockedFunction,
 } from "vitest";
-import { ArtistService } from "../artist.service";
+import { ArtistService } from "../artist.api";
 
 // Mock the base service
-vi.mock("../base.service");
+vi.mock("../base.api");
 
 describe("ArtistService", () => {
   let artistService: ArtistService;
