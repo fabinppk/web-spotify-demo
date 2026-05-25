@@ -1,18 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { FormField } from "@/components/ui/FormField";
 import { Input } from "@/components/ui/input";
 import { useFavorites } from "@/hooks/useFavorites";
-
-const schema = z.object({
-  name: z.string().min(1),
-  type: z.enum(["artist", "album", "track"]),
-  note: z.string().max(200).optional(),
-});
-
-type FormData = z.infer<typeof schema>;
+import { favoriteSchema, FavoriteFormData } from "./schema";
 
 export function AddFavoriteForm() {
   const { t } = useTranslation();
@@ -23,12 +15,12 @@ export function AddFavoriteForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<FavoriteFormData>({
+    resolver: zodResolver(favoriteSchema),
     defaultValues: { type: "artist" },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: FavoriteFormData) => {
     dispatch({
       type: "ADD_FAVORITE",
       payload: { ...data, id: crypto.randomUUID() },
@@ -37,7 +29,7 @@ export function AddFavoriteForm() {
   };
 
   return (
-    <section className="bg-surface rounded-lg p-6 flex flex-col gap-4">
+    <section className="bg-surface rounded-lg flex flex-col gap-4">
       <h2 className="text-lg font-semibold text-text-primary">
         {t("PAGES.FAVORITES.addTitle")}
       </h2>

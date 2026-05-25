@@ -6,3 +6,4 @@ export * from "./useSpotifyMutations";
 export * from "./useSpotifyPlayer";
 export * from "./useSpotifyQueries";
 export * from "./useTheme";
+export * from "./useFavorites";
