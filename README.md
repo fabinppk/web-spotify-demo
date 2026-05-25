@@ -1,6 +1,8 @@
 # Spotify Web Player
 
-> SPA React que consome a Spotify Web API com autenticação PKCE, player integrado, suporte a temas e internacionalização PT-BR / EN-US.
+## 🚀 [https://web-spotify-demo.vercel.app/](https://web-spotify-demo.vercel.app/)
+
+> SPA React que consome a Spotify Web API com autenticação PKCE, suporte a temas e internacionalização PT-BR / EN-US.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/fabinppk/web-spotify-demo)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)
