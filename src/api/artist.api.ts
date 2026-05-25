@@ -104,8 +104,8 @@ export class ArtistService {
    */
   async getTopArtists(options?: {
     limit?: number;
-  }): Promise<{ artists: Artist[] }> {
-    return this.apiClient.get<{ artists: Artist[] }>(
+  }): Promise<PaginatedResponse<Artist>> {
+    return this.apiClient.get<PaginatedResponse<Artist>>(
       "/me/top/artists",
       options,
     );

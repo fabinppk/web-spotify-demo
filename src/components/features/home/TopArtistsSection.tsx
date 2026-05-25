@@ -31,7 +31,7 @@ export function TopArtistsSection() {
     );
   }
 
-  const artists = data?.artists ?? [];
+  const artists = data?.items ?? [];
 
   if (!artists.length) return null;
 
