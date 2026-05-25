@@ -30,3 +30,4 @@ coverage/
 PLAN.md
 TEST_PLAN.md
 package-lock.json
+.claude/
