@@ -17,7 +17,7 @@ export function AddFavoriteForm() {
     formState: { errors },
   } = useForm<FavoriteFormData>({
     resolver: zodResolver(favoriteSchema),
-    defaultValues: { type: "artist" },
+    defaultValues: { type: "track" },
   });
 
   const onSubmit = (data: FavoriteFormData) => {
