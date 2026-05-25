@@ -1,1 +1,1 @@
-type FilterChip = "All" | "Music" | "Podcasts";
+type FilterChip = "All" | "Playlists" | "Artists";
