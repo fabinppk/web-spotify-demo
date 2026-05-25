@@ -6,13 +6,13 @@ import {
   beforeEach,
   type MockedFunction,
 } from "vitest";
-import { TrackService } from "../track.api";
+import { TrackApi } from "../track.api";
 
 // Mock the base service
 vi.mock("../base.api");
 
-describe("TrackService", () => {
-  let trackService: TrackService;
+describe("TrackApi", () => {
+  let TrackApi: TrackApi;
   let mockApiClient: {
     get: MockedFunction<any>;
     put: MockedFunction<any>;
@@ -27,7 +27,7 @@ describe("TrackService", () => {
       delete: vi.fn(),
       post: vi.fn(),
     };
-    trackService = new TrackService(mockApiClient as any);
+    TrackApi = new TrackApi(mockApiClient as any);
   });
 
   describe("getTrack", () => {
@@ -53,7 +53,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockTrack);
 
-      const result = await trackService.getTrack("track123");
+      const result = await TrackApi.getTrack("track123");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/tracks/track123", {});
       expect(result).toEqual(mockTrack);
@@ -67,7 +67,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockTrack);
 
-      const result = await trackService.getTrack("track123", "US");
+      const result = await TrackApi.getTrack("track123", "US");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/tracks/track123", {
         market: "US",
@@ -87,7 +87,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await trackService.getTracks(["track1", "track2"]);
+      const result = await TrackApi.getTracks(["track1", "track2"]);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/tracks", {
         ids: "track1,track2",
@@ -102,7 +102,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await trackService.getTracks(["track1"], "GB");
+      const result = await TrackApi.getTracks(["track1"], "GB");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/tracks", {
         ids: "track1",
@@ -117,7 +117,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue({ tracks: [] });
 
-      await trackService.getTracks(trackIds);
+      await TrackApi.getTracks(trackIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/tracks", {
         ids: expectedIds,
@@ -139,7 +139,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockTracks);
 
-      const result = await trackService.getUserSavedTracks();
+      const result = await TrackApi.getUserSavedTracks();
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/tracks", undefined);
       expect(result).toEqual(mockTracks);
@@ -154,7 +154,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue({ items: [] });
 
-      await trackService.getUserSavedTracks(options);
+      await TrackApi.getUserSavedTracks(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/tracks", options);
     });
@@ -164,7 +164,7 @@ describe("TrackService", () => {
     it("should save tracks", async () => {
       mockApiClient.put.mockResolvedValue(undefined);
 
-      await trackService.saveTracks(["track1", "track2"]);
+      await TrackApi.saveTracks(["track1", "track2"]);
 
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/tracks", null, {
         params: { ids: "track1,track2" },
@@ -177,7 +177,7 @@ describe("TrackService", () => {
 
       mockApiClient.put.mockResolvedValue(undefined);
 
-      await trackService.saveTracks(trackIds);
+      await TrackApi.saveTracks(trackIds);
 
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/tracks", null, {
         params: { ids: expectedIds },
@@ -189,7 +189,7 @@ describe("TrackService", () => {
     it("should remove tracks", async () => {
       mockApiClient.delete.mockResolvedValue(undefined);
 
-      await trackService.removeTracks(["track1", "track2"]);
+      await TrackApi.removeTracks(["track1", "track2"]);
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         "/me/tracks?ids=track1,track2",
@@ -202,7 +202,7 @@ describe("TrackService", () => {
 
       mockApiClient.delete.mockResolvedValue(undefined);
 
-      await trackService.removeTracks(trackIds);
+      await TrackApi.removeTracks(trackIds);
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         `/me/tracks?ids=${expectedIds}`,
@@ -216,7 +216,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await trackService.checkSavedTracks([
+      const result = await TrackApi.checkSavedTracks([
         "track1",
         "track2",
         "track3",
@@ -234,7 +234,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue([]);
 
-      await trackService.checkSavedTracks(trackIds);
+      await TrackApi.checkSavedTracks(trackIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/tracks/contains", {
         ids: expectedIds,
@@ -267,7 +267,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockFeatures);
 
-      const result = await trackService.getTrackAudioFeatures("track123");
+      const result = await TrackApi.getTrackAudioFeatures("track123");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/audio-features/track123",
@@ -287,7 +287,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await trackService.getTracksAudioFeatures([
+      const result = await TrackApi.getTracksAudioFeatures([
         "track1",
         "track2",
       ]);
@@ -304,7 +304,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue({ audio_features: [] });
 
-      await trackService.getTracksAudioFeatures(trackIds);
+      await TrackApi.getTracksAudioFeatures(trackIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/audio-features", {
         ids: expectedIds,
@@ -326,7 +326,7 @@ describe("TrackService", () => {
         limit: 10,
       };
 
-      const result = await trackService.getRecommendations(options);
+      const result = await TrackApi.getRecommendations(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/recommendations", {
         seed_artists: "artist1,artist2",
@@ -343,7 +343,7 @@ describe("TrackService", () => {
         target_energy: 0.8,
       };
 
-      await trackService.getRecommendations(options);
+      await TrackApi.getRecommendations(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/recommendations", {
         seed_tracks: "track1,track2",
@@ -359,7 +359,7 @@ describe("TrackService", () => {
         market: "US",
       };
 
-      await trackService.getRecommendations(options);
+      await TrackApi.getRecommendations(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/recommendations", {
         seed_genres: "rock,pop",
@@ -378,7 +378,7 @@ describe("TrackService", () => {
         max_tempo: 140,
       };
 
-      await trackService.getRecommendations(options);
+      await TrackApi.getRecommendations(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/recommendations", {
         seed_artists: "artist1",
@@ -394,7 +394,7 @@ describe("TrackService", () => {
         limit: 10,
       };
 
-      await expect(trackService.getRecommendations(options)).rejects.toThrow(
+      await expect(TrackApi.getRecommendations(options)).rejects.toThrow(
         "At least one seed must be provided",
       );
     });
@@ -406,7 +406,7 @@ describe("TrackService", () => {
         seed_genres: ["rock"],
       };
 
-      await expect(trackService.getRecommendations(options)).rejects.toThrow(
+      await expect(TrackApi.getRecommendations(options)).rejects.toThrow(
         "Maximum of 5 seeds allowed in total",
       );
     });
@@ -420,7 +420,7 @@ describe("TrackService", () => {
 
       mockApiClient.get.mockResolvedValue(mockGenres);
 
-      const result = await trackService.getAvailableGenreSeeds();
+      const result = await TrackApi.getAvailableGenreSeeds();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/recommendations/available-genre-seeds",

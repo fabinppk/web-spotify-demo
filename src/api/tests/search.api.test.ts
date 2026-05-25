@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { SearchService } from "../search.api";
+import { SearchApi } from "../search.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock the SpotifyApiClient
@@ -7,8 +7,8 @@ vi.mock("../base.api", () => ({
   SpotifyApiClient: vi.fn(),
 }));
 
-describe("SearchService", () => {
-  let searchService: SearchService;
+describe("SearchApi", () => {
+  let SearchApi: SearchApi;
   let mockApiClient: {
     get: ReturnType<typeof vi.fn>;
   };
@@ -18,9 +18,7 @@ describe("SearchService", () => {
       get: vi.fn(),
     };
 
-    searchService = new SearchService(
-      mockApiClient as unknown as SpotifyApiClient,
-    );
+    SearchApi = new SearchApi(mockApiClient as unknown as SpotifyApiClient);
   });
 
   describe("search", () => {
@@ -32,7 +30,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockSearchResult);
 
-      const result = await searchService.search("test query", [
+      const result = await SearchApi.search("test query", [
         "album",
         "artist",
         "track",
@@ -58,7 +56,7 @@ describe("SearchService", () => {
         include_external: "audio" as const,
       };
 
-      const result = await searchService.search("test", ["album"], options);
+      const result = await SearchApi.search("test", ["album"], options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "test",
@@ -77,7 +75,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockSearchResult);
 
-      const result = await searchService.search("love", ["track"]);
+      const result = await SearchApi.search("love", ["track"]);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "love",
@@ -97,7 +95,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockSearchResult);
 
-      const result = await searchService.search("test", [
+      const result = await SearchApi.search("test", [
         "album",
         "artist",
         "playlist",
@@ -121,7 +119,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockAlbumsResult);
 
-      const result = await searchService.searchAlbums("beatles");
+      const result = await SearchApi.searchAlbums("beatles");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "beatles",
@@ -140,7 +138,7 @@ describe("SearchService", () => {
         offset: 5,
       };
 
-      const result = await searchService.searchAlbums("rock", options);
+      const result = await SearchApi.searchAlbums("rock", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "rock",
@@ -160,7 +158,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockArtistsResult);
 
-      const result = await searchService.searchArtists("coldplay");
+      const result = await SearchApi.searchArtists("coldplay");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "coldplay",
@@ -178,7 +176,7 @@ describe("SearchService", () => {
         limit: 10,
       };
 
-      const result = await searchService.searchArtists("jazz", options);
+      const result = await SearchApi.searchArtists("jazz", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "jazz",
@@ -197,7 +195,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockPlaylistsResult);
 
-      const result = await searchService.searchPlaylists("workout");
+      const result = await SearchApi.searchPlaylists("workout");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "workout",
@@ -216,7 +214,7 @@ describe("SearchService", () => {
         offset: 0,
       };
 
-      const result = await searchService.searchPlaylists("chill", options);
+      const result = await SearchApi.searchPlaylists("chill", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "chill",
@@ -236,7 +234,7 @@ describe("SearchService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockTracksResult);
 
-      const result = await searchService.searchTracks("bohemian rhapsody");
+      const result = await SearchApi.searchTracks("bohemian rhapsody");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "bohemian rhapsody",
@@ -256,7 +254,7 @@ describe("SearchService", () => {
         include_external: "audio" as const,
       };
 
-      const result = await searchService.searchTracks("love song", options);
+      const result = await SearchApi.searchTracks("love song", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/search", {
         q: "love song",
@@ -275,7 +273,7 @@ describe("SearchService", () => {
       const apiError = new Error("API Error");
       mockApiClient.get.mockRejectedValue(apiError);
 
-      await expect(searchService.search("test", ["track"])).rejects.toThrow(
+      await expect(SearchApi.search("test", ["track"])).rejects.toThrow(
         "API Error",
       );
     });

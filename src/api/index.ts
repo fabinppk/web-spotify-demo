@@ -1,35 +1,35 @@
 import { SpotifyApiClient } from "./base.api";
-import { ArtistService } from "./artist.api";
-import { AlbumService } from "./album.api";
-import { TrackService } from "./track.api";
-import { PlaylistService } from "./playlist.api";
-import { PlaybackService } from "./playback.api";
-import { SearchService } from "./search.api";
-import { BrowseService } from "./browse.api";
+import { ArtistApi } from "./artist.api";
+import { AlbumApi } from "./album.api";
+import { TrackApi } from "./track.api";
+import { PlaylistApi } from "./playlist.api";
+import { PlaybackApi } from "./playback.api";
+import { SearchApi } from "./search.api";
+import { BrowseApi } from "./browse.api";
 
 export class SpotifyApi {
   private readonly apiClient: SpotifyApiClient;
 
   // Service instances
-  public artists: ArtistService;
-  public albums: AlbumService;
-  public tracks: TrackService;
-  public playlists: PlaylistService;
-  public playback: PlaybackService;
-  public search: SearchService;
-  public browse: BrowseService;
+  public artists: ArtistApi;
+  public albums: AlbumApi;
+  public tracks: TrackApi;
+  public playlists: PlaylistApi;
+  public playback: PlaybackApi;
+  public search: SearchApi;
+  public browse: BrowseApi;
 
   constructor(accessToken: string) {
     this.apiClient = new SpotifyApiClient(accessToken);
 
     // Initialize all services
-    this.artists = new ArtistService(this.apiClient);
-    this.albums = new AlbumService(this.apiClient);
-    this.tracks = new TrackService(this.apiClient);
-    this.playlists = new PlaylistService(this.apiClient);
-    this.playback = new PlaybackService(this.apiClient);
-    this.search = new SearchService(this.apiClient);
-    this.browse = new BrowseService(this.apiClient);
+    this.artists = new ArtistApi(this.apiClient);
+    this.albums = new AlbumApi(this.apiClient);
+    this.tracks = new TrackApi(this.apiClient);
+    this.playlists = new PlaylistApi(this.apiClient);
+    this.playback = new PlaybackApi(this.apiClient);
+    this.search = new SearchApi(this.apiClient);
+    this.browse = new BrowseApi(this.apiClient);
   }
 
   /**
@@ -66,11 +66,11 @@ export class SpotifyApi {
 // Export individual services as well for more granular imports
 export {
   SpotifyApiClient,
-  ArtistService,
-  AlbumService,
-  TrackService,
-  PlaylistService,
-  PlaybackService,
-  SearchService,
-  BrowseService,
+  ArtistApi,
+  AlbumApi,
+  TrackApi,
+  PlaylistApi,
+  PlaybackApi,
+  SearchApi,
+  BrowseApi,
 };

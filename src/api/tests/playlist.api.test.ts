@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { PlaylistService } from "../playlist.api";
+import { PlaylistApi } from "../playlist.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock the base service
@@ -12,12 +12,12 @@ const mockApiClient = {
   delete: vi.fn(),
 } as unknown as SpotifyApiClient;
 
-describe("PlaylistService", () => {
-  let playlistService: PlaylistService;
+describe("PlaylistApi", () => {
+  let PlaylistApi: PlaylistApi;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    playlistService = new PlaylistService(mockApiClient);
+    PlaylistApi = new PlaylistApi(mockApiClient);
   });
 
   describe("getPlaylist", () => {
@@ -32,7 +32,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockPlaylist);
 
-      const result = await playlistService.getPlaylist("test-playlist-id");
+      const result = await PlaylistApi.getPlaylist("test-playlist-id");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/playlists/test-playlist-id",
@@ -54,10 +54,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockPlaylist);
 
-      const result = await playlistService.getPlaylist(
-        "test-playlist-id",
-        options,
-      );
+      const result = await PlaylistApi.getPlaylist("test-playlist-id", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/playlists/test-playlist-id",
@@ -83,7 +80,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockPlaylists);
 
-      const result = await playlistService.getCurrentUserPlaylists();
+      const result = await PlaylistApi.getCurrentUserPlaylists();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/me/playlists",
@@ -103,7 +100,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockPlaylists);
 
-      const result = await playlistService.getCurrentUserPlaylists(options);
+      const result = await PlaylistApi.getCurrentUserPlaylists(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/playlists", options);
       expect(result).toEqual(mockPlaylists);
@@ -126,7 +123,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockPlaylists);
 
-      const result = await playlistService.getUserPlaylists("test-user-id");
+      const result = await PlaylistApi.getUserPlaylists("test-user-id");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/users/test-user-id/playlists",
@@ -146,7 +143,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockPlaylists);
 
-      const result = await playlistService.getUserPlaylists(
+      const result = await PlaylistApi.getUserPlaylists(
         "test-user-id",
         options,
       );
@@ -171,10 +168,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.post as any).mockResolvedValue(mockPlaylist);
 
-      const result = await playlistService.createPlaylist(
-        "user-id",
-        playlistData,
-      );
+      const result = await PlaylistApi.createPlaylist("user-id", playlistData);
 
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/users/user-id/playlists",
@@ -200,10 +194,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.post as any).mockResolvedValue(mockPlaylist);
 
-      const result = await playlistService.createPlaylist(
-        "user-id",
-        playlistData,
-      );
+      const result = await PlaylistApi.createPlaylist("user-id", playlistData);
 
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/users/user-id/playlists",
@@ -220,10 +211,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.post as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.addItemsToPlaylist(
-        "playlist-id",
-        data,
-      );
+      const result = await PlaylistApi.addItemsToPlaylist("playlist-id", data);
 
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/playlists/playlist-id/tracks",
@@ -241,10 +229,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.post as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.addItemsToPlaylist(
-        "playlist-id",
-        data,
-      );
+      const result = await PlaylistApi.addItemsToPlaylist("playlist-id", data);
 
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/playlists/playlist-id/tracks",
@@ -264,7 +249,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.delete as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.removeItemsFromPlaylist(
+      const result = await PlaylistApi.removeItemsFromPlaylist(
         "playlist-id",
         tracks,
       );
@@ -287,7 +272,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.put as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.replacePlaylistItems(
+      const result = await PlaylistApi.replacePlaylistItems(
         "playlist-id",
         uris,
       );
@@ -304,7 +289,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.put as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.replacePlaylistItems(
+      const result = await PlaylistApi.replacePlaylistItems(
         "playlist-id",
         uris,
       );
@@ -323,7 +308,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.put as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.updatePlaylistDetails(
+      const result = await PlaylistApi.updatePlaylistDetails(
         "playlist-id",
         data,
       );
@@ -345,7 +330,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.put as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.updatePlaylistDetails(
+      const result = await PlaylistApi.updatePlaylistDetails(
         "playlist-id",
         data,
       );
@@ -362,7 +347,7 @@ describe("PlaylistService", () => {
     it("should follow playlist publicly by default", async () => {
       (mockApiClient.put as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.followPlaylist("playlist-id");
+      const result = await PlaylistApi.followPlaylist("playlist-id");
 
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/playlists/playlist-id/followers",
@@ -374,7 +359,7 @@ describe("PlaylistService", () => {
     it("should follow playlist privately", async () => {
       (mockApiClient.put as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.followPlaylist("playlist-id", false);
+      const result = await PlaylistApi.followPlaylist("playlist-id", false);
 
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/playlists/playlist-id/followers",
@@ -388,7 +373,7 @@ describe("PlaylistService", () => {
     it("should unfollow playlist", async () => {
       (mockApiClient.delete as any).mockResolvedValue(undefined);
 
-      const result = await playlistService.unfollowPlaylist("playlist-id");
+      const result = await PlaylistApi.unfollowPlaylist("playlist-id");
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         "/playlists/playlist-id/followers",
@@ -411,7 +396,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.getFeaturedPlaylists();
+      const result = await PlaylistApi.getFeaturedPlaylists();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/featured-playlists",
@@ -439,7 +424,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.getFeaturedPlaylists(options);
+      const result = await PlaylistApi.getFeaturedPlaylists(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/featured-playlists",
@@ -463,7 +448,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.getCategoryPlaylists("pop");
+      const result = await PlaylistApi.getCategoryPlaylists("pop");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories/pop/playlists",
@@ -489,10 +474,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.get as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.getCategoryPlaylists(
-        "rock",
-        options,
-      );
+      const result = await PlaylistApi.getCategoryPlaylists("rock", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories/rock/playlists",
@@ -512,7 +494,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.put as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.reorderPlaylistItems(
+      const result = await PlaylistApi.reorderPlaylistItems(
         "playlist-id",
         data,
       );
@@ -535,7 +517,7 @@ describe("PlaylistService", () => {
 
       (mockApiClient.put as any).mockResolvedValue(mockResponse);
 
-      const result = await playlistService.reorderPlaylistItems(
+      const result = await PlaylistApi.reorderPlaylistItems(
         "playlist-id",
         data,
       );
@@ -554,7 +536,7 @@ describe("PlaylistService", () => {
       (mockApiClient.get as any).mockRejectedValue(error);
 
       await expect(
-        playlistService.getPlaylist("invalid-playlist-id"),
+        PlaylistApi.getPlaylist("invalid-playlist-id"),
       ).rejects.toThrow("Playlist not found");
     });
 
@@ -563,7 +545,7 @@ describe("PlaylistService", () => {
       (mockApiClient.post as any).mockRejectedValue(error);
 
       await expect(
-        playlistService.createPlaylist("invalid-user-id", { name: "Test" }),
+        PlaylistApi.createPlaylist("invalid-user-id", { name: "Test" }),
       ).rejects.toThrow("Invalid user ID");
     });
 
@@ -572,7 +554,7 @@ describe("PlaylistService", () => {
       (mockApiClient.put as any).mockRejectedValue(error);
 
       await expect(
-        playlistService.updatePlaylistDetails("playlist-id", {
+        PlaylistApi.updatePlaylistDetails("playlist-id", {
           name: "New Name",
         }),
       ).rejects.toThrow("Forbidden");
@@ -583,7 +565,7 @@ describe("PlaylistService", () => {
       (mockApiClient.delete as any).mockRejectedValue(error);
 
       await expect(
-        playlistService.removeItemsFromPlaylist("playlist-id", [
+        PlaylistApi.removeItemsFromPlaylist("playlist-id", [
           { uri: "invalid-uri" },
         ]),
       ).rejects.toThrow("Bad request");

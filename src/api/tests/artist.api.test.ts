@@ -6,13 +6,13 @@ import {
   beforeEach,
   type MockedFunction,
 } from "vitest";
-import { ArtistService } from "../artist.api";
+import { ArtistApi } from "../artist.api";
 
 // Mock the base service
 vi.mock("../base.api");
 
-describe("ArtistService", () => {
-  let artistService: ArtistService;
+describe("ArtistApi", () => {
+  let ArtistApi: ArtistApi;
   let mockApiClient: {
     get: MockedFunction<any>;
     put: MockedFunction<any>;
@@ -27,7 +27,7 @@ describe("ArtistService", () => {
       delete: vi.fn(),
       post: vi.fn(),
     };
-    artistService = new ArtistService(mockApiClient as any);
+    ArtistApi = new ArtistApi(mockApiClient as any);
   });
 
   describe("getArtist", () => {
@@ -47,7 +47,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue(mockArtist);
 
-      const result = await artistService.getArtist("artist123");
+      const result = await ArtistApi.getArtist("artist123");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/artists/artist123");
       expect(result).toEqual(mockArtist);
@@ -65,7 +65,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await artistService.getArtists(["artist1", "artist2"]);
+      const result = await ArtistApi.getArtists(["artist1", "artist2"]);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/artists", {
         ids: "artist1,artist2",
@@ -79,7 +79,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue({ artists: [] });
 
-      await artistService.getArtists(artistIds);
+      await ArtistApi.getArtists(artistIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/artists", {
         ids: expectedIds,
@@ -101,7 +101,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue(mockAlbums);
 
-      const result = await artistService.getArtistAlbums("artist123");
+      const result = await ArtistApi.getArtistAlbums("artist123");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/artists/artist123/albums",
@@ -120,7 +120,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue({ items: [] });
 
-      await artistService.getArtistAlbums("artist123", options);
+      await ArtistApi.getArtistAlbums("artist123", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/artists/artist123/albums",
@@ -140,7 +140,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await artistService.getRelatedArtists("artist123");
+      const result = await ArtistApi.getRelatedArtists("artist123");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/artists/artist123/related-artists",
@@ -165,7 +165,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await artistService.getFollowedArtists();
+      const result = await ArtistApi.getFollowedArtists();
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/following", {
         type: "artist",
@@ -182,7 +182,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue({ artists: { items: [] } });
 
-      await artistService.getFollowedArtists(options);
+      await ArtistApi.getFollowedArtists(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/following", {
         type: "artist",
@@ -196,7 +196,7 @@ describe("ArtistService", () => {
     it("should follow artists", async () => {
       mockApiClient.put.mockResolvedValue(undefined);
 
-      await artistService.followArtists(["artist1", "artist2"]);
+      await ArtistApi.followArtists(["artist1", "artist2"]);
 
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/following", null, {
         params: { type: "artist", ids: "artist1,artist2" },
@@ -209,7 +209,7 @@ describe("ArtistService", () => {
 
       mockApiClient.put.mockResolvedValue(undefined);
 
-      await artistService.followArtists(artistIds);
+      await ArtistApi.followArtists(artistIds);
 
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/following", null, {
         params: { type: "artist", ids: expectedIds },
@@ -221,7 +221,7 @@ describe("ArtistService", () => {
     it("should unfollow artists", async () => {
       mockApiClient.delete.mockResolvedValue(undefined);
 
-      await artistService.unfollowArtists(["artist1", "artist2"]);
+      await ArtistApi.unfollowArtists(["artist1", "artist2"]);
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         "/me/following?type=artist&ids=artist1,artist2",
@@ -234,7 +234,7 @@ describe("ArtistService", () => {
 
       mockApiClient.delete.mockResolvedValue(undefined);
 
-      await artistService.unfollowArtists(artistIds);
+      await ArtistApi.unfollowArtists(artistIds);
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         `/me/following?type=artist&ids=${expectedIds}`,
@@ -248,7 +248,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await artistService.checkFollowingArtists([
+      const result = await ArtistApi.checkFollowingArtists([
         "artist1",
         "artist2",
         "artist3",
@@ -267,7 +267,7 @@ describe("ArtistService", () => {
 
       mockApiClient.get.mockResolvedValue([]);
 
-      await artistService.checkFollowingArtists(artistIds);
+      await ArtistApi.checkFollowingArtists(artistIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/following/contains", {
         type: "artist",

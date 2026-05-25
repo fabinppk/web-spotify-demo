@@ -1,6 +1,6 @@
 import { SpotifyApiClient } from "./base.api";
 
-export class TrackService {
+export class TrackApi {
   constructor(private readonly apiClient: SpotifyApiClient) {}
 
   /**

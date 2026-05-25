@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { BrowseService } from "../browse.api";
+import { BrowseApi } from "../browse.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock SpotifyApiClient
 vi.mock("../base.api");
 
-describe("BrowseService", () => {
-  let browseService: BrowseService;
+describe("BrowseApi", () => {
+  let BrowseApi: BrowseApi;
   let mockApiClient: {
     get: ReturnType<typeof vi.fn>;
   };
@@ -15,9 +15,7 @@ describe("BrowseService", () => {
     mockApiClient = {
       get: vi.fn(),
     };
-    browseService = new BrowseService(
-      mockApiClient as unknown as SpotifyApiClient,
-    );
+    BrowseApi = new BrowseApi(mockApiClient as unknown as SpotifyApiClient);
   });
 
   describe("getCategories", () => {
@@ -33,7 +31,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getCategories();
+      const result = await BrowseApi.getCategories();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories",
@@ -60,7 +58,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getCategories(options);
+      const result = await BrowseApi.getCategories(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories",
@@ -81,7 +79,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getCategory(categoryId);
+      const result = await BrowseApi.getCategory(categoryId);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories/party",
@@ -104,7 +102,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getCategory(categoryId, options);
+      const result = await BrowseApi.getCategory(categoryId, options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories/rock",
@@ -129,7 +127,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getCategoryPlaylists(categoryId);
+      const result = await BrowseApi.getCategoryPlaylists(categoryId);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories/jazz/playlists",
@@ -156,10 +154,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getCategoryPlaylists(
-        categoryId,
-        options,
-      );
+      const result = await BrowseApi.getCategoryPlaylists(categoryId, options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/categories/pop/playlists",
@@ -183,7 +178,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getFeaturedPlaylists();
+      const result = await BrowseApi.getFeaturedPlaylists();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/featured-playlists",
@@ -211,7 +206,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getFeaturedPlaylists(options);
+      const result = await BrowseApi.getFeaturedPlaylists(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/featured-playlists",
@@ -235,7 +230,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getNewReleases();
+      const result = await BrowseApi.getNewReleases();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/new-releases",
@@ -262,7 +257,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getNewReleases(options);
+      const result = await BrowseApi.getNewReleases(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/new-releases",
@@ -279,7 +274,7 @@ describe("BrowseService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await browseService.getAvailableGenreSeeds();
+      const result = await BrowseApi.getAvailableGenreSeeds();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/recommendations/available-genre-seeds",

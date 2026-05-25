@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { AlbumService } from "../album.api";
+import { AlbumApi } from "../album.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock the SpotifyApiClient
@@ -7,8 +7,8 @@ vi.mock("../base.api", () => ({
   SpotifyApiClient: vi.fn(),
 }));
 
-describe("AlbumService", () => {
-  let albumService: AlbumService;
+describe("AlbumApi", () => {
+  let AlbumApi: AlbumApi;
   let mockApiClient: {
     get: ReturnType<typeof vi.fn>;
     put: ReturnType<typeof vi.fn>;
@@ -22,9 +22,7 @@ describe("AlbumService", () => {
       delete: vi.fn(),
     };
 
-    albumService = new AlbumService(
-      mockApiClient as unknown as SpotifyApiClient,
-    );
+    AlbumApi = new AlbumApi(mockApiClient as unknown as SpotifyApiClient);
   });
 
   describe("getAlbum", () => {
@@ -36,7 +34,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockAlbum);
 
-      const result = await albumService.getAlbum("album1");
+      const result = await AlbumApi.getAlbum("album1");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/albums/album1", {});
       expect(result).toEqual(mockAlbum);
@@ -50,7 +48,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockAlbum);
 
-      const result = await albumService.getAlbum("album1", "US");
+      const result = await AlbumApi.getAlbum("album1", "US");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/albums/album1", {
         market: "US",
@@ -69,7 +67,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockAlbums);
 
-      const result = await albumService.getAlbums(["album1", "album2"]);
+      const result = await AlbumApi.getAlbums(["album1", "album2"]);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/albums", {
         ids: "album1,album2",
@@ -83,7 +81,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockAlbums);
 
-      const result = await albumService.getAlbums(["album1"], "GB");
+      const result = await AlbumApi.getAlbums(["album1"], "GB");
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/albums", {
         ids: "album1",
@@ -98,7 +96,7 @@ describe("AlbumService", () => {
       const mockAlbums = { albums: [] };
       mockApiClient.get.mockResolvedValue(mockAlbums);
 
-      await albumService.getAlbums(albumIds);
+      await AlbumApi.getAlbums(albumIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/albums", {
         ids: expectedIds,
@@ -116,7 +114,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockTracks);
 
-      const result = await albumService.getAlbumTracks("album1");
+      const result = await AlbumApi.getAlbumTracks("album1");
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/albums/album1/tracks",
@@ -140,7 +138,7 @@ describe("AlbumService", () => {
         offset: 0,
       };
 
-      const result = await albumService.getAlbumTracks("album1", options);
+      const result = await AlbumApi.getAlbumTracks("album1", options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/albums/album1/tracks",
@@ -162,7 +160,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockSavedAlbums);
 
-      const result = await albumService.getUserSavedAlbums();
+      const result = await AlbumApi.getUserSavedAlbums();
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/albums", undefined);
       expect(result).toEqual(mockSavedAlbums);
@@ -183,7 +181,7 @@ describe("AlbumService", () => {
         market: "CA",
       };
 
-      const result = await albumService.getUserSavedAlbums(options);
+      const result = await AlbumApi.getUserSavedAlbums(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/albums", options);
       expect(result).toEqual(mockSavedAlbums);
@@ -194,7 +192,7 @@ describe("AlbumService", () => {
     it("should save albums to user library", async () => {
       mockApiClient.put.mockResolvedValue(undefined);
 
-      await albumService.saveAlbums(["album1", "album2"]);
+      await AlbumApi.saveAlbums(["album1", "album2"]);
 
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/albums", null, {
         params: { ids: "album1,album2" },
@@ -206,7 +204,7 @@ describe("AlbumService", () => {
       const expectedIds = albumIds.slice(0, 50).join(",");
       mockApiClient.put.mockResolvedValue(undefined);
 
-      await albumService.saveAlbums(albumIds);
+      await AlbumApi.saveAlbums(albumIds);
 
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/albums", null, {
         params: { ids: expectedIds },
@@ -218,7 +216,7 @@ describe("AlbumService", () => {
     it("should remove albums from user library", async () => {
       mockApiClient.delete.mockResolvedValue(undefined);
 
-      await albumService.removeAlbums(["album1", "album2"]);
+      await AlbumApi.removeAlbums(["album1", "album2"]);
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         "/me/albums?ids=album1,album2",
@@ -230,7 +228,7 @@ describe("AlbumService", () => {
       const expectedIds = albumIds.slice(0, 50).join(",");
       mockApiClient.delete.mockResolvedValue(undefined);
 
-      await albumService.removeAlbums(albumIds);
+      await AlbumApi.removeAlbums(albumIds);
 
       expect(mockApiClient.delete).toHaveBeenCalledWith(
         `/me/albums?ids=${expectedIds}`,
@@ -243,7 +241,7 @@ describe("AlbumService", () => {
       const mockResponse = [true, false, true];
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await albumService.checkSavedAlbums([
+      const result = await AlbumApi.checkSavedAlbums([
         "album1",
         "album2",
         "album3",
@@ -261,7 +259,7 @@ describe("AlbumService", () => {
       const mockResponse = Array.from({ length: 50 }, () => false);
       mockApiClient.get.mockResolvedValue(mockResponse);
 
-      const result = await albumService.checkSavedAlbums(albumIds);
+      const result = await AlbumApi.checkSavedAlbums(albumIds);
 
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/albums/contains", {
         ids: expectedIds,
@@ -279,7 +277,7 @@ describe("AlbumService", () => {
       };
       mockApiClient.get.mockResolvedValue(mockNewReleases);
 
-      const result = await albumService.getNewReleases();
+      const result = await AlbumApi.getNewReleases();
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/new-releases",
@@ -305,7 +303,7 @@ describe("AlbumService", () => {
         offset: 10,
       };
 
-      const result = await albumService.getNewReleases(options);
+      const result = await AlbumApi.getNewReleases(options);
 
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/browse/new-releases",
@@ -320,7 +318,7 @@ describe("AlbumService", () => {
       const apiError = new Error("Album not found");
       mockApiClient.get.mockRejectedValue(apiError);
 
-      await expect(albumService.getAlbum("invalid-id")).rejects.toThrow(
+      await expect(AlbumApi.getAlbum("invalid-id")).rejects.toThrow(
         "Album not found",
       );
     });

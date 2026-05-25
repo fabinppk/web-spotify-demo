@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { PlaybackService } from "../playback.api";
+import { PlaybackApi } from "../playback.api";
 import type { SpotifyApiClient } from "../base.api";
 
 const mockApiClient = {
@@ -9,17 +9,17 @@ const mockApiClient = {
   delete: vi.fn(),
 } as unknown as SpotifyApiClient;
 
-const playbackService = new PlaybackService(mockApiClient);
+const PlaybackApi = new PlaybackApi(mockApiClient);
 
 beforeEach(() => {
   vi.clearAllMocks();
 });
 
-describe("PlaybackService", () => {
+describe("PlaybackApi", () => {
   describe("getCurrentPlayback", () => {
     it("should get current playback state with parameters", async () => {
       mockApiClient.get = vi.fn().mockResolvedValue("playback-state");
-      const result = await playbackService.getCurrentPlayback("US", "episode");
+      const result = await PlaybackApi.getCurrentPlayback("US", "episode");
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/player", {
         market: "US",
         additional_types: "episode",
@@ -29,7 +29,7 @@ describe("PlaybackService", () => {
 
     it("should get current playback state without parameters", async () => {
       mockApiClient.get = vi.fn().mockResolvedValue("playback-state");
-      const result = await playbackService.getCurrentPlayback();
+      const result = await PlaybackApi.getCurrentPlayback();
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/player", {});
       expect(result).toBe("playback-state");
     });
@@ -37,14 +37,14 @@ describe("PlaybackService", () => {
     it("should return null for 204 status (no active device)", async () => {
       const error = { response: { status: 204 } };
       mockApiClient.get = vi.fn().mockRejectedValue(error);
-      const result = await playbackService.getCurrentPlayback();
+      const result = await PlaybackApi.getCurrentPlayback();
       expect(result).toBeNull();
     });
 
     it("should throw error for non-204 errors", async () => {
       const error = new Error("API Error");
       mockApiClient.get = vi.fn().mockRejectedValue(error);
-      await expect(playbackService.getCurrentPlayback()).rejects.toThrow(
+      await expect(PlaybackApi.getCurrentPlayback()).rejects.toThrow(
         "API Error",
       );
     });
@@ -53,7 +53,7 @@ describe("PlaybackService", () => {
   describe("transferPlayback", () => {
     it("should transfer playback with play=false", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.transferPlayback(["device1", "device2"]);
+      await PlaybackApi.transferPlayback(["device1", "device2"]);
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/player", {
         device_ids: ["device1", "device2"],
         play: false,
@@ -62,7 +62,7 @@ describe("PlaybackService", () => {
 
     it("should transfer playback with play=true", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.transferPlayback(["device1"], true);
+      await PlaybackApi.transferPlayback(["device1"], true);
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/player", {
         device_ids: ["device1"],
         play: true,
@@ -74,7 +74,7 @@ describe("PlaybackService", () => {
     it("should get available devices", async () => {
       const devices = { devices: [{ id: "device1", name: "Speaker" }] };
       mockApiClient.get = vi.fn().mockResolvedValue(devices);
-      const result = await playbackService.getAvailableDevices();
+      const result = await PlaybackApi.getAvailableDevices();
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/player/devices");
       expect(result).toEqual(devices);
     });
@@ -83,7 +83,7 @@ describe("PlaybackService", () => {
   describe("getCurrentlyPlaying", () => {
     it("should get currently playing with parameters", async () => {
       mockApiClient.get = vi.fn().mockResolvedValue("currently-playing");
-      const result = await playbackService.getCurrentlyPlaying("US", "episode");
+      const result = await PlaybackApi.getCurrentlyPlaying("US", "episode");
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/me/player/currently-playing",
         {
@@ -96,7 +96,7 @@ describe("PlaybackService", () => {
 
     it("should get currently playing without parameters", async () => {
       mockApiClient.get = vi.fn().mockResolvedValue("currently-playing");
-      const result = await playbackService.getCurrentlyPlaying();
+      const result = await PlaybackApi.getCurrentlyPlaying();
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/me/player/currently-playing",
         {},
@@ -107,14 +107,14 @@ describe("PlaybackService", () => {
     it("should return null for 204 status (no track playing)", async () => {
       const error = { response: { status: 204 } };
       mockApiClient.get = vi.fn().mockRejectedValue(error);
-      const result = await playbackService.getCurrentlyPlaying();
+      const result = await PlaybackApi.getCurrentlyPlaying();
       expect(result).toBeNull();
     });
 
     it("should throw error for non-204 errors", async () => {
       const error = new Error("API Error");
       mockApiClient.get = vi.fn().mockRejectedValue(error);
-      await expect(playbackService.getCurrentlyPlaying()).rejects.toThrow(
+      await expect(PlaybackApi.getCurrentlyPlaying()).rejects.toThrow(
         "API Error",
       );
     });
@@ -123,7 +123,7 @@ describe("PlaybackService", () => {
   describe("startResumePlayback", () => {
     it("should start playback without options", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.startResumePlayback();
+      await PlaybackApi.startResumePlayback();
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/player/play", null);
     });
 
@@ -133,7 +133,7 @@ describe("PlaybackService", () => {
         device_id: "device1",
         context_uri: "spotify:album:123",
       };
-      await playbackService.startResumePlayback(options);
+      await PlaybackApi.startResumePlayback(options);
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/play?device_id=device1",
         {
@@ -150,7 +150,7 @@ describe("PlaybackService", () => {
         offset: { position: 1 },
         position_ms: 30000,
       };
-      await playbackService.startResumePlayback(options);
+      await PlaybackApi.startResumePlayback(options);
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/play",
         options,
@@ -161,13 +161,13 @@ describe("PlaybackService", () => {
   describe("pausePlayback", () => {
     it("should pause playback without device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.pausePlayback();
+      await PlaybackApi.pausePlayback();
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/player/pause");
     });
 
     it("should pause playback with device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.pausePlayback("device1");
+      await PlaybackApi.pausePlayback("device1");
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/pause?device_id=device1",
       );
@@ -177,13 +177,13 @@ describe("PlaybackService", () => {
   describe("skipToNext", () => {
     it("should skip to next track without device_id", async () => {
       mockApiClient.post = vi.fn().mockResolvedValue(undefined);
-      await playbackService.skipToNext();
+      await PlaybackApi.skipToNext();
       expect(mockApiClient.post).toHaveBeenCalledWith("/me/player/next");
     });
 
     it("should skip to next track with device_id", async () => {
       mockApiClient.post = vi.fn().mockResolvedValue(undefined);
-      await playbackService.skipToNext("device1");
+      await PlaybackApi.skipToNext("device1");
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/me/player/next?device_id=device1",
       );
@@ -193,13 +193,13 @@ describe("PlaybackService", () => {
   describe("skipToPrevious", () => {
     it("should skip to previous track without device_id", async () => {
       mockApiClient.post = vi.fn().mockResolvedValue(undefined);
-      await playbackService.skipToPrevious();
+      await PlaybackApi.skipToPrevious();
       expect(mockApiClient.post).toHaveBeenCalledWith("/me/player/previous");
     });
 
     it("should skip to previous track with device_id", async () => {
       mockApiClient.post = vi.fn().mockResolvedValue(undefined);
-      await playbackService.skipToPrevious("device1");
+      await PlaybackApi.skipToPrevious("device1");
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/me/player/previous?device_id=device1",
       );
@@ -209,7 +209,7 @@ describe("PlaybackService", () => {
   describe("seekToPosition", () => {
     it("should seek to position without device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.seekToPosition(30000);
+      await PlaybackApi.seekToPosition(30000);
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/player/seek", null, {
         params: { position_ms: 30000 },
       });
@@ -217,7 +217,7 @@ describe("PlaybackService", () => {
 
     it("should seek to position with device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.seekToPosition(45000, "device1");
+      await PlaybackApi.seekToPosition(45000, "device1");
       expect(mockApiClient.put).toHaveBeenCalledWith("/me/player/seek", null, {
         params: { position_ms: 45000, device_id: "device1" },
       });
@@ -227,7 +227,7 @@ describe("PlaybackService", () => {
   describe("setRepeatMode", () => {
     it("should set repeat mode without device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.setRepeatMode("track");
+      await PlaybackApi.setRepeatMode("track");
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/repeat",
         null,
@@ -239,7 +239,7 @@ describe("PlaybackService", () => {
 
     it("should set repeat mode with device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.setRepeatMode("context", "device1");
+      await PlaybackApi.setRepeatMode("context", "device1");
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/repeat",
         null,
@@ -253,7 +253,7 @@ describe("PlaybackService", () => {
   describe("setPlaybackVolume", () => {
     it("should set volume without device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.setPlaybackVolume(50);
+      await PlaybackApi.setPlaybackVolume(50);
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/volume",
         null,
@@ -265,7 +265,7 @@ describe("PlaybackService", () => {
 
     it("should set volume with device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.setPlaybackVolume(75, "device1");
+      await PlaybackApi.setPlaybackVolume(75, "device1");
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/volume",
         null,
@@ -276,20 +276,20 @@ describe("PlaybackService", () => {
     });
 
     it("should throw error for volume below 0", async () => {
-      await expect(playbackService.setPlaybackVolume(-1)).rejects.toThrow(
+      await expect(PlaybackApi.setPlaybackVolume(-1)).rejects.toThrow(
         "Volume percent must be between 0 and 100",
       );
     });
 
     it("should throw error for volume above 100", async () => {
-      await expect(playbackService.setPlaybackVolume(101)).rejects.toThrow(
+      await expect(PlaybackApi.setPlaybackVolume(101)).rejects.toThrow(
         "Volume percent must be between 0 and 100",
       );
     });
 
     it("should accept volume at boundary values", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.setPlaybackVolume(0);
+      await PlaybackApi.setPlaybackVolume(0);
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/volume",
         null,
@@ -298,7 +298,7 @@ describe("PlaybackService", () => {
         },
       );
 
-      await playbackService.setPlaybackVolume(100);
+      await PlaybackApi.setPlaybackVolume(100);
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/volume",
         null,
@@ -312,7 +312,7 @@ describe("PlaybackService", () => {
   describe("toggleShuffle", () => {
     it("should toggle shuffle on without device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.toggleShuffle(true);
+      await PlaybackApi.toggleShuffle(true);
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/shuffle",
         null,
@@ -324,7 +324,7 @@ describe("PlaybackService", () => {
 
     it("should toggle shuffle off with device_id", async () => {
       mockApiClient.put = vi.fn().mockResolvedValue(undefined);
-      await playbackService.toggleShuffle(false, "device1");
+      await PlaybackApi.toggleShuffle(false, "device1");
       expect(mockApiClient.put).toHaveBeenCalledWith(
         "/me/player/shuffle",
         null,
@@ -344,7 +344,7 @@ describe("PlaybackService", () => {
         cursors: {},
       };
       mockApiClient.get = vi.fn().mockResolvedValue(recentTracks);
-      const result = await playbackService.getRecentlyPlayedTracks();
+      const result = await PlaybackApi.getRecentlyPlayedTracks();
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/me/player/recently-played",
         undefined,
@@ -361,7 +361,7 @@ describe("PlaybackService", () => {
       };
       mockApiClient.get = vi.fn().mockResolvedValue(recentTracks);
       const options = { limit: 10, after: 1234567890, before: 1234567900 };
-      const result = await playbackService.getRecentlyPlayedTracks(options);
+      const result = await PlaybackApi.getRecentlyPlayedTracks(options);
       expect(mockApiClient.get).toHaveBeenCalledWith(
         "/me/player/recently-played",
         options,
@@ -377,7 +377,7 @@ describe("PlaybackService", () => {
         queue: [{ id: "track2" }],
       };
       mockApiClient.get = vi.fn().mockResolvedValue(queue);
-      const result = await playbackService.getUserQueue();
+      const result = await PlaybackApi.getUserQueue();
       expect(mockApiClient.get).toHaveBeenCalledWith("/me/player/queue");
       expect(result).toEqual(queue);
     });
@@ -386,7 +386,7 @@ describe("PlaybackService", () => {
   describe("addItemToPlaybackQueue", () => {
     it("should add item to queue without device_id", async () => {
       mockApiClient.post = vi.fn().mockResolvedValue(undefined);
-      await playbackService.addItemToPlaybackQueue("spotify:track:123");
+      await PlaybackApi.addItemToPlaybackQueue("spotify:track:123");
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/me/player/queue",
         null,
@@ -398,10 +398,7 @@ describe("PlaybackService", () => {
 
     it("should add item to queue with device_id", async () => {
       mockApiClient.post = vi.fn().mockResolvedValue(undefined);
-      await playbackService.addItemToPlaybackQueue(
-        "spotify:track:456",
-        "device1",
-      );
+      await PlaybackApi.addItemToPlaybackQueue("spotify:track:456", "device1");
       expect(mockApiClient.post).toHaveBeenCalledWith(
         "/me/player/queue",
         null,
