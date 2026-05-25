@@ -1,9 +1,10 @@
 import { lazy, Suspense } from "react";
-import { useOutlet } from "react-router-dom";
+import { useOutlet } from "@/modules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
-import { NavHeader, useNavHeader } from "@/components/features/home/NavHeader";
+import { NavHeader } from "@/components/features/home/NavHeader";
+import { useNavHeader } from "@/hooks";
 // import { RecentlyPlayedSection } from "@/components/features/home/RecentlyPlayedSection";
 import { TopArtistsSection } from "@/components/features/home/TopArtistsSection";
 import { MadeForYouSection } from "@/components/features/home/MadeForYouSection";

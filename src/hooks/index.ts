@@ -7,3 +7,4 @@ export * from "./useSpotifyPlayer";
 export * from "./useSpotifyQueries";
 export * from "./useTheme";
 export * from "./useFavorites";
+export * from "./useNavHeader";
