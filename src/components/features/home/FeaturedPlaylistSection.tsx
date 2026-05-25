@@ -5,7 +5,7 @@ import {
 } from "@/hooks";
 import { usePlayerStore } from "@/stores";
 import { PlaylistCarousel } from "./PlaylistCarousel";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 
 export function FeaturedPlaylistSection() {
   const { t } = useTranslation();

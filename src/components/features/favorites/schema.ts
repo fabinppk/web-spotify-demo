@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/modules";
 
 export const favoriteSchema = z.object({
   name: z.string().min(1),

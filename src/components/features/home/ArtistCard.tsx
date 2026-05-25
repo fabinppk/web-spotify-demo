@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Link, useTranslation } from "@/modules";
 
 interface ArtistCardProps {
   artist: Artist;

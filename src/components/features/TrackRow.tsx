@@ -1,5 +1,4 @@
-import { Play } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Play, useNavigate } from "@/modules";
 
 interface TrackRowProps {
   track: Track;

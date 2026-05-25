@@ -1,5 +1,4 @@
-import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
+import { useTranslation, useForm } from "@/modules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormField } from "@/components/ui/FormField";
 import { Input } from "@/components/ui/input";

@@ -1,7 +1,5 @@
 import { useCallback } from "react";
-import { useParams } from "react-router-dom";
-import { Play } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useParams, Play, useTranslation } from "@/modules";
 import { useArtist, usePlaybackControls } from "@/hooks";
 import { useInfiniteArtistAlbums } from "@/hooks/useSpotifyQueries";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";

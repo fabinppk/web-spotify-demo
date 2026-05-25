@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@/modules";
 import { useSpotifyApi } from "./useSpotifyApi";
 
 export const usePlaybackControls = () => {

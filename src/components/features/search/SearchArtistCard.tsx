@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useNavigate, useTranslation } from "@/modules";
 
 interface SearchArtistCardProps {
   artist: Artist;

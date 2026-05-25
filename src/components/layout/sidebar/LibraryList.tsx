@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LibraryListItem } from "./LibraryListItem";
 

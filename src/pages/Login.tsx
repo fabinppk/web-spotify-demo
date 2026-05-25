@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import IconSpotify from "@/assets/svg/spotify.svg";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 
 const Login = () => {
   const { login } = useAuth();

@@ -1,5 +1,4 @@
-import { Pause, Play } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Pause, Play, Link } from "@/modules";
 
 type RecentItem = {
   id: string;

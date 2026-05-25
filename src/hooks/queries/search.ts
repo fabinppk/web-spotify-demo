@@ -1,4 +1,4 @@
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@/modules";
 import { useSpotifyApi } from "@/hooks/useSpotifyApi";
 import { requireApi } from "./requireApi";
 

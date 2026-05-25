@@ -1,6 +1,5 @@
 import { getArtistsString } from "@/utils";
-import { Play, Pause } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Play, Pause, useNavigate } from "@/modules";
 
 interface AlbumTrack {
   id: string;

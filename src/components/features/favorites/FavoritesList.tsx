@@ -1,5 +1,4 @@
-import { useTranslation } from "react-i18next";
-import { Trash2, X } from "lucide-react";
+import { useTranslation, Trash2, X } from "@/modules";
 import { useFavorites } from "@/hooks/useFavorites";
 
 export function FavoritesList() {

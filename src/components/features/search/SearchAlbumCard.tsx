@@ -1,5 +1,5 @@
 import { getArtistsString } from "@/utils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@/modules";
 
 interface SearchAlbumCardProps {
   album: Album;

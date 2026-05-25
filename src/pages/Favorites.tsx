@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 import { AddFavoriteForm } from "@/components/features/favorites/AddFavoriteForm";
 import { FavoritesList } from "@/components/features/favorites/FavoritesList";
 

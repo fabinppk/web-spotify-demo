@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@/modules";
 import { useSpotifyApi } from "@/hooks/useSpotifyApi";
 import { requireApi } from "./requireApi";
 import { useCurrentUserProfile } from "./me";

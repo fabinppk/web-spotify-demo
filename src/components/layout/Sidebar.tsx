@@ -1,7 +1,5 @@
 import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { Heart } from "lucide-react";
+import { useNavigate, useTranslation, Heart } from "@/modules";
 import {
   useUserPlaylists,
   useSavedAlbums,

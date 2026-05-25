@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { RouteObject } from "react-router-dom";
+import { type RouteObject } from "@/modules";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { PageLoader } from "@/components/ui/PageLoader";
 

@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Pause, Play } from "lucide-react";
+import { Link, Pause, Play } from "@/modules";
 
 interface PlaylistCardProps {
   playlist: Playlist;

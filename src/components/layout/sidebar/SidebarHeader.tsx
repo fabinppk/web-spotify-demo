@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 import { LibraryIcon } from "@/components/icons/sidebar";
 import { Chip } from "@/components/ui/Chip";
 

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 import { HomeSection } from "./HomeSection";
 import { ArtistCard } from "./ArtistCard";
 import { Skeleton } from "@/components/ui/skeleton";

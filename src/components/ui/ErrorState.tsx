@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/modules";
 
 interface ErrorStateProps {
   message: string;

@@ -1,6 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { Play, Heart } from "lucide-react";
+import { useParams, useNavigate, useTranslation, Play, Heart } from "@/modules";
 import {
   useAlbum,
   useAlbumTracks,
