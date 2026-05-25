@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { LibraryIcon } from "@/components/icons/sidebar";
+import { Chip } from "@/components/ui/Chip";
 
 interface SidebarHeaderProps {
   filter: FilterType;
@@ -32,17 +33,13 @@ export function SidebarHeader({
 
       <div className="flex gap-2 flex-wrap mb-3">
         {FILTERS.map(({ key, label }) => (
-          <button
+          <Chip
             key={key}
+            label={label}
+            active={filter === key}
+            size="xs"
             onClick={() => onFilterChange(filter === key ? "all" : key)}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-colors whitespace-nowrap ${
-              filter === key
-                ? "bg-text text-bg"
-                : "bg-border text-text hover:bg-surface-hover"
-            }`}
-          >
-            {label}
-          </button>
+          />
         ))}
       </div>
     </div>

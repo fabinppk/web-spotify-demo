@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Chip } from "@/components/ui/Chip";
 
 export type FilterChip = "All" | "Music" | "Podcasts";
 
@@ -36,24 +37,19 @@ export function NavHeader({
       className="sticky top-0 z-10 bg-surface px-4 py-2 mt-4 flex items-center gap-2"
     >
       {CHIPS.map((chip, i) => (
-        <button
+        <Chip
           key={chip}
           ref={(el) => {
             refs.current[i] = el;
           }}
+          label={t(`COMPONENTS.NAV_HEADER.${chip.toLowerCase()}`)}
+          active={active === chip}
           role="radio"
           aria-checked={active === chip}
           tabIndex={active === chip ? 0 : -1}
           onClick={() => onChange(chip)}
           onKeyDown={(e) => handleKeyDown(e, i)}
-          className={`px-3 py-1 rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-            active === chip
-              ? "bg-white text-black"
-              : "bg-surface-hover text-text-primary hover:bg-neutral-600"
-          }`}
-        >
-          {t(`COMPONENTS.NAV_HEADER.${chip.toLowerCase()}`)}
-        </button>
+        />
       ))}
     </div>
   );
