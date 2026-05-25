@@ -10,6 +10,7 @@ const Login = lazy(() => import("../pages/Login"));
 // const PlaylistDetail = lazy(() => import("../pages/PlaylistDetail"));
 const AlbumDetail = lazy(() => import("../pages/AlbumDetail"));
 const ArtistDetail = lazy(() => import("../pages/ArtistDetail"));
+const Favorites = lazy(() => import("../pages/Favorites"));
 
 export function getRoutes(): RouteObject[] {
   return [
@@ -44,6 +45,14 @@ export function getRoutes(): RouteObject[] {
           element: (
             <Suspense fallback={<PageLoader />}>
               <ArtistDetail />
+            </Suspense>
+          ),
+        },
+        {
+          path: "favorites",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Favorites />
             </Suspense>
           ),
         },

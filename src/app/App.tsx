@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import { FavoritesProvider } from "@/context/FavoritesProvider";
 import { router } from "./routes";
 
 if (!import.meta.env.VITE_CLIENT_ID) {
@@ -33,7 +34,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ThemeProvider>
-          <RouterProvider router={router} />
+          <FavoritesProvider>
+            <RouterProvider router={router} />
+          </FavoritesProvider>
         </ThemeProvider>
       </AuthProvider>
     </QueryClientProvider>

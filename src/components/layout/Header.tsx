@@ -4,13 +4,21 @@ import { useCurrentUserProfile } from "@/hooks/useSpotifyQueries";
 import { useState } from "react";
 import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "@/hooks";
-import { Sun, Moon, Languages } from "lucide-react";
+import { useTheme, useAuth } from "@/hooks";
+import { Sun, Moon, Languages, LogOut, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export function Header() {
+  const { logout } = useAuth();
   const { data: profile } = useCurrentUserProfile();
   const { t, i18n } = useTranslation();
 
@@ -37,6 +45,7 @@ export function Header() {
   const avatarUrl = profile?.images?.[0]?.url;
   const displayName = profile?.display_name ?? "User";
   const initials = displayName.slice(0, 2).toUpperCase();
+  const userId = profile?.id;
 
   return (
     <header
@@ -83,6 +92,40 @@ export function Header() {
         className="flex items-center gap-3 pr-2"
         data-testid="accountbar-element"
       >
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className="flex items-center rounded-full hover:bg-surface-hover p-1 transition-colors"
+            data-testid="avatar-element"
+          >
+            <Avatar className="w-8 h-8">
+              <AvatarImage src={avatarUrl} alt={displayName} />
+              <AvatarFallback className="bg-accent text-bg text-xs font-bold">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="w-44 bg-surface border-border"
+            data-testid="dropdown-element"
+          >
+            {userId && (
+              <DropdownMenuItem
+                onClick={() => navigate(`/users/${userId}`)}
+                className="text-text-primary hover:bg-surface-hover cursor-pointer"
+              >
+                <User className="w-4 h-4 mr-2" /> Profile
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuItem
+              onClick={logout}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <LogOut className="w-4 h-4 mr-2" /> Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <button
           onClick={toggleLanguage}
           aria-label="Toggle language"

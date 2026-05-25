@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Heart } from "lucide-react";
 import {
   useUserPlaylists,
   useSavedAlbums,
@@ -97,6 +98,13 @@ export function Sidebar() {
       className="hidden md:flex flex-col w-72 lg:w-80 shrink-0 h-full bg-surface rounded-lg overflow-hidden"
       data-testid="sidebar-element"
     >
+      <button
+        onClick={() => navigate("/favorites")}
+        className="flex items-center gap-3 mx-3 mt-2 px-3 py-2 rounded-md text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
+      >
+        <Heart size={16} />
+        {t("COMPONENTS.SIDEBAR.favorites")}
+      </button>
       <SidebarHeader
         filter={filter}
         searchOpen={searchOpen}

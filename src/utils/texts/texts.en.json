@@ -22,6 +22,24 @@
       "albumType": "Album",
       "title": "Title",
       "duration": "Duration"
+    },
+    "FAVORITES": {
+      "title": "Favorites",
+      "addTitle": "Add Favorite",
+      "listTitle": "My Favorites",
+      "nameLabel": "Name",
+      "typeLabel": "Type",
+      "noteLabel": "Note (optional)",
+      "submit": "Add",
+      "noFavorites": "No favorites yet. Add one above!",
+      "clearAll": "Clear all",
+      "removeButton": "Remove",
+      "typeArtist": "Artist",
+      "typeAlbum": "Album",
+      "typeTrack": "Track",
+      "namePlaceholder": "Artist, album, or track name",
+      "notePlaceholder": "Why do you like it? (max 200 chars)",
+      "nameRequired": "Name is required"
     }
   },
   "COMPONENTS": {
@@ -63,7 +81,8 @@
       "emptyLibrary": "No items in your library",
       "playlistSubtitle": "Playlist",
       "artistSubtitle": "Artist",
-      "albumSubtitle": "Album"
+      "albumSubtitle": "Album",
+      "favorites": "Favorites"
     }
   }
 }

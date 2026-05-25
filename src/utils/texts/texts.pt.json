@@ -22,6 +22,24 @@
       "albumType": "Álbum",
       "title": "Título",
       "duration": "Duração"
+    },
+    "FAVORITES": {
+      "title": "Favoritos",
+      "addTitle": "Adicionar Favorito",
+      "listTitle": "Meus Favoritos",
+      "nameLabel": "Nome",
+      "typeLabel": "Tipo",
+      "noteLabel": "Nota (opcional)",
+      "submit": "Adicionar",
+      "noFavorites": "Nenhum favorito ainda. Adicione um acima!",
+      "clearAll": "Limpar tudo",
+      "removeButton": "Remover",
+      "typeArtist": "Artista",
+      "typeAlbum": "Álbum",
+      "typeTrack": "Música",
+      "namePlaceholder": "Nome do artista, álbum ou música",
+      "notePlaceholder": "Por que você gosta? (máx. 200 caracteres)",
+      "nameRequired": "Nome é obrigatório"
     }
   },
   "COMPONENTS": {
@@ -63,7 +81,8 @@
       "emptyLibrary": "Nenhum item na sua biblioteca",
       "playlistSubtitle": "Playlist",
       "artistSubtitle": "Artista",
-      "albumSubtitle": "Álbum"
+      "albumSubtitle": "Álbum",
+      "favorites": "Favoritos"
     }
   }
 }
