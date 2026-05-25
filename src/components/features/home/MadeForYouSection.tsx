@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export function MadeForYouSection() {
   const { t } = useTranslation();
-  const { data, isLoading, isError } = useMadeForYouPlaylists(20);
+  const { data, isLoading, isError } = useMadeForYouPlaylists(10);
   const { data: playback } = useCurrentPlayback();
   const { play, pause } = usePlaybackControls();
   const { deviceId } = usePlayerStore();
