@@ -14,7 +14,7 @@ import {
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
 import { useNavigate } from "react-router-dom";
 import { useTheme, useAuth } from "@/hooks";
-import { Sun, Moon, Languages, LogOut, User } from "lucide-react";
+import { Sun, Moon, Languages, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export function Header() {
@@ -45,7 +45,6 @@ export function Header() {
   const avatarUrl = profile?.images?.[0]?.url;
   const displayName = profile?.display_name ?? "User";
   const initials = displayName.slice(0, 2).toUpperCase();
-  const userId = profile?.id;
 
   return (
     <header
@@ -109,15 +108,6 @@ export function Header() {
             className="w-48 bg-surface border-border"
             data-testid="dropdown-element"
           >
-            {userId && (
-              <DropdownMenuItem
-                onClick={() => navigate(`/users/${userId}`)}
-                className="text-text-primary hover:bg-surface-hover cursor-pointer"
-              >
-                <User className="w-4 h-4 mr-2" /> Profile
-              </DropdownMenuItem>
-            )}
-            <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuItem
               onClick={toggleTheme}
               className="text-text-primary hover:bg-surface-hover cursor-pointer"
