@@ -42,6 +42,7 @@
       "retry": "Tentar novamente"
     },
     "HOME": {
+      "topArtists": "Seus Artistas Favoritos",
       "madeForYou": "Feito Para Você",
       "featuredPlaylists": "Playlists em Destaque",
       "artistsYouFollow": "Artistas que Você Segue"

@@ -42,6 +42,7 @@
       "retry": "Try again"
     },
     "HOME": {
+      "topArtists": "Your Top Artists",
       "madeForYou": "Made For You",
       "featuredPlaylists": "Featured Playlists",
       "artistsYouFollow": "Artists You Follow"
