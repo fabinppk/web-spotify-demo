@@ -5,10 +5,10 @@ import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
 import { NavHeader, useNavHeader } from "@/components/features/home/NavHeader";
 // import { RecentlyPlayedSection } from "@/components/features/home/RecentlyPlayedSection";
+import { TopArtistsSection } from "@/components/features/home/TopArtistsSection";
 import { MadeForYouSection } from "@/components/features/home/MadeForYouSection";
 import { FeaturedPlaylistSection } from "@/components/features/home/FeaturedPlaylistSection";
-import { ArtistSection } from "@/components/features/home/ArtistSection";
-import { TopArtistsSection } from "@/components/features/home/TopArtistsSection";
+// import { ArtistSection } from "@/components/features/home/ArtistSection";
 
 const Search = lazy(() =>
   import("@/components/features/Search").then((m) => ({ default: m.Search })),
@@ -40,10 +40,9 @@ export function MainPanel() {
       <NavHeader active={activeFilter} onChange={setActiveFilter} />
       <div className="p-4 flex flex-col gap-6">
         {/* <RecentlyPlayedSection /> */}
-        <TopArtistsSection />
         <MadeForYouSection />
         <FeaturedPlaylistSection />
-        <ArtistSection />
+        <TopArtistsSection />
       </div>
     </>
   );
