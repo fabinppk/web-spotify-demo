@@ -97,7 +97,7 @@ export function Header() {
             className="flex items-center rounded-full hover:bg-surface-hover p-1 transition-colors"
             data-testid="avatar-element"
           >
-            <Avatar className="w-8 h-8">
+            <Avatar className="w-10 h-10">
               <AvatarImage src={avatarUrl} alt={displayName} />
               <AvatarFallback className="bg-accent text-bg text-xs font-bold">
                 {initials}
@@ -106,7 +106,7 @@ export function Header() {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="w-44 bg-surface border-border"
+            className="w-48 bg-surface border-border"
             data-testid="dropdown-element"
           >
             {userId && (
@@ -119,6 +119,25 @@ export function Header() {
             )}
             <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuItem
+              onClick={toggleTheme}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4 mr-2" />
+              ) : (
+                <Moon className="w-4 h-4 mr-2" />
+              )}
+              {theme === "dark" ? "Light mode" : "Dark mode"}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={toggleLanguage}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <Languages className="w-4 h-4 mr-2" />
+              {i18n.language === "pt" ? "English" : "Português"}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuItem
               onClick={logout}
               className="text-text-primary hover:bg-surface-hover cursor-pointer"
             >
@@ -126,27 +145,6 @@ export function Header() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <button
-          onClick={toggleLanguage}
-          aria-label="Toggle language"
-          className="flex items-center gap-1 px-2 h-8 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-text-primary"
-        >
-          <Languages size={16} />
-          <span className="text-xs font-medium uppercase">{i18n.language}</span>
-        </button>
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-          className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-text-primary"
-        >
-          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
-        <Avatar className="w-10 h-10">
-          <AvatarImage src={avatarUrl} alt={displayName} />
-          <AvatarFallback className="bg-accent text-bg text-xs font-bold">
-            {initials}
-          </AvatarFallback>
-        </Avatar>
       </div>
     </header>
   );
