@@ -10,20 +10,14 @@ interface PlaylistCarouselProps {
   title: string;
   playlists: Playlist[];
   isLoading: boolean;
-  activeContextUri: string | null;
-  isPlaybackActive: boolean;
-  onPlay: (uri: string) => void;
-  onPause: () => void;
+  onPlay: () => void;
 }
 
 export function PlaylistCarousel({
   title,
   playlists,
   isLoading,
-  activeContextUri,
-  isPlaybackActive,
   onPlay,
-  onPause,
 }: Readonly<PlaylistCarouselProps>) {
   const { scrollRef, canScrollLeft, canScrollRight, scroll } =
     useCarouselScroll(playlists);
@@ -63,9 +57,6 @@ export function PlaylistCarousel({
               key={playlist.id}
               playlist={playlist}
               onPlay={onPlay}
-              onPause={onPause}
-              isActive={activeContextUri === playlist.uri}
-              isPlaying={activeContextUri === playlist.uri && isPlaybackActive}
             />
           ))}
         </div>

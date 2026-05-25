@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { useParams, Play, useTranslation } from "@/modules";
-import { useArtist, usePlaybackControls } from "@/hooks";
+import { useParams, Play, useTranslation, toast } from "@/modules";
+import { useArtist } from "@/hooks";
 import { useInfiniteArtistAlbums } from "@/hooks/useSpotifyQueries";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { ErrorState } from "@/components/ui/ErrorState";
@@ -27,8 +27,6 @@ export default function ArtistDetail() {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteArtistAlbums(id ?? "", 8);
-
-  const { play } = usePlaybackControls();
 
   const onIntersect = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -84,7 +82,7 @@ export default function ArtistDetail() {
 
         <div className="flex items-center gap-4 mt-6">
           <button
-            onClick={() => play.mutate({ context_uri: artist.uri })}
+            onClick={() => toast.info(t("COMPONENTS.PLAYER.comingSoon"))}
             aria-label="Play artist"
             className="w-12 h-12 rounded-full bg-accent flex items-center justify-center hover:scale-105 transition-transform"
           >

@@ -1,30 +1,20 @@
-import { Link, Pause, Play } from "@/modules";
+import { Link, Play } from "@/modules";
 
 interface PlaylistCardProps {
   playlist: Playlist;
-  onPlay: (uri: string) => void;
-  onPause: () => void;
-  isActive: boolean;
-  isPlaying: boolean;
+  onPlay: () => void;
 }
 
 export function PlaylistCard({
   playlist,
   onPlay,
-  onPause,
-  isActive,
-  isPlaying,
 }: Readonly<PlaylistCardProps>) {
   const image = playlist.images?.[0]?.url;
   const initials = playlist.name.slice(0, 2).toUpperCase();
 
-  const handlePlayPause = (e: React.MouseEvent) => {
+  const handlePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isActive && isPlaying) {
-      onPause();
-    } else {
-      onPlay(playlist.uri);
-    }
+    onPlay();
   };
 
   return (
@@ -63,26 +53,11 @@ export function PlaylistCard({
           Positioned absolute from the outer div: image is h-40 (160px),
           button is h-9 (36px), bottom-2 (8px) → top = 160 - 36 - 8 = 116px */}
       <button
-        aria-label={
-          isActive && isPlaying
-            ? `Pause ${playlist.name}`
-            : `Play ${playlist.name}`
-        }
-        onClick={handlePlayPause}
-        className={`absolute top-[116px] right-2 w-9 h-9 rounded-full bg-accent flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"}`}
+        aria-label={`Play ${playlist.name}`}
+        onClick={handlePlay}
+        className="absolute top-[116px] right-2 w-9 h-9 rounded-full bg-accent flex items-center justify-center shadow-lg hover:scale-105 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
       >
-        {isActive && isPlaying ? (
-          <>
-            <span className="group-hover:hidden flex items-end gap-[2px] h-4">
-              <span className="w-[3px] bg-black rounded-sm animate-eq-bar1" />
-              <span className="w-[3px] bg-black rounded-sm animate-eq-bar2" />
-              <span className="w-[3px] bg-black rounded-sm animate-eq-bar3" />
-            </span>
-            <Pause className="hidden group-hover:flex w-4 h-4 text-black fill-black" />
-          </>
-        ) : (
-          <Play className="w-4 h-4 text-black fill-black ml-0.5" />
-        )}
+        <Play className="w-4 h-4 text-black fill-black ml-0.5" />
       </button>
     </div>
   );
