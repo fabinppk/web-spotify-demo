@@ -12,10 +12,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
-import { useNavigate } from "react-router-dom";
 import { useTheme, useAuth } from "@/hooks";
-import { Sun, Moon, Languages, LogOut } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import {
+  useNavigate,
+  Sun,
+  Moon,
+  Languages,
+  LogOut,
+  useTranslation,
+} from "@/modules";
 
 export function Header() {
   const { logout } = useAuth();
@@ -117,7 +122,9 @@ export function Header() {
               ) : (
                 <Moon className="w-4 h-4 mr-2" />
               )}
-              {theme === "dark" ? "Light mode" : "Dark mode"}
+              {theme === "dark"
+                ? t("COMPONENTS.HEADER.lightMode")
+                : t("COMPONENTS.HEADER.darkMode")}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={toggleLanguage}
@@ -131,7 +138,8 @@ export function Header() {
               onClick={logout}
               className="text-text-primary hover:bg-surface-hover cursor-pointer"
             >
-              <LogOut className="w-4 h-4 mr-2" /> Log out
+              <LogOut className="w-4 h-4 mr-2" />{" "}
+              {t("COMPONENTS.HEADER.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

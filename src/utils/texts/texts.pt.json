@@ -44,7 +44,10 @@
   },
   "COMPONENTS": {
     "HEADER": {
-      "searchPlaceholder": "O que você quer ouvir?"
+      "searchPlaceholder": "O que você quer ouvir?",
+      "lightMode": "Modo claro",
+      "darkMode": "Modo escuro",
+      "logout": "Sair"
     },
     "SEARCH": {
       "emptyTitle": "Buscar músicas",

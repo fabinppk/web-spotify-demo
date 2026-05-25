@@ -44,7 +44,10 @@
   },
   "COMPONENTS": {
     "HEADER": {
-      "searchPlaceholder": "What do you want to play?"
+      "searchPlaceholder": "What do you want to play?",
+      "lightMode": "Light mode",
+      "darkMode": "Dark mode",
+      "logout": "Log out"
     },
     "SEARCH": {
       "emptyTitle": "Search for music",
