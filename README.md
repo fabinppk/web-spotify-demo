@@ -14,10 +14,11 @@
 ## Funcionalidades
 
 - **Autenticação** via OAuth 2.0 PKCE — sem client secret exposto
-- **Dashboard** com playlists em destaque, seção "Made For You" e listagem de artistas com infinite scroll
+- **Dashboard** com playlists em destaque, seção "Made For You" e top artistas
 - **Detalhe de artista** — discografia em carrossel e botão de seguir
 - **Detalhe de álbum** — tracklist completa com duração total
 - **Busca** com infinite scroll — artistas e álbuns por demanda
+- **Favoritos** — formulário com validação (React Hook Form + Zod), lista persistida no `localStorage`
 - **Player Web Playback SDK** integrado (requer Spotify Premium)
 - **Tema claro / escuro** — persiste no `localStorage`, aplicado antes do primeiro render (sem flash)
 - **Internacionalização** PT-BR / EN-US — persiste no `localStorage`
@@ -41,7 +42,8 @@
 | -------------------------- | --------------------------------------- |
 | TanStack Query v5          | Server state — cache, stale time, retry |
 | Zustand                    | Client state — player, content atual    |
-| Context API + `useReducer` | Auth state e Theme state                |
+| Context API + `useReducer` | Auth, Theme e Favorites state           |
+| React Hook Form + Zod      | Validação de formulários                |
 
 ### UI
 
@@ -148,13 +150,16 @@ src/
 │   ├── icons/        # Ícones customizados
 │   ├── layout/       # Header, MainPanel
 │   └── ui/           # Componentes genéricos (EmptyState, ErrorState, Skeleton, ScrollArrow…)
-├── context/          # AuthContext + AuthProvider, ThemeContext + ThemeProvider
-├── hooks/            # useAuthToken, useSpotifyApi, useSpotifyQueries, useSpotifyMutations,
-│                     # useSpotifyPlayer, useTheme, useIntersectionObserver, useCarouselScroll
-├── pages/            # Dashboard, Login, ArtistDetail, AlbumDetail
+├── context/          # AuthContext + AuthProvider, ThemeContext + ThemeProvider, FavoritesContext + FavoritesProvider
+├── hooks/            # useAuthToken, useSpotifyApi, useSpotifyMutations, useSpotifyPlayer,
+│   │                 # useTheme, useNavHeader, useIntersectionObserver, useCarouselScroll, useFavorites
+│   └── queries/      # Hooks TanStack Query por domínio (me, artist, album, track, playlist, browse, search, playback)
+├── modules/          # Barrel de re-exports de libs externas — único ponto de import de react-router-dom,
+│                     # lucide-react, @tanstack/react-query, react-hook-form, zod, zustand, axios, react-i18next
+├── pages/            # Dashboard, Login, ArtistDetail, AlbumDetail, Favorites
 ├── services/         # auth.service.ts (PKCE flow), i18n.service.ts
 ├── stores/           # usePlayerStore, useContentStore (Zustand)
-├── types/            # Declarações globais: spotify.d.ts, theme.d.ts, playback.d.ts
+├── types/            # Declarações globais: spotify.d.ts, theme.d.ts, playback.d.ts, favorites.d.ts
 └── utils/            # Helpers, enums, textos de tradução (PT/EN)
 ```
 
@@ -163,8 +168,9 @@ src/
 ```
 QueryClientProvider
   └── AuthProvider
-        └── RouterProvider
-              └── ThemeProvider
+        └── ThemeProvider
+              └── FavoritesProvider
+                    └── RouterProvider
 ```
 
 ### Fluxo de autenticação (PKCE)
@@ -184,6 +190,7 @@ QueryClientProvider
 | Player (device_id, estado)  | Zustand `usePlayerStore`              | Acesso global sem prop drilling            |
 | Conteúdo atual (aba, query) | Zustand `useContentStore`             | Simples, sem side effects                  |
 | Tema                        | Context + `useReducer` + localStorage | Precisa aplicar classe no `<html>`         |
+| Favoritos                   | Context + `useReducer` + localStorage | Lista persistida entre sessões             |
 | Auth                        | Context + `useState` + localStorage   | Token compartilhado em toda a app          |
 | Idioma                      | i18next + localStorage                | Padrão da lib                              |
 
