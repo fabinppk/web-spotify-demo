@@ -29,9 +29,6 @@ import {
   useCategories,
   useCategoryPlaylists,
   useNewReleases,
-  useCurrentPlayback,
-  useCurrentlyPlaying,
-  useAvailableDevices,
 } from "../useSpotifyQueries";
 
 const mockApi = {
@@ -55,11 +52,6 @@ const mockApi = {
     getCategories: vi.fn(),
     getCategoryPlaylists: vi.fn(),
     getNewReleases: vi.fn(),
-  },
-  playback: {
-    getCurrentPlayback: vi.fn(),
-    getCurrentlyPlaying: vi.fn(),
-    getAvailableDevices: vi.fn(),
   },
 };
 
@@ -530,61 +522,3 @@ describe("useNewReleases", () => {
   });
 });
 
-describe("useCurrentPlayback", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    vi.mocked(useSpotifyApi).mockReturnValue(mockApi as never);
-  });
-
-  it("fetches current playback state", async () => {
-    const mockPlayback = { is_playing: true, item: null };
-    mockApi.playback.getCurrentPlayback.mockResolvedValue(mockPlayback);
-    const { result } = renderHook(() => useCurrentPlayback(), {
-      wrapper: createWrapper(),
-    });
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual(mockPlayback);
-  });
-
-  it("is disabled when api is null", () => {
-    vi.mocked(useSpotifyApi).mockReturnValue(null);
-    const { result } = renderHook(() => useCurrentPlayback(), {
-      wrapper: createWrapper(),
-    });
-    expect(result.current.fetchStatus).toBe("idle");
-  });
-});
-
-describe("useCurrentlyPlaying", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    vi.mocked(useSpotifyApi).mockReturnValue(mockApi as never);
-  });
-
-  it("fetches currently playing track", async () => {
-    const mockData = { is_playing: true, item: { id: "t1" } };
-    mockApi.playback.getCurrentlyPlaying.mockResolvedValue(mockData);
-    const { result } = renderHook(() => useCurrentlyPlaying(), {
-      wrapper: createWrapper(),
-    });
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual(mockData);
-  });
-});
-
-describe("useAvailableDevices", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    vi.mocked(useSpotifyApi).mockReturnValue(mockApi as never);
-  });
-
-  it("fetches available devices", async () => {
-    const mockDevices = { devices: [{ id: "dev1", name: "My Device" }] };
-    mockApi.playback.getAvailableDevices.mockResolvedValue(mockDevices);
-    const { result } = renderHook(() => useAvailableDevices(), {
-      wrapper: createWrapper(),
-    });
-    await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual(mockDevices);
-  });
-});

@@ -9,7 +9,6 @@ export const useArtist = (artistId: string) => {
     queryKey: ["spotify", "artist", artistId],
     queryFn: () => requireApi(api).artists.getArtist(artistId),
     enabled: api !== null && !!artistId,
-    staleTime: 10 * 60 * 1000,
   });
 };
 
@@ -24,7 +23,6 @@ export const useArtistAlbums = (artistId: string, limit = 10, offset = 0) => {
         ...(offset > 0 && { offset }),
       }),
     enabled: api !== null && !!artistId,
-    staleTime: 10 * 60 * 1000,
   });
 };
 
@@ -44,7 +42,6 @@ export const useInfiniteArtistAlbums = (artistId: string, limit = 8) => {
       return Number(new URL(lastPage.next).searchParams.get("offset"));
     },
     enabled: api !== null && !!artistId,
-    staleTime: 10 * 60 * 1000,
   });
 };
 
@@ -57,7 +54,6 @@ export const useArtistTopTracks = (artistId: string) => {
     queryFn: () =>
       requireApi(api).artists.getArtistTopTracks(artistId, { market }),
     enabled: api !== null && !!artistId && profile !== undefined,
-    staleTime: 10 * 60 * 1000,
   });
   return { ...query, isLoading: query.isLoading || profileLoading };
 };
@@ -68,7 +64,6 @@ export const useFollowedArtists = (limit = 50) => {
     queryKey: ["spotify", "me", "following", "artists", limit],
     queryFn: () => requireApi(api).artists.getFollowedArtists({ limit }),
     enabled: api !== null,
-    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -85,7 +80,6 @@ export const useInfiniteFollowedArtists = (limit = 20) => {
       return new URL(next).searchParams.get("after") ?? undefined;
     },
     enabled: api !== null,
-    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -95,6 +89,5 @@ export const useTopArtists = (limit = 20) => {
     queryKey: ["spotify", "me", "top", "artists", limit],
     queryFn: () => requireApi(api).artists.getTopArtists({ limit }),
     enabled: api !== null,
-    staleTime: 5 * 60 * 1000,
   });
 };

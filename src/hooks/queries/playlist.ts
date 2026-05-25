@@ -9,7 +9,6 @@ export const usePlaylist = (playlistId: string) => {
     queryKey: ["spotify", "playlist", playlistId],
     queryFn: () => requireApi(api).playlists.getPlaylist(playlistId),
     enabled: api !== null && !!playlistId,
-    staleTime: 10 * 60 * 1000,
   });
 };
 
@@ -20,7 +19,6 @@ export const useUserPlaylists = (limit = 50, offset = 0) => {
     queryFn: () =>
       requireApi(api).playlists.getCurrentUserPlaylists({ limit, offset }),
     enabled: api !== null,
-    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -33,7 +31,6 @@ export const useFeaturedPlaylists = (limit = 20) => {
     queryFn: () =>
       requireApi(api).search.search("featured", ["playlist"], { market }),
     enabled: api !== null && profile !== undefined,
-    staleTime: 10 * 60 * 1000,
   });
   return { ...query, isLoading: query.isLoading || profileLoading };
 };
@@ -47,7 +44,6 @@ export const useMadeForYouPlaylists = (limit = 20) => {
     queryFn: () =>
       requireApi(api).search.search("for me", ["playlist"], { market }),
     enabled: api !== null && profile !== undefined,
-    staleTime: 10 * 60 * 1000,
   });
   return { ...query, isLoading: query.isLoading || profileLoading };
 };

@@ -6,7 +6,7 @@ import { createElement } from "react";
 vi.mock("@/services/auth.service", () => ({
   getToken: vi.fn(),
   redirectToSpotifyAuthorize: vi.fn(),
-  REQUIRED_SCOPES: ["user-read-playback-state"],
+  REQUIRED_SCOPES: ["user-read-private"],
 }));
 
 const mockGetValidAccessToken = vi.hoisted(() => vi.fn());
@@ -57,7 +57,7 @@ describe("AuthProvider", () => {
 
   it("loads existing valid access token from getValidAccessToken", async () => {
     localStorage.setItem("access_token", "stored-token");
-    localStorage.setItem("token_scope", "user-read-playback-state");
+    localStorage.setItem("token_scope", "user-read-private");
     mockGetValidAccessToken.mockResolvedValue("stored-token");
     renderProvider();
     await waitFor(() =>
@@ -73,7 +73,7 @@ describe("AuthProvider", () => {
   //     refresh_token: "new-refresh",
   //     expires_in: 3600,
   //     token_type: "Bearer",
-  //     scope: "user-read-playback-state",
+  //     scope: "user-read-private",
   //   });
   //   // After exchange, URL loses ?code, effect re-runs via else branch.
   //   // Real getValidAccessToken reads localStorage — simulate that here.
@@ -114,7 +114,7 @@ describe("AuthProvider", () => {
   it("logout clears all tokens and sets accessToken null", async () => {
     localStorage.setItem("access_token", "token");
     localStorage.setItem("refresh_token", "refresh");
-    localStorage.setItem("token_scope", "user-read-playback-state");
+    localStorage.setItem("token_scope", "user-read-private");
     mockGetValidAccessToken.mockResolvedValue("token");
     renderProvider();
     await waitFor(() =>
@@ -128,7 +128,7 @@ describe("AuthProvider", () => {
 
   it("handles spotify:auth-failure event clearing token", async () => {
     localStorage.setItem("access_token", "token");
-    localStorage.setItem("token_scope", "user-read-playback-state");
+    localStorage.setItem("token_scope", "user-read-private");
     mockGetValidAccessToken.mockResolvedValue("token");
     renderProvider();
     await waitFor(() =>

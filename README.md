@@ -15,11 +15,12 @@
 
 - **Autenticação** via OAuth 2.0 PKCE — sem client secret exposto
 - **Dashboard** com playlists em destaque, seção "Made For You" e top artistas
-- **Detalhe de artista** — discografia em carrossel e botão de seguir
+- **Detalhe de artista** — discografia com infinite scroll e botão de seguir
 - **Detalhe de álbum** — tracklist completa com duração total
+- **Detalhe de playlist** — tracklist com header e metadados
 - **Busca** com infinite scroll — artistas e álbuns por demanda
 - **Favoritos** — formulário com validação (React Hook Form + Zod), lista persistida no `localStorage`
-- **Player Web Playback SDK** integrado (requer Spotify Premium)
+- **Filtro de conteúdo** no NavHeader — Playlists / Artistas / All
 - **Tema claro / escuro** — persiste no `localStorage`, aplicado antes do primeiro render (sem flash)
 - **Internacionalização** PT-BR / EN-US — persiste no `localStorage`
 
@@ -55,11 +56,11 @@
 
 ### Outros
 
-| Tecnologia               | Papel                             |
-| ------------------------ | --------------------------------- |
-| Axios                    | HTTP client                       |
-| i18next + react-i18next  | Internacionalização PT-BR / EN-US |
-| Spotify Web Playback SDK | Streaming in-browser              |
+| Tecnologia              | Papel                             |
+| ----------------------- | --------------------------------- |
+| Axios                   | HTTP client                       |
+| i18next + react-i18next | Internacionalização PT-BR / EN-US |
+| Sonner                  | Toast notifications               |
 
 ### Qualidade
 
@@ -77,7 +78,7 @@
 
 - **Node.js** 20+
 - **npm** ou **yarn**
-- Conta no **Spotify** (Premium para o player)
+- Conta no **Spotify**
 - App registrado no [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
 
 ---
@@ -108,7 +109,7 @@ VITE_REDIRECT_URI=http://127.0.0.1:3000/
 No [Developer Dashboard](https://developer.spotify.com/dashboard), no seu app:
 
 - **Redirect URIs**: adicione `http://127.0.0.1:3000/` (dev) e a URL de produção
-- **APIs used**: marque **Web API** e **Web Playback SDK**
+- **APIs used**: marque **Web API**
 
 ### 4. Rode
 
@@ -142,25 +143,24 @@ npx vitest run src/app/tests/App.test.tsx
 
 ```
 src/
-├── api/              # Services da Spotify Web API (album, artist, browse, playback, search, track, user)
+├── api/              # Services da Spotify Web API (album, artist, browse, playlist, search, track)
 ├── app/              # App.tsx, rotas, definições de rota
 ├── assets/           # SVGs e imagens
 ├── components/
-│   ├── features/     # Componentes de domínio (Search, ArtistCard, PlaylistCard, TrackRow…)
-│   ├── icons/        # Ícones customizados
-│   ├── layout/       # Header, MainPanel
-│   └── ui/           # Componentes genéricos (EmptyState, ErrorState, Skeleton, ScrollArrow…)
+│   ├── features/     # Componentes de domínio (Search, ArtistCard, PlaylistCard, TrackRow, Favorites…)
+│   ├── layout/       # Header, Sidebar, MainPanel
+│   └── ui/           # Componentes genéricos (Chip, FormField, Input, ErrorState, Skeleton, ScrollArrow…)
 ├── context/          # AuthContext + AuthProvider, ThemeContext + ThemeProvider, FavoritesContext + FavoritesProvider
-├── hooks/            # useAuthToken, useSpotifyApi, useSpotifyMutations, useSpotifyPlayer,
+├── hooks/            # useAuthToken, useSpotifyApi, useSpotifyMutations,
 │   │                 # useTheme, useNavHeader, useIntersectionObserver, useCarouselScroll, useFavorites
-│   └── queries/      # Hooks TanStack Query por domínio (me, artist, album, track, playlist, browse, search, playback)
+│   └── queries/      # Hooks TanStack Query por domínio (me, artist, album, track, playlist, browse, search)
 ├── modules/          # Barrel de re-exports de libs externas — único ponto de import de react-router-dom,
-│                     # lucide-react, @tanstack/react-query, react-hook-form, zod, zustand, axios, react-i18next
-├── pages/            # Dashboard, Login, ArtistDetail, AlbumDetail, Favorites
+│                     # lucide-react, @tanstack/react-query, react-hook-form, zod, zustand, axios, react-i18next, sonner
+├── pages/            # Dashboard, Login, ArtistDetail, AlbumDetail, PlaylistDetail, Favorites
 ├── services/         # auth.service.ts (PKCE flow), i18n.service.ts
-├── stores/           # usePlayerStore, useContentStore (Zustand)
-├── types/            # Declarações globais: spotify.d.ts, theme.d.ts, playback.d.ts, favorites.d.ts
-└── utils/            # Helpers, enums, textos de tradução (PT/EN)
+├── stores/           # useContentStore (Zustand)
+├── types/            # Declarações globais: spotify.d.ts, theme.d.ts, favorites.d.ts, playlist.d.ts, chip.d.ts
+└── utils/            # Helpers, consts, enums, textos de tradução (PT/EN)
 ```
 
 ### Provider stack (`App.tsx`)
@@ -187,7 +187,6 @@ QueryClientProvider
 | Dado                        | Onde vive                             | Por quê                                    |
 | --------------------------- | ------------------------------------- | ------------------------------------------ |
 | Dados da API Spotify        | TanStack Query                        | Cache automático, deduplicação, stale time |
-| Player (device_id, estado)  | Zustand `usePlayerStore`              | Acesso global sem prop drilling            |
 | Conteúdo atual (aba, query) | Zustand `useContentStore`             | Simples, sem side effects                  |
 | Tema                        | Context + `useReducer` + localStorage | Precisa aplicar classe no `<html>`         |
 | Favoritos                   | Context + `useReducer` + localStorage | Lista persistida entre sessões             |

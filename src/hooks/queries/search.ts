@@ -16,7 +16,6 @@ export const useSearchQuery = (
     queryKey: ["spotify", "search", query, types, limit],
     queryFn: () => requireApi(api).search.search(query, types, { limit }),
     enabled: api !== null && query.length > 0,
-    staleTime: 5 * 60 * 1000,
     retry: false,
   });
 };
@@ -40,7 +39,6 @@ export const useInfiniteSearchQuery = (
       return Number(new URL(next).searchParams.get("offset"));
     },
     enabled: api !== null && query.length > 0,
-    staleTime: 5 * 60 * 1000,
     retry: false,
   });
 };

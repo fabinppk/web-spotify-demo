@@ -9,7 +9,6 @@ export const useTrack = (trackId: string) => {
     queryKey: ["spotify", "track", trackId],
     queryFn: () => requireApi(api).tracks.getTrack(trackId),
     enabled: api !== null && !!trackId,
-    staleTime: 10 * 60 * 1000,
   });
 };
 
@@ -19,7 +18,6 @@ export const useSavedTracks = (limit = 50, offset = 0) => {
     queryKey: ["spotify", "me", "tracks", limit, offset],
     queryFn: () => requireApi(api).tracks.getUserSavedTracks({ limit, offset }),
     enabled: api !== null,
-    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -35,7 +33,6 @@ export const useUserTopTracks = (artistId: string) => {
         limit: 10,
       }),
     enabled: api !== null && !!artistId && profile !== undefined,
-    staleTime: 10 * 60 * 1000,
   });
   return { ...query, isLoading: query.isLoading || profileLoading };
 };
