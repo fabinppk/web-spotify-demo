@@ -51,7 +51,7 @@ export function ArtistSection() {
   if (!artists.length) return null;
 
   return (
-    <HomeSection title="Artists You Follow">
+    <HomeSection title={t("COMPONENTS.HOME.artistsYouFollow")}>
       <div className="flex gap-4 flex-wrap">
         {artists.map((artist) => (
           <ArtistCard key={artist.id} artist={artist} />
