@@ -1,4 +1,4 @@
-import { Play, Heart } from "lucide-react";
+import { Play, Heart, useTranslation } from "@/modules";
 
 interface PlaylistHeaderProps {
   playlist: PlaylistHeaderPlaylist;
@@ -9,7 +9,9 @@ export function PlaylistHeader({
   playlist,
   onPlay,
 }: Readonly<PlaylistHeaderProps>) {
+  const { t } = useTranslation();
   const coverImage = playlist.images?.[0]?.url;
+  const trackCount = playlist.items?.total ?? playlist.tracks?.total;
 
   return (
     <div className="bg-[linear-gradient(180deg,var(--color-hero-album-start)_0%,var(--color-bg)_100%)] p-8">
@@ -29,18 +31,18 @@ export function PlaylistHeader({
         )}
         <div className="flex flex-col gap-2 min-w-0">
           <span className="text-text-muted text-xs font-semibold uppercase tracking-widest">
-            Playlist
+            {t("PAGES.PLAYLIST_DETAIL.playlistType")}
           </span>
           <h1 className="text-text-primary text-4xl md:text-5xl font-bold truncate">
             {playlist.name}
           </h1>
           <p className="text-text-muted text-sm">
             <span>{playlist.owner?.display_name}</span>
-            {(playlist.items?.total ?? playlist.tracks?.total) != null && (
+            {trackCount != null && (
               <>
                 {" · "}
                 <span>
-                  {playlist.items?.total ?? playlist.tracks?.total} songs
+                  {trackCount} {t("PAGES.PLAYLIST_DETAIL.songs")}
                 </span>
               </>
             )}

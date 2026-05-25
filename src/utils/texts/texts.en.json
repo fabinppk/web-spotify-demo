@@ -23,6 +23,13 @@
       "title": "Title",
       "duration": "Duration"
     },
+    "PLAYLIST_DETAIL": {
+      "errorMessage": "Failed to load playlist.",
+      "playlistType": "Playlist",
+      "songs": "songs",
+      "noTracks": "No tracks available.",
+      "titleColumn": "Title"
+    },
     "FAVORITES": {
       "title": "Favorites",
       "addTitle": "Add Favorite",

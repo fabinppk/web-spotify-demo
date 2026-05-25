@@ -17,7 +17,7 @@ export function PlaylistTrackList({
   if (tracks.length === 0) {
     return (
       <p className="text-text-muted text-sm text-center py-12">
-        No tracks available.
+        {t("PAGES.PLAYLIST_DETAIL.noTracks")}
       </p>
     );
   }
@@ -26,7 +26,7 @@ export function PlaylistTrackList({
     <div>
       <div className="sticky top-0 z-10 px-2 py-2 border-b border-border mb-2">
         <span className="text-text-muted text-xs font-semibold uppercase tracking-wider">
-          Title
+          {t("PAGES.PLAYLIST_DETAIL.titleColumn")}
         </span>
       </div>
       {tracks.map((playlistItem) => (

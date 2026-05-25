@@ -23,6 +23,13 @@
       "title": "Título",
       "duration": "Duração"
     },
+    "PLAYLIST_DETAIL": {
+      "errorMessage": "Falha ao carregar playlist.",
+      "playlistType": "Playlist",
+      "songs": "músicas",
+      "noTracks": "Nenhuma faixa disponível.",
+      "titleColumn": "Título"
+    },
     "FAVORITES": {
       "title": "Favoritos",
       "addTitle": "Adicionar Favorito",

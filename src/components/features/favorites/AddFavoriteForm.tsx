@@ -24,7 +24,7 @@ export function AddFavoriteForm() {
       type: "ADD_FAVORITE",
       payload: { ...data, id: crypto.randomUUID() },
     });
-    reset({ type: "artist" });
+    reset();
   };
 
   return (

@@ -14,7 +14,7 @@ export default function PlaylistDetail() {
   if (isError || !playlist) {
     return (
       <ErrorState
-        message="Failed to load playlist."
+        message={t("PAGES.PLAYLIST_DETAIL.errorMessage")}
         onRetry={() => refetch()}
       />
     );
