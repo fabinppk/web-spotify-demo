@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { PlaylistApi } from "../playlist.api";
+import { PlaylistApi as PlaylistApiServices } from "../playlist.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock the base service
@@ -13,11 +13,11 @@ const mockApiClient = {
 } as unknown as SpotifyApiClient;
 
 describe("PlaylistApi", () => {
-  let PlaylistApi: PlaylistApi;
+  let PlaylistApi: PlaylistApiServices;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    PlaylistApi = new PlaylistApi(mockApiClient);
+    PlaylistApi = new PlaylistApiServices(mockApiClient);
   });
 
   describe("getPlaylist", () => {

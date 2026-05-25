@@ -6,13 +6,13 @@ import {
   beforeEach,
   type MockedFunction,
 } from "vitest";
-import { ArtistApi } from "../artist.api";
+import { ArtistApi as ArtistApiServices } from "../artist.api";
 
 // Mock the base service
 vi.mock("../base.api");
 
 describe("ArtistApi", () => {
-  let ArtistApi: ArtistApi;
+  let ArtistApi: ArtistApiServices;
   let mockApiClient: {
     get: MockedFunction<any>;
     put: MockedFunction<any>;
@@ -27,7 +27,7 @@ describe("ArtistApi", () => {
       delete: vi.fn(),
       post: vi.fn(),
     };
-    ArtistApi = new ArtistApi(mockApiClient as any);
+    ArtistApi = new ArtistApiServices(mockApiClient as any);
   });
 
   describe("getArtist", () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { PlaybackApi } from "../playback.api";
+import { PlaybackApi as PlaybackApiServices } from "../playback.api";
 import type { SpotifyApiClient } from "../base.api";
 
 const mockApiClient = {
@@ -9,7 +9,7 @@ const mockApiClient = {
   delete: vi.fn(),
 } as unknown as SpotifyApiClient;
 
-const PlaybackApi = new PlaybackApi(mockApiClient);
+const PlaybackApi = new PlaybackApiServices(mockApiClient);
 
 beforeEach(() => {
   vi.clearAllMocks();

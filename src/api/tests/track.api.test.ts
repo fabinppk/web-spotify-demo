@@ -6,13 +6,13 @@ import {
   beforeEach,
   type MockedFunction,
 } from "vitest";
-import { TrackApi } from "../track.api";
+import { TrackApi as TrackApiServices } from "../track.api";
 
 // Mock the base service
 vi.mock("../base.api");
 
 describe("TrackApi", () => {
-  let TrackApi: TrackApi;
+  let TrackApi: TrackApiServices;
   let mockApiClient: {
     get: MockedFunction<any>;
     put: MockedFunction<any>;
@@ -27,7 +27,7 @@ describe("TrackApi", () => {
       delete: vi.fn(),
       post: vi.fn(),
     };
-    TrackApi = new TrackApi(mockApiClient as any);
+    TrackApi = new TrackApiServices(mockApiClient as any);
   });
 
   describe("getTrack", () => {

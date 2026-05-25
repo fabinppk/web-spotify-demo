@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { SearchApi } from "../search.api";
+import { SearchApi as SearchApiServices } from "../search.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock the SpotifyApiClient
@@ -8,7 +8,7 @@ vi.mock("../base.api", () => ({
 }));
 
 describe("SearchApi", () => {
-  let SearchApi: SearchApi;
+  let SearchApi: SearchApiServices;
   let mockApiClient: {
     get: ReturnType<typeof vi.fn>;
   };
@@ -18,7 +18,9 @@ describe("SearchApi", () => {
       get: vi.fn(),
     };
 
-    SearchApi = new SearchApi(mockApiClient as unknown as SpotifyApiClient);
+    SearchApi = new SearchApiServices(
+      mockApiClient as unknown as SpotifyApiClient,
+    );
   });
 
   describe("search", () => {

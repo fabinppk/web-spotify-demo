@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { AlbumApi } from "../album.api";
+import { AlbumApi as AlbumApiServices } from "../album.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock the SpotifyApiClient
@@ -8,7 +8,7 @@ vi.mock("../base.api", () => ({
 }));
 
 describe("AlbumApi", () => {
-  let AlbumApi: AlbumApi;
+  let AlbumApi: AlbumApiServices;
   let mockApiClient: {
     get: ReturnType<typeof vi.fn>;
     put: ReturnType<typeof vi.fn>;
@@ -22,7 +22,9 @@ describe("AlbumApi", () => {
       delete: vi.fn(),
     };
 
-    AlbumApi = new AlbumApi(mockApiClient as unknown as SpotifyApiClient);
+    AlbumApi = new AlbumApiServices(
+      mockApiClient as unknown as SpotifyApiClient,
+    );
   });
 
   describe("getAlbum", () => {

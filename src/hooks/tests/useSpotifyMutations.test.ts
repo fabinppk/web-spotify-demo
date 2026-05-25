@@ -82,7 +82,7 @@ describe("usePlaybackControls", () => {
     vi.mocked(useSpotifyApi).mockReturnValue(null);
     const { wrapper } = createWrapper();
     const { result } = renderHook(() => usePlaybackControls(), { wrapper });
-    await expect(result.current.pause.mutateAsync()).rejects.toThrow(
+    await expect(result.current.pause.mutateAsync("device-1")).rejects.toThrow(
       "Not authenticated",
     );
   });
@@ -92,7 +92,7 @@ describe("usePlaybackControls", () => {
     const { wrapper } = createWrapper();
     const { result } = renderHook(() => usePlaybackControls(), { wrapper });
     await act(async () => {
-      await result.current.next.mutateAsync();
+      await result.current.next.mutateAsync("device-1");
     });
     expect(mockApi.playback.skipToNext).toHaveBeenCalled();
   });
@@ -102,7 +102,7 @@ describe("usePlaybackControls", () => {
     const { wrapper } = createWrapper();
     const { result } = renderHook(() => usePlaybackControls(), { wrapper });
     await act(async () => {
-      await result.current.previous.mutateAsync();
+      await result.current.previous.mutateAsync("device-1");
     });
     expect(mockApi.playback.skipToPrevious).toHaveBeenCalled();
   });
@@ -127,7 +127,10 @@ describe("usePlaybackControls", () => {
     await act(async () => {
       await result.current.setVolume.mutateAsync({ volumePercent: 80 });
     });
-    expect(mockApi.playback.setPlaybackVolume).toHaveBeenCalledWith(80, undefined);
+    expect(mockApi.playback.setPlaybackVolume).toHaveBeenCalledWith(
+      80,
+      undefined,
+    );
   });
 
   it("setRepeat calls setRepeatMode", async () => {
@@ -150,7 +153,10 @@ describe("usePlaybackControls", () => {
     await act(async () => {
       await result.current.setShuffle.mutateAsync({ state: true });
     });
-    expect(mockApi.playback.toggleShuffle).toHaveBeenCalledWith(true, undefined);
+    expect(mockApi.playback.toggleShuffle).toHaveBeenCalledWith(
+      true,
+      undefined,
+    );
   });
 
   it("transferPlayback invalidates both playback and devices queries", async () => {
@@ -227,9 +233,9 @@ describe("useLibraryControls", () => {
     vi.mocked(useSpotifyApi).mockReturnValue(null);
     const { wrapper } = createWrapper();
     const { result } = renderHook(() => useLibraryControls(), { wrapper });
-    await expect(
-      result.current.saveTrack.mutateAsync("t1"),
-    ).rejects.toThrow("Not authenticated");
+    await expect(result.current.saveTrack.mutateAsync("t1")).rejects.toThrow(
+      "Not authenticated",
+    );
   });
 });
 

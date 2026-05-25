@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { BrowseApi } from "../browse.api";
+import { BrowseApi as BrowseApiServices } from "../browse.api";
 import { SpotifyApiClient } from "../base.api";
 
 // Mock SpotifyApiClient
 vi.mock("../base.api");
 
 describe("BrowseApi", () => {
-  let BrowseApi: BrowseApi;
+  let BrowseApi: BrowseApiServices;
   let mockApiClient: {
     get: ReturnType<typeof vi.fn>;
   };
@@ -15,7 +15,9 @@ describe("BrowseApi", () => {
     mockApiClient = {
       get: vi.fn(),
     };
-    BrowseApi = new BrowseApi(mockApiClient as unknown as SpotifyApiClient);
+    BrowseApi = new BrowseApiServices(
+      mockApiClient as unknown as SpotifyApiClient,
+    );
   });
 
   describe("getCategories", () => {

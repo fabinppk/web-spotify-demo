@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, waitFor, act } from "@testing-library/react";
+import {
+  renderHook,
+  waitFor,
+  // act
+} from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createElement } from "react";
 
@@ -292,7 +296,10 @@ describe("useInfiniteArtistAlbums — offset pagination", () => {
   });
 
   it("returns no next page when next is null", async () => {
-    mockApi.artists.getArtistAlbums.mockResolvedValue({ items: [], next: null });
+    mockApi.artists.getArtistAlbums.mockResolvedValue({
+      items: [],
+      next: null,
+    });
     const { result } = renderHook(() => useInfiniteArtistAlbums("a1"), {
       wrapper: createWrapper(),
     });
@@ -466,7 +473,9 @@ describe("useCategories", () => {
   });
 
   it("fetches browse categories", async () => {
-    mockApi.browse.getCategories.mockResolvedValue({ categories: { items: [] } });
+    mockApi.browse.getCategories.mockResolvedValue({
+      categories: { items: [] },
+    });
     const { result } = renderHook(() => useCategories(), {
       wrapper: createWrapper(),
     });
@@ -482,7 +491,9 @@ describe("useCategoryPlaylists", () => {
   });
 
   it("fetches playlists for a category", async () => {
-    mockApi.browse.getCategoryPlaylists.mockResolvedValue({ playlists: { items: [] } });
+    mockApi.browse.getCategoryPlaylists.mockResolvedValue({
+      playlists: { items: [] },
+    });
     const { result } = renderHook(() => useCategoryPlaylists("pop"), {
       wrapper: createWrapper(),
     });
