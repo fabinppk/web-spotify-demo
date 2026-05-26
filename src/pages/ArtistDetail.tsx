@@ -1,8 +1,10 @@
 import { useCallback } from "react";
 import { useParams, Play, useTranslation, toast } from "@/modules";
-import { useArtist } from "@/hooks";
-import { useInfiniteArtistAlbums } from "@/hooks/useSpotifyQueries";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import {
+  useInfiniteArtistAlbums,
+  useIntersectionObserver,
+  useArtist,
+} from "@/hooks";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { ArtistDetailSkeleton } from "@/components/features/artist/ArtistDetailSkeleton";
 import { SearchAlbumCard } from "@/components/features/search/SearchAlbumCard";

@@ -91,3 +91,18 @@ export const useTopArtists = (limit = 20) => {
     enabled: api !== null,
   });
 };
+
+export const useInfiniteTopArtists = (limit = 20) => {
+  const api = useSpotifyApi();
+  return useInfiniteQuery({
+    queryKey: ["spotify", "me", "top", "artists", "infinite", limit],
+    queryFn: ({ pageParam }) =>
+      requireApi(api).artists.getTopArtists({ limit, offset: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage: PaginatedResponse<Artist>) => {
+      if (!lastPage.next) return undefined;
+      return Number(new URL(lastPage.next).searchParams.get("offset"));
+    },
+    enabled: api !== null,
+  });
+};

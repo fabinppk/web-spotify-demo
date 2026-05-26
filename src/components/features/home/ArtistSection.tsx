@@ -3,8 +3,7 @@ import { useTranslation } from "@/modules";
 import { HomeSection } from "./HomeSection";
 import { ArtistCard } from "./ArtistCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useInfiniteSearchQuery } from "@/hooks";
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useInfiniteSearchQuery, useIntersectionObserver } from "@/hooks";
 
 const SKELETON_KEYS = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
 

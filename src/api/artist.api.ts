@@ -104,6 +104,7 @@ export class ArtistApi {
    */
   async getTopArtists(options?: {
     limit?: number;
+    offset?: number;
   }): Promise<PaginatedResponse<Artist>> {
     return this.apiClient.get<PaginatedResponse<Artist>>(
       "/me/top/artists",

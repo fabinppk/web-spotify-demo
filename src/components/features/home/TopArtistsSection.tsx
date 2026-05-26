@@ -1,14 +1,28 @@
+import { useCallback } from "react";
 import { useTranslation } from "@/modules";
 import { HomeSection } from "./HomeSection";
 import { ArtistCard } from "./ArtistCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useTopArtists } from "@/hooks";
+import { useInfiniteTopArtists, useIntersectionObserver } from "@/hooks";
 
 const SKELETON_KEYS = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
 
 export function TopArtistsSection() {
   const { t } = useTranslation();
-  const { data, isLoading, isError } = useTopArtists(20);
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteTopArtists(20);
+
+  const onIntersect = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const sentinelRef = useIntersectionObserver(onIntersect);
 
   if (isError) return null;
 
@@ -31,7 +45,7 @@ export function TopArtistsSection() {
     );
   }
 
-  const artists = data?.items ?? [];
+  const artists = data?.pages.flatMap((p) => p.items ?? []) ?? [];
 
   if (!artists.length) return null;
 
@@ -42,6 +56,12 @@ export function TopArtistsSection() {
           <ArtistCard key={artist.id} artist={artist} />
         ))}
       </div>
+      <div ref={sentinelRef} className="h-4 mt-2" />
+      {isFetchingNextPage && (
+        <div className="flex justify-center py-4">
+          <div className="w-5 h-5 rounded-full border-2 border-accent border-t-transparent animate-spin" />
+        </div>
+      )}
     </HomeSection>
   );
 }

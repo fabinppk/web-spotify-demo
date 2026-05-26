@@ -7,3 +7,4 @@ export * from "./useSpotifyQueries";
 export * from "./useTheme";
 export * from "./useFavorites";
 export * from "./useNavHeader";
+export * from "./useIntersectionObserver";
