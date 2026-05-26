@@ -39,11 +39,7 @@ export function PlaylistListed({
     <HomeSection title={title}>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-8">
         {playlists.map((playlist) => (
-          <PlaylistCard
-            key={playlist.id}
-            playlist={playlist}
-            onPlay={onPlay}
-          />
+          <PlaylistCard key={playlist.id} playlist={playlist} onPlay={onPlay} />
         ))}
       </div>
     </HomeSection>

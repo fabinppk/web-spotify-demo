@@ -15,7 +15,9 @@
       "errorMessage": "Failed to load artist.",
       "follow": "Follow",
       "albumsSection": "Albums",
-      "noAlbums": "No albums found."
+      "noAlbums": "No albums found.",
+      "topTracksChart": "Top Tracks Popularity",
+      "popularity": "Popularity"
     },
     "ALBUM_DETAIL": {
       "errorMessage": "Failed to load album.",

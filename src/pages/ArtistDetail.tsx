@@ -4,10 +4,12 @@ import {
   useInfiniteArtistAlbums,
   useIntersectionObserver,
   useArtist,
+  useArtistTopTracks,
 } from "@/hooks";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { ArtistDetailSkeleton } from "@/components/features/artist/ArtistDetailSkeleton";
 import { SearchAlbumCard } from "@/components/features/search/SearchAlbumCard";
+import { TopTracksChart } from "@/components/features/artist/TopTracksChart";
 
 export default function ArtistDetail() {
   const { id } = useParams<{ id: string }>();
@@ -23,12 +25,14 @@ export default function ArtistDetail() {
   const {
     data: albumsData,
     isLoading: albumsLoading,
-    isError: albumsError,
     refetch: refetchAlbums,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteArtistAlbums(id ?? "", 8);
+
+  const { data: topTracksData } = useArtistTopTracks(id ?? "");
+  const topTracks: Track[] = topTracksData?.tracks ?? [];
 
   const onIntersect = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -37,7 +41,7 @@ export default function ArtistDetail() {
   const sentinelRef = useIntersectionObserver(onIntersect);
 
   const isLoading = artistLoading || albumsLoading;
-  const isError = artistError || albumsError;
+  const isError = artistError;
 
   const albums = (albumsData?.pages.flatMap((p) => p.items ?? []) ?? []).filter(
     Boolean,
@@ -98,6 +102,8 @@ export default function ArtistDetail() {
           </button>
         </div>
       </div>
+
+      <TopTracksChart tracks={topTracks} />
 
       {/* Albums */}
       <div className="flex-1 bg-bg px-6 py-6">

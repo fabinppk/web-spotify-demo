@@ -51,7 +51,6 @@ export class ArtistApi {
       market?: string;
     },
   ): Promise<{ tracks: Track[] }> {
-    console.log("api artistId:", artistId, "options:", options);
     return this.apiClient.get<{ tracks: Track[] }>(
       `/artists/${artistId}/top-tracks`,
       options,

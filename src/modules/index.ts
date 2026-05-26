@@ -52,3 +52,14 @@ export type { AxiosInstance, AxiosResponse } from "axios";
 
 // sonner
 export { toast, Toaster } from "sonner";
+
+// recharts
+export {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";

@@ -15,7 +15,9 @@
       "errorMessage": "Falha ao carregar artista.",
       "follow": "Seguir",
       "albumsSection": "Álbuns",
-      "noAlbums": "Nenhum álbum encontrado."
+      "noAlbums": "Nenhum álbum encontrado.",
+      "topTracksChart": "Popularidade das Top Tracks",
+      "popularity": "Popularidade"
     },
     "ALBUM_DETAIL": {
       "errorMessage": "Falha ao carregar álbum.",
