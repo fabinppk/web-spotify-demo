@@ -242,6 +242,63 @@ describe("ArtistApi", () => {
     });
   });
 
+  describe("getArtistTopTracks", () => {
+    it("should get top tracks without options", async () => {
+      const mockTracks = { tracks: [{ id: "t1", name: "Track 1" }] };
+      mockApiClient.get.mockResolvedValue(mockTracks);
+
+      const result = await ArtistApi.getArtistTopTracks("artist123");
+
+      expect(mockApiClient.get).toHaveBeenCalledWith(
+        "/artists/artist123/top-tracks",
+        undefined,
+      );
+      expect(result).toEqual(mockTracks);
+    });
+
+    it("should get top tracks with market option", async () => {
+      mockApiClient.get.mockResolvedValue({ tracks: [] });
+
+      await ArtistApi.getArtistTopTracks("artist123", { market: "US" });
+
+      expect(mockApiClient.get).toHaveBeenCalledWith(
+        "/artists/artist123/top-tracks",
+        { market: "US" },
+      );
+    });
+  });
+
+  describe("getTopArtists", () => {
+    it("should get top artists without options", async () => {
+      const mockResponse = { items: [], total: 0, limit: 20, offset: 0 };
+      mockApiClient.get.mockResolvedValue(mockResponse);
+
+      const result = await ArtistApi.getTopArtists();
+
+      expect(mockApiClient.get).toHaveBeenCalledWith(
+        "/me/top/artists",
+        undefined,
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    it("should get top artists with limit and offset", async () => {
+      mockApiClient.get.mockResolvedValue({
+        items: [],
+        total: 0,
+        limit: 10,
+        offset: 5,
+      });
+
+      await ArtistApi.getTopArtists({ limit: 10, offset: 5 });
+
+      expect(mockApiClient.get).toHaveBeenCalledWith("/me/top/artists", {
+        limit: 10,
+        offset: 5,
+      });
+    });
+  });
+
   describe("checkFollowingArtists", () => {
     it("should check if following artists", async () => {
       const mockResponse = [true, false, true];
