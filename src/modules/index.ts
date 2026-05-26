@@ -63,3 +63,6 @@ export {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+
+// vercel analytics
+export { Analytics } from "@vercel/analytics/react";

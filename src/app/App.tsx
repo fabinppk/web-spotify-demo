@@ -1,4 +1,10 @@
-import { QueryClient, QueryClientProvider, RouterProvider, Toaster } from "@/modules";
+import {
+  QueryClient,
+  QueryClientProvider,
+  RouterProvider,
+  Toaster,
+  Analytics,
+} from "@/modules";
 import { AuthProvider } from "@/context/AuthProvider";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { FavoritesProvider } from "@/context/FavoritesProvider";
@@ -33,6 +39,7 @@ function App() {
           <FavoritesProvider>
             <RouterProvider router={router} />
             <Toaster position="bottom-center" richColors />
+            <Analytics />
           </FavoritesProvider>
         </ThemeProvider>
       </AuthProvider>
