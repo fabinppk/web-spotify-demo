@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 import { FavoritesProvider } from "@/context/FavoritesProvider";
 import { router } from "./routes";
 import { getInitialTheme, queryRetry, queryStaleTime } from "@/utils";
+import { Analytics } from "@vercel/analytics/react";
 
 if (!import.meta.env.VITE_CLIENT_ID) {
   throw new Error("VITE_CLIENT_ID environment variable is required");
@@ -33,6 +34,7 @@ function App() {
           <FavoritesProvider>
             <RouterProvider router={router} />
             <Toaster position="bottom-center" richColors />
+            <Analytics />
           </FavoritesProvider>
         </ThemeProvider>
       </AuthProvider>
