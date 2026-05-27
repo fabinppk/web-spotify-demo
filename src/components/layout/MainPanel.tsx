@@ -8,6 +8,7 @@ import { useNavHeader } from "@/hooks";
 import { TopArtistsSection } from "@/components/features/home/TopArtistsSection";
 import { MadeForYouSection } from "@/components/features/home/MadeForYouSection";
 import { FeaturedPlaylistSection } from "@/components/features/home/FeaturedPlaylistSection";
+import { RecentlyPlayedSection } from "@/components/features/home/RecentlyPlayedSection";
 
 const Search = lazy(() =>
   import("@/components/features/Search").then((m) => ({ default: m.Search })),
@@ -41,6 +42,7 @@ export function MainPanel() {
     <>
       <NavHeader active={activeFilter} onChange={setActiveFilter} />
       <div className="p-4 flex flex-col gap-6">
+        <RecentlyPlayedSection />
         {showPlaylists && <MadeForYouSection />}
         {showPlaylists && <FeaturedPlaylistSection />}
         {showArtists && <TopArtistsSection />}

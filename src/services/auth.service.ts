@@ -16,6 +16,7 @@ export const REQUIRED_SCOPES = [
   "user-follow-read",
   "user-library-modify",
   "user-library-read",
+  "user-read-recently-played",
 ];
 const scope = REQUIRED_SCOPES.join(" ");
 
