@@ -49,6 +49,13 @@
       "namePlaceholder": "Artist, album, or track name",
       "notePlaceholder": "Why do you like it? (max 200 chars)",
       "nameRequired": "Name is required"
+    },
+    "PROFILE": {
+      "title": "Profile",
+      "followers": "followers",
+      "free": "Free",
+      "premium": "Premium",
+      "profileLink": "Profile"
     }
   },
   "COMPONENTS": {

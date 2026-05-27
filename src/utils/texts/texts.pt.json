@@ -49,6 +49,13 @@
       "namePlaceholder": "Nome do artista, álbum ou música",
       "notePlaceholder": "Por que você gosta? (máx. 200 caracteres)",
       "nameRequired": "Nome é obrigatório"
+    },
+    "PROFILE": {
+      "title": "Perfil",
+      "followers": "seguidores",
+      "free": "Gratuito",
+      "premium": "Premium",
+      "profileLink": "Perfil"
     }
   },
   "COMPONENTS": {
