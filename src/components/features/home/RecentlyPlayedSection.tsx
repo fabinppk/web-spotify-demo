@@ -44,7 +44,7 @@ export function RecentlyPlayedSection() {
       <h2 className="text-text text-2xl font-bold mb-4">
         {t("COMPONENTS.HOME.recentlyPlayed")}
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
         {unique.map(({ track }) => (
           <RecentlyPlayedCard
             key={track.id}
