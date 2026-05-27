@@ -196,4 +196,14 @@ export class TrackApi {
       "/recommendations/available-genre-seeds",
     );
   }
+
+  async getRecentlyPlayed(limit = 20): Promise<{
+    href: string;
+    limit: number;
+    next?: string;
+    cursors: { after?: string; before?: string };
+    items: Array<{ track: Track; played_at: string }>;
+  }> {
+    return this.apiClient.get("/me/player/recently-played", { limit });
+  }
 }
