@@ -35,6 +35,7 @@ export {
   X,
   ChevronLeft,
   ChevronRight,
+  User,
   Volume2,
   VolumeX,
 } from "lucide-react";
