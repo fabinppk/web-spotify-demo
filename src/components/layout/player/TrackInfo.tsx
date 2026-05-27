@@ -1,21 +1,16 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { AddToLibraryIcon } from "@/components/icons/player";
 import { useNavigate, useTranslation } from "@/modules";
 
 interface TrackInfoProps {
   track: Track | undefined;
   isLoading: boolean;
   albumImageUrl: string | undefined;
-  saved: boolean;
-  onSave: () => void;
 }
 
 export function TrackInfo({
   track,
   isLoading,
   albumImageUrl,
-  saved,
-  onSave,
 }: Readonly<TrackInfoProps>) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -68,14 +63,6 @@ export function TrackInfo({
           ))}
         </span>
       </div>
-
-      <button
-        onClick={onSave}
-        className="ml-3 shrink-0 hover:opacity-80 transition-opacity"
-        aria-label={t("COMPONENTS.PLAYER.addToLibrary")}
-      >
-        <AddToLibraryIcon saved={saved} />
-      </button>
     </>
   );
 }

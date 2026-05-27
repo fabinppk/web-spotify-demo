@@ -1,8 +1,4 @@
-import { useCurrentPlayback } from "@/hooks/queries";
-import {
-  usePlaybackControls,
-  useLibraryControls,
-} from "@/hooks/useSpotifyMutations";
+import { usePlaybackControls, useCurrentPlayback } from "@/hooks";
 import { TrackInfo } from "./player/TrackInfo";
 import { PlaybackControls } from "./player/PlaybackControls";
 import { ExtraControls } from "./player/ExtraControls";
@@ -20,7 +16,6 @@ export function PlayerBar() {
     setRepeat,
     setShuffle,
   } = usePlaybackControls();
-  const { saveTrack } = useLibraryControls();
 
   const track = playback?.item;
   const isPlaying = playback?.is_playing ?? false;
@@ -63,7 +58,7 @@ export function PlayerBar() {
       </div>
 
       {/* Desktop */}
-      <div className="hidden md:flex items-center justify-between h-[90px] px-4 w-full">
+      <div className="hidden md:flex items-center justify-between h-22.5 px-4 w-full">
         <div
           className="flex flex-row items-center"
           style={{ minWidth: 0, flex: "0 0 auto", maxWidth: "30%" }}
@@ -72,10 +67,6 @@ export function PlayerBar() {
             track={track}
             isLoading={isLoading}
             albumImageUrl={albumImageUrl}
-            saved={false}
-            onSave={() => {
-              if (track?.id) saveTrack.mutate(track.id);
-            }}
           />
         </div>
 
