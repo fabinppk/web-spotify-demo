@@ -5,9 +5,7 @@ interface PlaylistTrackListProps {
   items: PlaylistItem[];
 }
 
-export function PlaylistTrackList({
-  items,
-}: Readonly<PlaylistTrackListProps>) {
+export function PlaylistTrackList({ items }: Readonly<PlaylistTrackListProps>) {
   const { t } = useTranslation();
 
   const tracks = items.filter(

@@ -73,7 +73,21 @@
       "retry": "Tentar novamente"
     },
     "PLAYER": {
-      "comingSoon": "Reprodução em breve 🎵"
+      "comingSoon": "Reprodução em breve 🎵",
+      "nothingPlaying": "Nada tocando",
+      "previous": "Faixa anterior",
+      "next": "Próxima faixa",
+      "play": "Reproduzir",
+      "pause": "Pausar",
+      "shuffle": "Modo aleatório",
+      "repeat": "Repetir",
+      "volume": "Volume",
+      "mute": "Silenciar",
+      "unmute": "Ativar som",
+      "addToLibrary": "Adicionar à biblioteca",
+      "queue": "Fila",
+      "connectDevice": "Conectar dispositivo",
+      "trackProgress": "Progresso da faixa"
     },
     "HOME": {
       "topArtists": "Seus Artistas Favoritos",
