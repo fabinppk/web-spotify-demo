@@ -64,12 +64,21 @@ export function TopTracksChart({ tracks }: Readonly<TopTracksChartProps>) {
                 color: "var(--color-text)",
                 fontSize: "12px",
               }}
-              formatter={(value) => [value, t("PAGES.ARTIST_DETAIL.popularity")]}
+              formatter={(value) => [
+                value,
+                t("PAGES.ARTIST_DETAIL.popularity"),
+              ]}
             />
             <Bar
               dataKey="popularity"
               shape={(props) => {
-                const { x, y, width, height, index = 0 } = props as {
+                const {
+                  x,
+                  y,
+                  width,
+                  height,
+                  index = 0,
+                } = props as {
                   x: number;
                   y: number;
                   width: number;

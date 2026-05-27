@@ -53,15 +53,30 @@ describe("useCarouselScroll", () => {
       return createElement(
         "div",
         { ref: scrollRef, "data-testid": "container" },
-        createElement("span", { "data-testid": "can-left" }, String(canScrollLeft)),
+        createElement(
+          "span",
+          { "data-testid": "can-left" },
+          String(canScrollLeft),
+        ),
       );
     }
     const { getByTestId } = render(createElement(Carousel));
     const container = getByTestId("container");
-    Object.defineProperty(container, "scrollLeft", { get: () => 50, configurable: true });
-    Object.defineProperty(container, "clientWidth", { get: () => 200, configurable: true });
-    Object.defineProperty(container, "scrollWidth", { get: () => 500, configurable: true });
-    act(() => { container.dispatchEvent(new Event("scroll")); });
+    Object.defineProperty(container, "scrollLeft", {
+      get: () => 50,
+      configurable: true,
+    });
+    Object.defineProperty(container, "clientWidth", {
+      get: () => 200,
+      configurable: true,
+    });
+    Object.defineProperty(container, "scrollWidth", {
+      get: () => 500,
+      configurable: true,
+    });
+    act(() => {
+      container.dispatchEvent(new Event("scroll"));
+    });
     expect(getByTestId("can-left").textContent).toBe("true");
   });
 

@@ -521,4 +521,3 @@ describe("useNewReleases", () => {
     });
   });
 });
-

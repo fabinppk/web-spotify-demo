@@ -45,6 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           const token = await getToken(code);
           localStorage.setItem("access_token", token.access_token);
           localStorage.setItem("refresh_token", token.refresh_token);
+          localStorage.setItem("token_scope", token.scope);
           localStorage.setItem("expires_in", token.expires_in.toString());
           localStorage.setItem(
             "expires",

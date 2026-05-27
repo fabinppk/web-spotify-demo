@@ -1,4 +1,11 @@
-import { useParams, useNavigate, useTranslation, Play, Heart, toast } from "@/modules";
+import {
+  useParams,
+  useNavigate,
+  useTranslation,
+  Play,
+  Heart,
+  toast,
+} from "@/modules";
 import { useAlbum, useAlbumTracks } from "@/hooks/useSpotifyQueries";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { formatDuration, formatTotalDuration } from "@/utils";
