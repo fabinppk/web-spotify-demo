@@ -64,7 +64,8 @@
       "lightMode": "Modo claro",
       "darkMode": "Modo escuro",
       "logout": "Sair",
-      "favorites": "Favoritos"
+      "favorites": "Favoritos",
+      "profile": "Perfil"
     },
     "SEARCH": {
       "emptyTitle": "Buscar músicas",

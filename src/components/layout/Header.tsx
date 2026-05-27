@@ -20,6 +20,7 @@ import {
   Languages,
   LogOut,
   Heart,
+  User,
   useTranslation,
 } from "@/modules";
 
@@ -114,6 +115,14 @@ export function Header() {
             className="w-48 bg-surface border-border"
             data-testid="dropdown-element"
           >
+            <DropdownMenuItem
+              onClick={() => navigate("/profile")}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <User className="w-4 h-4 mr-2" />
+              {t("COMPONENTS.HEADER.profile")}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuItem
               onClick={toggleTheme}
               className="text-text-primary hover:bg-surface-hover cursor-pointer"
