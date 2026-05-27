@@ -56,6 +56,15 @@
       "free": "Free",
       "premium": "Premium",
       "profileLink": "Profile"
+    },
+    "SETTINGS": {
+      "title": "Settings",
+      "appearance": "Appearance",
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode",
+      "switchToLight": "Switch to light",
+      "switchToDark": "Switch to dark",
+      "language": "Language"
     }
   },
   "COMPONENTS": {
@@ -65,7 +74,8 @@
       "darkMode": "Dark mode",
       "logout": "Log out",
       "favorites": "Favorites",
-      "profile": "Profile"
+      "profile": "Profile",
+      "settings": "Settings"
     },
     "SEARCH": {
       "emptyTitle": "Search for music",
@@ -126,7 +136,18 @@
       "playlistSubtitle": "Playlist",
       "artistSubtitle": "Artist",
       "albumSubtitle": "Album",
-      "favorites": "Favorites"
+      "favorites": "Favorites",
+      "settings": "Settings"
+    },
+    "MOBILE_TAB_BAR": {
+      "home": "Home",
+      "search": "Search",
+      "library": "Library",
+      "profile": "Profile"
+    },
+    "TRACK_ROW": {
+      "saveTrack": "Save to library",
+      "removeTrack": "Remove from library"
     }
   }
 }

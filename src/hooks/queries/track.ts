@@ -21,6 +21,16 @@ export const useSavedTracks = (limit = 50, offset = 0) => {
   });
 };
 
+export const useCheckSavedTracks = (ids: string[]) => {
+  const api = useSpotifyApi();
+  return useQuery({
+    queryKey: ["spotify", "me", "saved-tracks-check", ids],
+    queryFn: () => requireApi(api).tracks.checkSavedTracks(ids),
+    enabled: api !== null && ids.length > 0,
+    staleTime: 30 * 1000,
+  });
+};
+
 export const useUserTopTracks = (artistId: string) => {
   const api = useSpotifyApi();
   const { data: profile, isLoading: profileLoading } = useCurrentUserProfile();

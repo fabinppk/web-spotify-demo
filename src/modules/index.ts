@@ -16,6 +16,7 @@ export {
   useNavigate,
   useParams,
   useOutlet,
+  useLocation,
   Link,
   RouterProvider,
   createBrowserRouter,
@@ -38,6 +39,10 @@ export {
   User,
   Volume2,
   VolumeX,
+  House,
+  Search,
+  Library,
+  Settings,
 } from "lucide-react";
 
 // react-hook-form

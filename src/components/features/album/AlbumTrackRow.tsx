@@ -1,5 +1,5 @@
 import { getArtistsString } from "@/utils";
-import { Play, useNavigate } from "@/modules";
+import { Play, Heart, useNavigate, useTranslation } from "@/modules";
 
 interface AlbumTrack {
   id: string;
@@ -13,6 +13,8 @@ interface AlbumTrackRowProps {
   index: number;
   formattedDuration: string;
   onPlay: () => void;
+  isSaved?: boolean;
+  onToggleSave?: () => void;
 }
 
 export function AlbumTrackRow({
@@ -20,8 +22,11 @@ export function AlbumTrackRow({
   index,
   formattedDuration,
   onPlay,
+  isSaved = false,
+  onToggleSave,
 }: Readonly<AlbumTrackRowProps>) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -37,7 +42,7 @@ export function AlbumTrackRow({
       role="button"
       tabIndex={0}
       aria-label={`${track.name} by ${getArtistsString(track.artists)}`}
-      className="grid grid-cols-[2rem_1fr_4rem] gap-4 px-2 py-2 rounded hover:bg-[#ffffff10] cursor-pointer group items-center"
+      className="grid grid-cols-[2rem_1fr_2rem_4rem] gap-4 px-2 py-2 rounded hover:bg-[#ffffff10] cursor-pointer group items-center"
     >
       <div className="flex items-center justify-end w-full">
         <Play className="w-4 h-4 text-text-primary fill-text-primary hidden group-hover:block" />
@@ -68,6 +73,26 @@ export function AlbumTrackRow({
           ))}
         </span>
       </div>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleSave?.();
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+        aria-label={
+          isSaved
+            ? t("COMPONENTS.TRACK_ROW.removeTrack")
+            : t("COMPONENTS.TRACK_ROW.saveTrack")
+        }
+        className={`flex items-center justify-center transition-opacity ${
+          isSaved
+            ? "text-accent opacity-100"
+            : "text-text-muted opacity-0 group-hover:opacity-100"
+        }`}
+      >
+        <Heart className="w-4 h-4" fill={isSaved ? "currentColor" : "none"} />
+      </button>
 
       <span className="text-xs text-text-muted text-right">
         {formattedDuration}

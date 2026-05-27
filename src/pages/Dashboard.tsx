@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { MainPanel } from "@/components/layout/MainPanel";
 import { PlayerBar } from "@/components/layout/PlayerBar";
 import { NowPlaying } from "@/components/features/NowPlaying";
+import { MobileTabBar } from "@/components/layout/MobileTabBar";
 
 const Dashboard = () => {
   return (
@@ -20,6 +21,7 @@ const Dashboard = () => {
         <NowPlaying />
       </div>
       <PlayerBar />
+      <MobileTabBar />
     </div>
   );
 };
