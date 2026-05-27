@@ -1,12 +1,14 @@
-const muted = "rgb(186,186,186)";
+const ACCENT = "var(--color-accent)";
+const MUTED = "var(--color-text-muted)";
+
 const iconStyle = (extra?: object) => ({
-  fill: muted,
+  fill: MUTED,
   height: "1.15em",
   cursor: "pointer" as const,
   ...extra,
 });
 const smallIconStyle = (extra?: object) => ({
-  fill: muted,
+  fill: MUTED,
   height: "1.2em",
   cursor: "pointer" as const,
   maxWidth: "17px",
@@ -17,7 +19,7 @@ export function ShuffleIcon({ active }: Readonly<{ active: boolean }>) {
   return (
     <svg
       viewBox="0 0 16 16"
-      style={{ ...iconStyle(), fill: active ? "#1db954" : muted }}
+      style={{ ...iconStyle(), fill: active ? ACCENT : MUTED }}
     >
       <path d="M13.151.922a.75.75 0 1 0-1.06 1.06L13.109 3H11.16a3.75 3.75 0 0 0-2.873 1.34l-6.173 7.356A2.25 2.25 0 0 1 .39 12.5H0V14h.391a3.75 3.75 0 0 0 2.873-1.34l6.173-7.356a2.25 2.25 0 0 1 1.724-.804h1.947l-1.017 1.018a.75.75 0 0 0 1.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 0 0 .39 3.5z" />
       <path d="m7.5 10.723.98-1.167.957 1.14a2.25 2.25 0 0 0 1.724.804h1.947l-1.017-1.018a.75.75 0 1 1 1.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 1 1-1.06-1.06L13.109 13H11.16a3.75 3.75 0 0 1-2.873-1.34l-.787-.938z" />
@@ -69,7 +71,7 @@ export function RepeatIcon({ state }: Readonly<{ state: string }>) {
   return (
     <svg
       viewBox="0 0 16 16"
-      style={{ ...iconStyle(), fill: state === "off" ? muted : "#1db954" }}
+      style={{ ...iconStyle(), fill: state === "off" ? MUTED : ACCENT }}
     >
       <path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z" />
     </svg>
@@ -79,7 +81,7 @@ export function RepeatIcon({ state }: Readonly<{ state: string }>) {
 export function AddToLibraryIcon({ saved }: Readonly<{ saved: boolean }>) {
   if (saved) {
     return (
-      <svg viewBox="0 0 24 24" width="17" height="17" fill="#1db954">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill={ACCENT}>
         <path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-2-9H7v2h3v3h2v-3h3v-2h-3V10h-2v3z" />
       </svg>
     );
@@ -89,8 +91,8 @@ export function AddToLibraryIcon({ saved }: Readonly<{ saved: boolean }>) {
       viewBox="0 0 24 24"
       width="17"
       height="17"
-      stroke="#b3b3b3"
-      fill="#b3b3b3"
+      stroke={MUTED}
+      fill={MUTED}
       strokeWidth="0"
     >
       <path d="M11.999 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-11 9c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z" />

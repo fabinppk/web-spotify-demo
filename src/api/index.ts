@@ -5,6 +5,7 @@ import { TrackApi } from "./track.api";
 import { PlaylistApi } from "./playlist.api";
 import { SearchApi } from "./search.api";
 import { BrowseApi } from "./browse.api";
+import { PlaybackApi } from "./playback.api";
 
 export class SpotifyApi {
   private readonly apiClient: SpotifyApiClient;
@@ -15,6 +16,7 @@ export class SpotifyApi {
   public playlists: PlaylistApi;
   public search: SearchApi;
   public browse: BrowseApi;
+  public playback: PlaybackApi;
 
   constructor(accessToken: string) {
     this.apiClient = new SpotifyApiClient(accessToken);
@@ -25,6 +27,7 @@ export class SpotifyApi {
     this.playlists = new PlaylistApi(this.apiClient);
     this.search = new SearchApi(this.apiClient);
     this.browse = new BrowseApi(this.apiClient);
+    this.playback = new PlaybackApi(this.apiClient);
   }
 
   /**
@@ -66,4 +69,5 @@ export {
   PlaylistApi,
   SearchApi,
   BrowseApi,
+  PlaybackApi,
 };

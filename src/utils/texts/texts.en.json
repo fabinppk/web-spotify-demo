@@ -73,7 +73,21 @@
       "retry": "Try again"
     },
     "PLAYER": {
-      "comingSoon": "Playback coming soon 🎵"
+      "comingSoon": "Playback coming soon 🎵",
+      "nothingPlaying": "Nothing playing",
+      "previous": "Previous track",
+      "next": "Next track",
+      "play": "Play",
+      "pause": "Pause",
+      "shuffle": "Toggle shuffle",
+      "repeat": "Toggle repeat",
+      "volume": "Volume",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "addToLibrary": "Add to library",
+      "queue": "Queue",
+      "connectDevice": "Connect to a device",
+      "trackProgress": "Track progress"
     },
     "HOME": {
       "topArtists": "Your Top Artists",

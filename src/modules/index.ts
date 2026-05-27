@@ -35,6 +35,8 @@ export {
   X,
   ChevronLeft,
   ChevronRight,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 
 // react-hook-form
