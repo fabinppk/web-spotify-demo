@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MainPanel } from "@/components/layout/MainPanel";
+import { NowPlaying } from "@/components/features/NowPlaying";
 
 const Dashboard = () => {
   return (
@@ -15,6 +16,7 @@ const Dashboard = () => {
         <ScrollArea className="flex-1 min-w-0 bg-surface rounded-lg">
           <MainPanel />
         </ScrollArea>
+        <NowPlaying />
       </div>
     </div>
   );

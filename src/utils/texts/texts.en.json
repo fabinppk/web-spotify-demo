@@ -75,6 +75,10 @@
     "PLAYER": {
       "comingSoon": "Playback coming soon 🎵"
     },
+    "NOW_PLAYING": {
+      "title": "Now Playing",
+      "nothingPlaying": "Nothing playing right now"
+    },
     "HOME": {
       "topArtists": "Your Top Artists",
       "madeForYou": "Made For You",
