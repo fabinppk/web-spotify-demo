@@ -4,13 +4,34 @@ import { useCurrentUserProfile } from "@/hooks/useSpotifyQueries";
 import { useState } from "react";
 import { useContentStore } from "@/stores/useContentStore";
 import { MainContent } from "@/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
-import { useNavigate } from "react-router-dom";
-import { useTheme } from "@/hooks";
-import { Sun, Moon } from "lucide-react";
+import { useTheme, useAuth } from "@/hooks";
+import {
+  useNavigate,
+  Sun,
+  Moon,
+  Languages,
+  LogOut,
+  Heart,
+  useTranslation,
+} from "@/modules";
 
 export function Header() {
+  const { logout } = useAuth();
   const { data: profile } = useCurrentUserProfile();
+  const { t, i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "pt" ? "en" : "pt");
+  };
+
   const { setCurrentContent, setSearchQuery: setStoreSearchQuery } =
     useContentStore();
   const navigate = useNavigate();
@@ -54,7 +75,7 @@ export function Header() {
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="What do you want to play?"
+            placeholder={t("COMPONENTS.HEADER.searchPlaceholder")}
             className="pl-4 pr-10 bg-surface border-border text-text-primary placeholder:text-text-muted focus-visible:ring-accent h-10 rounded-full"
             data-testid="searchbar-element"
           />
@@ -76,19 +97,60 @@ export function Header() {
         className="flex items-center gap-3 pr-2"
         data-testid="accountbar-element"
       >
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-          className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-surface-hover transition-colors text-text-muted hover:text-text-primary"
-        >
-          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
-        <Avatar className="w-10 h-10">
-          <AvatarImage src={avatarUrl} alt={displayName} />
-          <AvatarFallback className="bg-accent text-bg text-xs font-bold">
-            {initials}
-          </AvatarFallback>
-        </Avatar>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className="flex items-center rounded-full hover:bg-surface-hover p-1 transition-colors"
+            data-testid="avatar-element"
+          >
+            <Avatar className="w-10 h-10">
+              <AvatarImage src={avatarUrl} alt={displayName} />
+              <AvatarFallback className="bg-accent text-bg text-xs font-bold">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="w-48 bg-surface border-border"
+            data-testid="dropdown-element"
+          >
+            <DropdownMenuItem
+              onClick={toggleTheme}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4 mr-2" />
+              ) : (
+                <Moon className="w-4 h-4 mr-2" />
+              )}
+              {theme === "dark"
+                ? t("COMPONENTS.HEADER.lightMode")
+                : t("COMPONENTS.HEADER.darkMode")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={toggleLanguage}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <Languages className="w-4 h-4 mr-2" />
+              {i18n.language === "pt" ? "English" : "Português"}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => navigate("/favorites")}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <Heart className="w-4 h-4 mr-2" />
+              {t("COMPONENTS.HEADER.favorites")}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuItem
+              onClick={logout}
+              className="text-text-primary hover:bg-surface-hover cursor-pointer"
+            >
+              <LogOut className="w-4 h-4 mr-2" />{" "}
+              {t("COMPONENTS.HEADER.logout")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

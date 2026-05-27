@@ -1,15 +1,14 @@
 import { lazy, Suspense } from "react";
-import { RouteObject } from "react-router-dom";
+import { type RouteObject } from "@/modules";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { PageLoader } from "@/components/ui/PageLoader";
 
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Login = lazy(() => import("../pages/Login"));
-// const Profile = lazy(() => import("../pages/Profile"));
-// const Settings = lazy(() => import("../pages/Settings"));
-// const PlaylistDetail = lazy(() => import("../pages/PlaylistDetail"));
+const PlaylistDetail = lazy(() => import("../pages/PlaylistDetail"));
 const AlbumDetail = lazy(() => import("../pages/AlbumDetail"));
 const ArtistDetail = lazy(() => import("../pages/ArtistDetail"));
+const Favorites = lazy(() => import("../pages/Favorites"));
 
 export function getRoutes(): RouteObject[] {
   return [
@@ -23,14 +22,14 @@ export function getRoutes(): RouteObject[] {
         </ProtectedRoute>
       ),
       children: [
-        // {
-        //   path: "playlist/:id",
-        //   element: (
-        //     <Suspense fallback={<PageLoader />}>
-        //       <PlaylistDetail />
-        //     </Suspense>
-        //   ),
-        // },
+        {
+          path: "playlist/:id",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <PlaylistDetail />
+            </Suspense>
+          ),
+        },
         {
           path: "album/:id",
           element: (
@@ -47,22 +46,14 @@ export function getRoutes(): RouteObject[] {
             </Suspense>
           ),
         },
-        // {
-        //   path: "profile",
-        //   element: (
-        //     <Suspense fallback={<PageLoader />}>
-        //       <Profile />
-        //     </Suspense>
-        //   ),
-        // },
-        // {
-        //   path: "settings",
-        //   element: (
-        //     <Suspense fallback={<PageLoader />}>
-        //       <Settings />
-        //     </Suspense>
-        //   ),
-        // },
+        {
+          path: "favorites",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Favorites />
+            </Suspense>
+          ),
+        },
       ],
     },
     {

@@ -1,16 +1,10 @@
-import {
-  useMadeForYouPlaylists,
-  useCurrentPlayback,
-  usePlaybackControls,
-} from "@/hooks";
-import { usePlayerStore } from "@/stores";
+import { useMadeForYouPlaylists } from "@/hooks";
 import { PlaylistCarousel } from "./PlaylistCarousel";
+import { toast, useTranslation } from "@/modules";
 
 export function MadeForYouSection() {
-  const { data, isLoading, isError } = useMadeForYouPlaylists(20);
-  const { data: playback } = useCurrentPlayback();
-  const { play, pause } = usePlaybackControls();
-  const { deviceId } = usePlayerStore();
+  const { t } = useTranslation();
+  const { data, isLoading, isError } = useMadeForYouPlaylists(10);
 
   if (isError) return null;
 
@@ -20,15 +14,10 @@ export function MadeForYouSection() {
 
   return (
     <PlaylistCarousel
-      title="Made For You"
+      title={t("COMPONENTS.HOME.madeForYou")}
       playlists={playlists}
       isLoading={isLoading}
-      activeContextUri={playback?.context?.uri ?? null}
-      isPlaybackActive={playback?.is_playing ?? false}
-      onPlay={(uri) =>
-        play.mutate({ context_uri: uri, device_id: deviceId ?? undefined })
-      }
-      onPause={() => pause.mutate(deviceId ?? undefined)}
+      onPlay={() => toast.info(t("COMPONENTS.PLAYER.comingSoon"))}
     />
   );
 }

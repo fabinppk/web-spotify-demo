@@ -15,7 +15,10 @@ const smallIconStyle = (extra?: object) => ({
 
 export function ShuffleIcon({ active }: Readonly<{ active: boolean }>) {
   return (
-    <svg viewBox="0 0 16 16" style={{ ...iconStyle(), fill: active ? "#1db954" : muted }}>
+    <svg
+      viewBox="0 0 16 16"
+      style={{ ...iconStyle(), fill: active ? "#1db954" : muted }}
+    >
       <path d="M13.151.922a.75.75 0 1 0-1.06 1.06L13.109 3H11.16a3.75 3.75 0 0 0-2.873 1.34l-6.173 7.356A2.25 2.25 0 0 1 .39 12.5H0V14h.391a3.75 3.75 0 0 0 2.873-1.34l6.173-7.356a2.25 2.25 0 0 1 1.724-.804h1.947l-1.017 1.018a.75.75 0 0 0 1.06 1.06L15.98 3.75 13.15.922zM.391 3.5H0V2h.391c1.109 0 2.16.49 2.873 1.34L4.89 5.277l-.979 1.167-1.796-2.14A2.25 2.25 0 0 0 .39 3.5z" />
       <path d="m7.5 10.723.98-1.167.957 1.14a2.25 2.25 0 0 0 1.724.804h1.947l-1.017-1.018a.75.75 0 1 1 1.06-1.06l2.829 2.828-2.829 2.828a.75.75 0 1 1-1.06-1.06L13.109 13H11.16a3.75 3.75 0 0 1-2.873-1.34l-.787-.938z" />
     </svg>
@@ -40,7 +43,11 @@ export function NextIcon() {
 
 export function PlayIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" style={{ fill: "black", height: "1.15em", cursor: "pointer" }}>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      style={{ fill: "black", height: "1.15em", cursor: "pointer" }}
+    >
       <path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" />
     </svg>
   );
@@ -48,7 +55,11 @@ export function PlayIcon() {
 
 export function PauseIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" style={{ fill: "black", height: "1.15em", cursor: "pointer" }}>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      style={{ fill: "black", height: "1.15em", cursor: "pointer" }}
+    >
       <path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z" />
     </svg>
   );
@@ -56,7 +67,10 @@ export function PauseIcon() {
 
 export function RepeatIcon({ state }: Readonly<{ state: string }>) {
   return (
-    <svg viewBox="0 0 16 16" style={{ ...iconStyle(), fill: state === "off" ? muted : "#1db954" }}>
+    <svg
+      viewBox="0 0 16 16"
+      style={{ ...iconStyle(), fill: state === "off" ? muted : "#1db954" }}
+    >
       <path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z" />
     </svg>
   );
@@ -71,7 +85,14 @@ export function AddToLibraryIcon({ saved }: Readonly<{ saved: boolean }>) {
     );
   }
   return (
-    <svg viewBox="0 0 24 24" width="17" height="17" stroke="#b3b3b3" fill="#b3b3b3" strokeWidth="0">
+    <svg
+      viewBox="0 0 24 24"
+      width="17"
+      height="17"
+      stroke="#b3b3b3"
+      fill="#b3b3b3"
+      strokeWidth="0"
+    >
       <path d="M11.999 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm-11 9c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z" />
       <path d="M17.999 12a1 1 0 0 1-1 1h-4v4a1 1 0 1 1-2 0v-4h-4a1 1 0 1 1 0-2h4V7a1 1 0 1 1 2 0v4h4a1 1 0 0 1 1 1z" />
     </svg>

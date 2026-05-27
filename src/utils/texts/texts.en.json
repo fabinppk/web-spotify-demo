@@ -1,0 +1,105 @@
+{
+  "PAGES": {
+    "DASHBOARD": {
+      "title": "My Top Artists",
+      "searchPlaceholder": "Search for artists, albums...",
+      "loading": "Loading your music...",
+      "albumsSection": "Albums and Singles",
+      "relatedArtists": "Fans also like"
+    },
+    "LOGIN": {
+      "tagline": "Enjoy your music to the fullest.",
+      "loginButton": "Log in with Spotify"
+    },
+    "ARTIST_DETAIL": {
+      "errorMessage": "Failed to load artist.",
+      "follow": "Follow",
+      "albumsSection": "Albums",
+      "noAlbums": "No albums found.",
+      "topTracksChart": "Top Tracks Popularity",
+      "popularity": "Popularity"
+    },
+    "ALBUM_DETAIL": {
+      "errorMessage": "Failed to load album.",
+      "albumType": "Album",
+      "title": "Title",
+      "duration": "Duration"
+    },
+    "PLAYLIST_DETAIL": {
+      "errorMessage": "Failed to load playlist.",
+      "playlistType": "Playlist",
+      "songs": "songs",
+      "noTracks": "No tracks available.",
+      "titleColumn": "Title"
+    },
+    "FAVORITES": {
+      "title": "Favorites",
+      "addTitle": "Add Favorite",
+      "listTitle": "My Favorites",
+      "nameLabel": "Name",
+      "typeLabel": "Type",
+      "noteLabel": "Note (optional)",
+      "submit": "Add",
+      "noFavorites": "No favorites yet. Add one above!",
+      "clearAll": "Clear all",
+      "removeButton": "Remove",
+      "typeArtist": "Artist",
+      "typeAlbum": "Album",
+      "typeTrack": "Track",
+      "namePlaceholder": "Artist, album, or track name",
+      "notePlaceholder": "Why do you like it? (max 200 chars)",
+      "nameRequired": "Name is required"
+    }
+  },
+  "COMPONENTS": {
+    "HEADER": {
+      "searchPlaceholder": "What do you want to play?",
+      "lightMode": "Light mode",
+      "darkMode": "Dark mode",
+      "logout": "Log out",
+      "favorites": "Favorites"
+    },
+    "SEARCH": {
+      "emptyTitle": "Search for music",
+      "emptyDescription": "Find songs, artists, albums, and playlists",
+      "errorMessage": "Search failed",
+      "artistsSection": "Artists",
+      "artistLabel": "Artist",
+      "albumsSection": "Albums",
+      "loading": "Loading...",
+      "loadMore": "Load more"
+    },
+    "ERROR_STATE": {
+      "retry": "Try again"
+    },
+    "PLAYER": {
+      "comingSoon": "Playback coming soon 🎵"
+    },
+    "HOME": {
+      "topArtists": "Your Top Artists",
+      "madeForYou": "Made For You",
+      "featuredPlaylists": "Featured Playlists",
+      "artistsYouFollow": "Artists You Follow"
+    },
+    "NAV_HEADER": {
+      "all": "All",
+      "playlists": "Playlists",
+      "artists": "Artists"
+    },
+    "SIDEBAR": {
+      "yourLibrary": "Your Library",
+      "create": "Create",
+      "filterPlaylists": "Playlists",
+      "filterArtists": "Artists",
+      "filterAlbums": "Albums",
+      "searchPlaceholder": "Search in Your Library",
+      "recentlyAdded": "Recently added",
+      "noResults": "No results found",
+      "emptyLibrary": "No items in your library",
+      "playlistSubtitle": "Playlist",
+      "artistSubtitle": "Artist",
+      "albumSubtitle": "Album",
+      "favorites": "Favorites"
+    }
+  }
+}

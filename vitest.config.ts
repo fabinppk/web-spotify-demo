@@ -10,6 +10,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./tests/setup.ts",
+    exclude: ["node_modules", "dist", ".claude"],
     coverage: {
       reporter: ["text", "json-summary", "json", "lcov"],
       // If you want a coverage reports even if your tests are failing, include the reportOnFailure option

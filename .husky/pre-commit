@@ -1,6 +1,13 @@
 
 echo "🔨 Running pre-commit checks..."
 
+echo "🎨 Checking formatting..."
+npm run format:check
+if [ $? -ne 0 ]; then
+  echo "❌ Formatting issues found! Run 'npm run format' to fix."
+  exit 1
+fi
+
 echo "📦 Building project..."
 npm run build
 if [ $? -ne 0 ]; then

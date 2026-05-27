@@ -1,12 +1,12 @@
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
+const tokenEndpoint = "https://accounts.spotify.com/api/token";
+
 const clientId = import.meta.env.VITE_CLIENT_ID;
+const redirectUrl = import.meta.env.VITE_REDIRECT_URI;
+
 export const REQUIRED_SCOPES = [
   "user-read-private",
   "user-read-email",
-  "user-read-playback-state",
-  "user-modify-playback-state",
-  "user-read-currently-playing",
-  "user-read-recently-played",
   "user-top-read",
   "playlist-read-private",
   "playlist-read-collaborative",
@@ -16,12 +16,8 @@ export const REQUIRED_SCOPES = [
   "user-follow-read",
   "user-library-modify",
   "user-library-read",
-  "streaming",
 ];
 const scope = REQUIRED_SCOPES.join(" ");
-const redirectUrl =
-  import.meta.env.VITE_REDIRECT_URI || "http://localhost:5173/";
-const tokenEndpoint = "https://accounts.spotify.com/api/token";
 
 export async function redirectToSpotifyAuthorize(): Promise<void> {
   const possible: string =
@@ -98,8 +94,6 @@ export async function getToken(code: string): Promise<TokenScopeResponse> {
 export const getRefreshToken = async (
   refreshToken: string,
 ): Promise<TokenResponse> => {
-  const url = "https://accounts.spotify.com/api/token";
-
   const payload = {
     method: "POST",
     headers: {
@@ -111,7 +105,7 @@ export const getRefreshToken = async (
       client_id: clientId,
     }),
   };
-  const body = await fetch(url, payload);
+  const body = await fetch(tokenEndpoint, payload);
   if (!body.ok) {
     throw new Error(`Token refresh failed: ${body.status}`);
   }

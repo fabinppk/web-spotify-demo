@@ -8,20 +8,14 @@ interface PlaylistListedProps {
   title: string;
   playlists: Playlist[];
   isLoading: boolean;
-  activeContextUri: string | null;
-  isPlaybackActive: boolean;
-  onPlay: (uri: string) => void;
-  onPause: () => void;
+  onPlay: () => void;
 }
 
 export function PlaylistListed({
   title,
   playlists,
   isLoading,
-  activeContextUri,
-  isPlaybackActive,
   onPlay,
-  onPause,
 }: Readonly<PlaylistListedProps>) {
   if (isLoading) {
     return (
@@ -45,14 +39,7 @@ export function PlaylistListed({
     <HomeSection title={title}>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-8">
         {playlists.map((playlist) => (
-          <PlaylistCard
-            key={playlist.id}
-            playlist={playlist}
-            onPlay={onPlay}
-            onPause={onPause}
-            isActive={activeContextUri === playlist.uri}
-            isPlaying={activeContextUri === playlist.uri && isPlaybackActive}
-          />
+          <PlaylistCard key={playlist.id} playlist={playlist} onPlay={onPlay} />
         ))}
       </div>
     </HomeSection>

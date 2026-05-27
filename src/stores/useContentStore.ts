@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from "@/modules";
 import { MainContent } from "@/utils";
 
 export const useContentStore = create<{
