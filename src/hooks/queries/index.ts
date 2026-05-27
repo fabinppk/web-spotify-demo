@@ -6,4 +6,5 @@ export * from "./playlist";
 export * from "./browse";
 export * from "./search";
 export * from "./recentlyPlayed";
+export * from "./nowPlaying";
 export * from "./playback";

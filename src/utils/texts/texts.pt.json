@@ -96,6 +96,10 @@
       "connectDevice": "Conectar dispositivo",
       "trackProgress": "Progresso da faixa"
     },
+    "NOW_PLAYING": {
+      "title": "Tocando agora",
+      "nothingPlaying": "Nada tocando no momento"
+    },
     "HOME": {
       "topArtists": "Seus Artistas Favoritos",
       "madeForYou": "Feito Para Você",

@@ -17,21 +17,6 @@ export const useCurrentPlayback = () => {
   });
 };
 
-export const useCurrentlyPlaying = () => {
-  const api = useSpotifyApi();
-  return useQuery({
-    queryKey: ["spotify", "playback", "currently-playing"],
-    queryFn: () => requireApi(api).playback.getCurrentlyPlaying(),
-    enabled: api !== null,
-    refetchInterval: (query) => {
-      return (query.state.data as { is_playing?: boolean } | null)?.is_playing
-        ? 1000
-        : 5000;
-    },
-    staleTime: 0,
-  });
-};
-
 export const useAvailableDevices = () => {
   const api = useSpotifyApi();
   return useQuery({
