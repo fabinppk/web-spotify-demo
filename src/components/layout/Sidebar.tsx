@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useNavigate, useTranslation, toast, User, Settings } from "@/modules";
+import { useNavigate, useTranslation, toast } from "@/modules";
 import { useUserPlaylists, useSavedAlbums, useFollowedArtists } from "@/hooks";
 import { SidebarHeader } from "@/components/layout/sidebar/SidebarHeader";
 import { LibraryList } from "@/components/layout/sidebar/LibraryList";
@@ -98,20 +98,6 @@ export function Sidebar() {
           if (!searchQuery) setSearchOpen(false);
         }}
       />
-      <button
-        onClick={() => navigate("/profile")}
-        className="flex items-center gap-3 px-4 py-2 text-sm text-text-muted hover:text-text hover:bg-surface-hover transition-colors"
-      >
-        <User className="w-4 h-4 shrink-0" />
-        <span>{t("PAGES.PROFILE.profileLink")}</span>
-      </button>
-      <button
-        onClick={() => navigate("/settings")}
-        className="flex items-center gap-3 px-4 py-2 text-sm text-text-muted hover:text-text hover:bg-surface-hover transition-colors"
-      >
-        <Settings className="w-4 h-4 shrink-0" />
-        <span>{t("COMPONENTS.SIDEBAR.settings")}</span>
-      </button>
       <LibraryList
         isLoading={isLoading}
         items={filteredItems}
