@@ -6,7 +6,9 @@ const mockNavigate = vi.fn();
 
 vi.mock("@/modules", () => ({
   Play: () => <svg data-testid="play-icon" />,
+  Heart: () => <svg data-testid="heart-icon" />,
   useNavigate: () => mockNavigate,
+  useTranslation: () => ({ t: (k: string) => k }),
 }));
 
 import { AlbumTrackRow } from "../AlbumTrackRow";

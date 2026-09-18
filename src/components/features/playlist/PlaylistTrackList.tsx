@@ -1,5 +1,7 @@
 import { toast, useTranslation } from "@/modules";
 import { TrackRow } from "../TrackRow";
+import { useCheckSavedTracks } from "@/hooks/useSpotifyQueries";
+import { useLibraryControls } from "@/hooks";
 
 interface PlaylistTrackListProps {
   items: PlaylistItem[];
@@ -11,6 +13,10 @@ export function PlaylistTrackList({ items }: Readonly<PlaylistTrackListProps>) {
   const tracks = items.filter(
     (i): i is PlaylistItem & { item: Track } => i.item?.type === "track",
   );
+
+  const trackIds = tracks.map((i) => i.item.id);
+  const { data: savedState } = useCheckSavedTracks(trackIds);
+  const { saveTrack, removeTrack } = useLibraryControls();
 
   if (tracks.length === 0) {
     return (
@@ -27,11 +33,19 @@ export function PlaylistTrackList({ items }: Readonly<PlaylistTrackListProps>) {
           {t("PAGES.PLAYLIST_DETAIL.titleColumn")}
         </span>
       </div>
-      {tracks.map((playlistItem) => (
+      {tracks.map((playlistItem, index) => (
         <TrackRow
           key={playlistItem.item.id}
           track={playlistItem.item}
           onPlay={() => toast.info(t("COMPONENTS.PLAYER.comingSoon"))}
+          isSaved={savedState?.[index] ?? false}
+          onToggleSave={() => {
+            if (savedState?.[index]) {
+              removeTrack.mutate(playlistItem.item.id);
+            } else {
+              saveTrack.mutate(playlistItem.item.id);
+            }
+          }}
         />
       ))}
     </div>

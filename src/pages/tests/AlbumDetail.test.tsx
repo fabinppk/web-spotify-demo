@@ -5,6 +5,13 @@ import "@testing-library/jest-dom";
 vi.mock("@/hooks/useSpotifyQueries", () => ({
   useAlbum: vi.fn(),
   useAlbumTracks: vi.fn(),
+  useCheckSavedTracks: () => ({ data: [] }),
+}));
+vi.mock("@/hooks", () => ({
+  useLibraryControls: () => ({
+    saveTrack: { mutate: vi.fn() },
+    removeTrack: { mutate: vi.fn() },
+  }),
 }));
 vi.mock("@/modules", () => ({
   useParams: vi.fn(() => ({ id: "album-1" })),

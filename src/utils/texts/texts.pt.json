@@ -49,6 +49,22 @@
       "namePlaceholder": "Nome do artista, álbum ou música",
       "notePlaceholder": "Por que você gosta? (máx. 200 caracteres)",
       "nameRequired": "Nome é obrigatório"
+    },
+    "PROFILE": {
+      "title": "Perfil",
+      "followers": "seguidores",
+      "free": "Gratuito",
+      "premium": "Premium",
+      "profileLink": "Perfil"
+    },
+    "SETTINGS": {
+      "title": "Configurações",
+      "appearance": "Aparência",
+      "darkMode": "Modo escuro",
+      "lightMode": "Modo claro",
+      "switchToLight": "Mudar para claro",
+      "switchToDark": "Mudar para escuro",
+      "language": "Idioma"
     }
   },
   "COMPONENTS": {
@@ -57,7 +73,9 @@
       "lightMode": "Modo claro",
       "darkMode": "Modo escuro",
       "logout": "Sair",
-      "favorites": "Favoritos"
+      "favorites": "Favoritos",
+      "profile": "Perfil",
+      "settings": "Configurações"
     },
     "SEARCH": {
       "emptyTitle": "Buscar músicas",
@@ -73,13 +91,32 @@
       "retry": "Tentar novamente"
     },
     "PLAYER": {
-      "comingSoon": "Reprodução em breve 🎵"
+      "comingSoon": "Reprodução em breve 🎵",
+      "nothingPlaying": "Nada tocando",
+      "previous": "Faixa anterior",
+      "next": "Próxima faixa",
+      "play": "Reproduzir",
+      "pause": "Pausar",
+      "shuffle": "Modo aleatório",
+      "repeat": "Repetir",
+      "volume": "Volume",
+      "mute": "Silenciar",
+      "unmute": "Ativar som",
+      "addToLibrary": "Adicionar à biblioteca",
+      "queue": "Fila",
+      "connectDevice": "Conectar dispositivo",
+      "trackProgress": "Progresso da faixa"
+    },
+    "NOW_PLAYING": {
+      "title": "Tocando agora",
+      "nothingPlaying": "Nada tocando no momento"
     },
     "HOME": {
       "topArtists": "Seus Artistas Favoritos",
       "madeForYou": "Feito Para Você",
       "featuredPlaylists": "Playlists em Destaque",
-      "artistsYouFollow": "Artistas que Você Segue"
+      "artistsYouFollow": "Artistas que Você Segue",
+      "recentlyPlayed": "Ouvido Recentemente"
     },
     "NAV_HEADER": {
       "all": "Tudo",
@@ -99,7 +136,18 @@
       "playlistSubtitle": "Playlist",
       "artistSubtitle": "Artista",
       "albumSubtitle": "Álbum",
-      "favorites": "Favoritos"
+      "favorites": "Favoritos",
+      "settings": "Configurações"
+    },
+    "MOBILE_TAB_BAR": {
+      "home": "Início",
+      "search": "Buscar",
+      "library": "Biblioteca",
+      "profile": "Perfil"
+    },
+    "TRACK_ROW": {
+      "saveTrack": "Salvar na biblioteca",
+      "removeTrack": "Remover da biblioteca"
     }
   }
 }

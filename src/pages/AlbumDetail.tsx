@@ -6,7 +6,12 @@ import {
   Heart,
   toast,
 } from "@/modules";
-import { useAlbum, useAlbumTracks } from "@/hooks/useSpotifyQueries";
+import {
+  useAlbum,
+  useAlbumTracks,
+  useCheckSavedTracks,
+} from "@/hooks/useSpotifyQueries";
+import { useLibraryControls } from "@/hooks";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { formatDuration, formatTotalDuration } from "@/utils";
 import { AlbumDetailSkeleton } from "@/components/features/album/AlbumDetailSkeleton";
@@ -34,6 +39,11 @@ export default function AlbumDetail() {
   const isLoading = albumLoading || tracksLoading;
   const isError = albumError || tracksError;
 
+  const tracks = tracksData?.items ?? [];
+  const trackIds = tracks.map((track: Track) => track.id).filter(Boolean);
+  const { data: savedState } = useCheckSavedTracks(trackIds);
+  const { saveTrack, removeTrack } = useLibraryControls();
+
   if (isLoading) return <AlbumDetailSkeleton />;
   if (isError || !album) {
     return (
@@ -47,7 +57,6 @@ export default function AlbumDetail() {
     );
   }
 
-  const tracks = tracksData?.items ?? [];
   const totalDurationMs = tracks.reduce(
     (sum: number, track: Pick<Track, "duration_ms">) =>
       sum + (track.duration_ms ?? 0),
@@ -120,7 +129,6 @@ export default function AlbumDetail() {
           >
             <Play className="w-5 h-5 text-black fill-black ml-0.5" />
           </button>
-          {/* Wire up save/unsave album using useLibraryControls when implemented */}
           <button
             aria-label="Like album"
             className="w-8 h-8 rounded-full border border-text-muted flex items-center justify-center hover:border-text-primary transition-colors"
@@ -132,13 +140,14 @@ export default function AlbumDetail() {
 
       {/* Track list */}
       <div className="flex-1 bg-bg px-6 py-4">
-        <div className="sticky top-0 z-10 bg-bg grid grid-cols-[2rem_1fr_4rem] gap-4 px-2 py-2 border-b border-border mb-2">
+        <div className="sticky top-0 z-10 bg-bg grid grid-cols-[2rem_1fr_2rem_4rem] gap-4 px-2 py-2 border-b border-border mb-2">
           <span className="text-text-muted text-xs font-semibold text-right">
             #
           </span>
           <span className="text-text-muted text-xs font-semibold uppercase tracking-wider">
             {t("PAGES.ALBUM_DETAIL.title")}
           </span>
+          <span />
           <span className="text-text-muted text-xs font-semibold uppercase tracking-wider text-right">
             {t("PAGES.ALBUM_DETAIL.duration")}
           </span>
@@ -153,6 +162,14 @@ export default function AlbumDetail() {
               index={index}
               formattedDuration={formatDuration(track.duration_ms)}
               onPlay={() => toast.info(t("COMPONENTS.PLAYER.comingSoon"))}
+              isSaved={savedState?.[index] ?? false}
+              onToggleSave={() => {
+                if (savedState?.[index]) {
+                  removeTrack.mutate(track.id);
+                } else {
+                  saveTrack.mutate(track.id);
+                }
+              }}
             />
           );
         })}

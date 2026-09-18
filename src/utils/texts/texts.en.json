@@ -49,6 +49,22 @@
       "namePlaceholder": "Artist, album, or track name",
       "notePlaceholder": "Why do you like it? (max 200 chars)",
       "nameRequired": "Name is required"
+    },
+    "PROFILE": {
+      "title": "Profile",
+      "followers": "followers",
+      "free": "Free",
+      "premium": "Premium",
+      "profileLink": "Profile"
+    },
+    "SETTINGS": {
+      "title": "Settings",
+      "appearance": "Appearance",
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode",
+      "switchToLight": "Switch to light",
+      "switchToDark": "Switch to dark",
+      "language": "Language"
     }
   },
   "COMPONENTS": {
@@ -57,7 +73,9 @@
       "lightMode": "Light mode",
       "darkMode": "Dark mode",
       "logout": "Log out",
-      "favorites": "Favorites"
+      "favorites": "Favorites",
+      "profile": "Profile",
+      "settings": "Settings"
     },
     "SEARCH": {
       "emptyTitle": "Search for music",
@@ -73,13 +91,32 @@
       "retry": "Try again"
     },
     "PLAYER": {
-      "comingSoon": "Playback coming soon 🎵"
+      "comingSoon": "Playback coming soon 🎵",
+      "nothingPlaying": "Nothing playing",
+      "previous": "Previous track",
+      "next": "Next track",
+      "play": "Play",
+      "pause": "Pause",
+      "shuffle": "Toggle shuffle",
+      "repeat": "Toggle repeat",
+      "volume": "Volume",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "addToLibrary": "Add to library",
+      "queue": "Queue",
+      "connectDevice": "Connect to a device",
+      "trackProgress": "Track progress"
+    },
+    "NOW_PLAYING": {
+      "title": "Now Playing",
+      "nothingPlaying": "Nothing playing right now"
     },
     "HOME": {
       "topArtists": "Your Top Artists",
       "madeForYou": "Made For You",
       "featuredPlaylists": "Featured Playlists",
-      "artistsYouFollow": "Artists You Follow"
+      "artistsYouFollow": "Artists You Follow",
+      "recentlyPlayed": "Recently Played"
     },
     "NAV_HEADER": {
       "all": "All",
@@ -99,7 +136,18 @@
       "playlistSubtitle": "Playlist",
       "artistSubtitle": "Artist",
       "albumSubtitle": "Album",
-      "favorites": "Favorites"
+      "favorites": "Favorites",
+      "settings": "Settings"
+    },
+    "MOBILE_TAB_BAR": {
+      "home": "Home",
+      "search": "Search",
+      "library": "Library",
+      "profile": "Profile"
+    },
+    "TRACK_ROW": {
+      "saveTrack": "Save to library",
+      "removeTrack": "Remove from library"
     }
   }
 }

@@ -9,6 +9,8 @@ const PlaylistDetail = lazy(() => import("../pages/PlaylistDetail"));
 const AlbumDetail = lazy(() => import("../pages/AlbumDetail"));
 const ArtistDetail = lazy(() => import("../pages/ArtistDetail"));
 const Favorites = lazy(() => import("../pages/Favorites"));
+const Profile = lazy(() => import("../pages/Profile"));
+const Settings = lazy(() => import("../pages/Settings"));
 
 export function getRoutes(): RouteObject[] {
   return [
@@ -51,6 +53,22 @@ export function getRoutes(): RouteObject[] {
           element: (
             <Suspense fallback={<PageLoader />}>
               <Favorites />
+            </Suspense>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Profile />
+            </Suspense>
+          ),
+        },
+        {
+          path: "settings",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Settings />
             </Suspense>
           ),
         },

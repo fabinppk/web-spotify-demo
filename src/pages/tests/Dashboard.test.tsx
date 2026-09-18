@@ -16,6 +16,15 @@ vi.mock("@/components/ui/scroll-area", () => ({
     <div>{children}</div>
   ),
 }));
+vi.mock("@/components/layout/PlayerBar", () => ({
+  PlayerBar: () => <div data-testid="player-bar" />,
+}));
+vi.mock("@/components/features/NowPlaying", () => ({
+  NowPlaying: () => <div data-testid="now-playing" />,
+}));
+vi.mock("@/components/layout/MobileTabBar", () => ({
+  MobileTabBar: () => <div data-testid="mobile-tab-bar" />,
+}));
 
 import Dashboard from "../Dashboard";
 

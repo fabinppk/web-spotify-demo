@@ -11,6 +11,15 @@ vi.mock("../../TrackRow", () => ({
     <div data-testid="track-row">{track.name}</div>
   ),
 }));
+vi.mock("@/hooks/useSpotifyQueries", () => ({
+  useCheckSavedTracks: () => ({ data: [] }),
+}));
+vi.mock("@/hooks", () => ({
+  useLibraryControls: () => ({
+    saveTrack: { mutate: vi.fn() },
+    removeTrack: { mutate: vi.fn() },
+  }),
+}));
 
 import { PlaylistTrackList } from "../PlaylistTrackList";
 

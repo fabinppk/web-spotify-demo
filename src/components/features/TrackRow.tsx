@@ -1,12 +1,20 @@
-import { Play, useNavigate } from "@/modules";
+import { Play, Heart, useNavigate, useTranslation } from "@/modules";
 
 interface TrackRowProps {
   track: Track;
   onPlay: (uri: string) => void;
+  isSaved?: boolean;
+  onToggleSave?: () => void;
 }
 
-export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
+export function TrackRow({
+  track,
+  onPlay,
+  isSaved = false,
+  onToggleSave,
+}: Readonly<TrackRowProps>) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const imageUrl =
     track.album?.images?.[2]?.url ?? track.album?.images?.[0]?.url;
 
@@ -46,7 +54,7 @@ export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
         </div>
       </div>
 
-      <div className="flex flex-col min-w-0">
+      <div className="flex flex-col min-w-0 flex-1">
         <span className="text-text-primary text-sm truncate">{track.name}</span>
         <span className="text-text-muted text-xs truncate">
           {track.artists.map((artist, index) => (
@@ -76,6 +84,25 @@ export function TrackRow({ track, onPlay }: Readonly<TrackRowProps>) {
           </button>
         )}
       </div>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleSave?.();
+        }}
+        aria-label={
+          isSaved
+            ? t("COMPONENTS.TRACK_ROW.removeTrack")
+            : t("COMPONENTS.TRACK_ROW.saveTrack")
+        }
+        className={`shrink-0 transition-opacity ${
+          isSaved
+            ? "text-accent opacity-100"
+            : "text-text-muted opacity-0 group-hover:opacity-100"
+        }`}
+      >
+        <Heart className="w-4 h-4" fill={isSaved ? "currentColor" : "none"} />
+      </button>
     </div>
   );
 }

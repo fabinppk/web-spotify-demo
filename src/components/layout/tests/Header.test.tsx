@@ -4,11 +4,9 @@ import "@testing-library/jest-dom";
 
 const mockLogout = vi.fn();
 const mockNavigate = vi.fn();
-const mockToggleTheme = vi.fn();
 
 vi.mock("@/hooks", () => ({
   useAuth: () => ({ logout: mockLogout }),
-  useTheme: () => ({ theme: "dark", toggleTheme: mockToggleTheme }),
 }));
 vi.mock("@/hooks/useSpotifyQueries", () => ({
   useCurrentUserProfile: vi.fn(() => ({
@@ -27,11 +25,10 @@ vi.mock("@/modules", () => ({
     t: (k: string) => k,
     i18n: { language: "pt", changeLanguage: vi.fn() },
   }),
-  Sun: () => <svg data-testid="sun-icon" />,
-  Moon: () => <svg data-testid="moon-icon" />,
-  Languages: () => <svg />,
   LogOut: () => <svg />,
   Heart: () => <svg />,
+  User: () => <svg />,
+  Settings: () => <svg />,
 }));
 vi.mock("@/components/ui/input", () => ({
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => (
@@ -99,10 +96,30 @@ describe("Header", () => {
     expect(screen.getByTestId("avatar-element")).toBeInTheDocument();
   });
 
-  it("renders dropdown with theme toggle", () => {
+  it("renders dropdown with profile, settings, and favorites items", () => {
     render(<Header />);
     expect(screen.getByTestId("dropdown-content")).toBeInTheDocument();
-    expect(screen.getByText("COMPONENTS.HEADER.lightMode")).toBeInTheDocument();
+    expect(screen.getByText("COMPONENTS.HEADER.profile")).toBeInTheDocument();
+    expect(screen.getByText("COMPONENTS.HEADER.settings")).toBeInTheDocument();
+    expect(screen.getByText("COMPONENTS.HEADER.favorites")).toBeInTheDocument();
+  });
+
+  it("navigates to profile when profile item clicked", () => {
+    render(<Header />);
+    fireEvent.click(screen.getByText("COMPONENTS.HEADER.profile"));
+    expect(mockNavigate).toHaveBeenCalledWith("/profile");
+  });
+
+  it("navigates to settings when settings item clicked", () => {
+    render(<Header />);
+    fireEvent.click(screen.getByText("COMPONENTS.HEADER.settings"));
+    expect(mockNavigate).toHaveBeenCalledWith("/settings");
+  });
+
+  it("navigates to favorites when favorites item clicked", () => {
+    render(<Header />);
+    fireEvent.click(screen.getByText("COMPONENTS.HEADER.favorites"));
+    expect(mockNavigate).toHaveBeenCalledWith("/favorites");
   });
 
   it("renders logout item", () => {
@@ -114,11 +131,6 @@ describe("Header", () => {
     render(<Header />);
     fireEvent.click(screen.getByText("COMPONENTS.HEADER.logout"));
     expect(mockLogout).toHaveBeenCalledTimes(1);
-  });
-
-  it("shows sun icon in dark theme", () => {
-    render(<Header />);
-    expect(screen.getByTestId("sun-icon")).toBeInTheDocument();
   });
 
   it("navigates home when Spotify logo clicked", () => {

@@ -36,6 +36,9 @@ vi.mock("@/components/features/home/FeaturedPlaylistSection", () => ({
 vi.mock("@/components/features/Search", () => ({
   Search: () => <div data-testid="search-component" />,
 }));
+vi.mock("@/components/features/home/RecentlyPlayedSection", () => ({
+  RecentlyPlayedSection: () => <div data-testid="recently-played-section" />,
+}));
 
 import { MainPanel } from "../MainPanel";
 import { MainContent } from "@/utils";

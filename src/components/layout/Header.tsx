@@ -12,30 +12,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SpotifyLogo, BrowseIcon } from "@/components/icons/home";
-import { useTheme, useAuth } from "@/hooks";
+import { useAuth } from "@/hooks";
 import {
   useNavigate,
-  Sun,
-  Moon,
-  Languages,
   LogOut,
   Heart,
+  User,
+  Settings,
   useTranslation,
 } from "@/modules";
 
 export function Header() {
   const { logout } = useAuth();
   const { data: profile } = useCurrentUserProfile();
-  const { t, i18n } = useTranslation();
-
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === "pt" ? "en" : "pt");
-  };
+  const { t } = useTranslation();
 
   const { setCurrentContent, setSearchQuery: setStoreSearchQuery } =
     useContentStore();
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -115,24 +109,19 @@ export function Header() {
             data-testid="dropdown-element"
           >
             <DropdownMenuItem
-              onClick={toggleTheme}
+              onClick={() => navigate("/profile")}
               className="text-text-primary hover:bg-surface-hover cursor-pointer"
             >
-              {theme === "dark" ? (
-                <Sun className="w-4 h-4 mr-2" />
-              ) : (
-                <Moon className="w-4 h-4 mr-2" />
-              )}
-              {theme === "dark"
-                ? t("COMPONENTS.HEADER.lightMode")
-                : t("COMPONENTS.HEADER.darkMode")}
+              <User className="w-4 h-4 mr-2" />
+              {t("COMPONENTS.HEADER.profile")}
             </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-border" />
             <DropdownMenuItem
-              onClick={toggleLanguage}
+              onClick={() => navigate("/settings")}
               className="text-text-primary hover:bg-surface-hover cursor-pointer"
             >
-              <Languages className="w-4 h-4 mr-2" />
-              {i18n.language === "pt" ? "English" : "Português"}
+              <Settings className="w-4 h-4 mr-2" />
+              {t("COMPONENTS.HEADER.settings")}
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => navigate("/favorites")}
