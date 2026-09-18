@@ -13,15 +13,39 @@
 
 ---
 
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="prints/home-made-for-you.png" alt="Home — Made For You e Playlists em Destaque" /><br /><sub><b>Home</b> — Made For You e Playlists em Destaque</sub></td>
+    <td width="50%"><img src="prints/home-top-artists.png" alt="Home — Seus Artistas Favoritos" /><br /><sub><b>Home</b> — Seus Artistas Favoritos</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="prints/artist-detail.png" alt="Detalhe de artista" /><br /><sub><b>Detalhe de artista</b> — álbuns e discografia</sub></td>
+    <td width="50%"><img src="prints/album-detail.png" alt="Detalhe de álbum" /><br /><sub><b>Detalhe de álbum</b> — tracklist e ações</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="prints/playlist-detail.png" alt="Detalhe de playlist" /><br /><sub><b>Detalhe de playlist</b> — tracklist com header</sub></td>
+    <td width="50%"></td>
+  </tr>
+</table>
+
+---
+
 ## Funcionalidades
 
 - **Autenticação** via OAuth 2.0 PKCE — sem client secret exposto
-- **Dashboard** com playlists em destaque, seção "Made For You" e top artistas
+- **Dashboard** com playlists em destaque, seção "Made For You", top artistas e recém-tocadas
+- **Player** — barra inferior com controles reais de playback (play/pause/skip/seek/volume) via Spotify Web API, mini player e painel "Tocando Agora"
 - **Detalhe de artista** — discografia com infinite scroll e botão de seguir
-- **Detalhe de álbum** — tracklist completa com duração total
-- **Detalhe de playlist** — tracklist com header e metadados
+- **Detalhe de álbum** — tracklist completa, duração total e favoritar faixas
+- **Detalhe de playlist** — tracklist com header, metadados e favoritar faixas
 - **Busca** com infinite scroll — artistas e álbuns por demanda
-- **Favoritos** — formulário com validação (React Hook Form + Zod), lista persistida no `localStorage`
+- **Favoritar faixas** — botão de coração em qualquer tracklist (álbum, playlist), estado persistido via API
+- **Favoritos** (custom) — formulário com validação (React Hook Form + Zod), lista persistida no `localStorage`
+- **Perfil** — dados da conta Spotify autenticada
+- **Configurações** — tema e idioma centralizados
+- **Navegação mobile** — tab bar inferior para telas pequenas
 - **Filtro de conteúdo** no NavHeader — Playlists / Artistas / All
 - **Tema claro / escuro** — persiste no `localStorage`, aplicado antes do primeiro render (sem flash)
 - **Internacionalização** PT-BR / EN-US — persiste no `localStorage`
@@ -150,7 +174,7 @@ src/
 ├── assets/           # SVGs e imagens
 ├── components/
 │   ├── features/     # Componentes de domínio (Search, ArtistCard, PlaylistCard, TrackRow, Favorites…)
-│   ├── layout/       # Header, Sidebar, MainPanel
+│   ├── layout/       # Header, Sidebar, MainPanel, PlayerBar, MobileTabBar
 │   └── ui/           # Componentes genéricos (Chip, FormField, Input, ErrorState, Skeleton, ScrollArrow…)
 ├── context/          # AuthContext + AuthProvider, ThemeContext + ThemeProvider, FavoritesContext + FavoritesProvider
 ├── hooks/            # useAuthToken, useSpotifyApi, useSpotifyMutations,
@@ -158,7 +182,7 @@ src/
 │   └── queries/      # Hooks TanStack Query por domínio (me, artist, album, track, playlist, browse, search)
 ├── modules/          # Barrel de re-exports de libs externas — único ponto de import de react-router-dom,
 │                     # lucide-react, @tanstack/react-query, react-hook-form, zod, zustand, axios, react-i18next, sonner
-├── pages/            # Dashboard, Login, ArtistDetail, AlbumDetail, PlaylistDetail, Favorites
+├── pages/            # Dashboard, Login, ArtistDetail, AlbumDetail, PlaylistDetail, Favorites, Profile, Settings
 ├── services/         # auth.service.ts (PKCE flow), i18n.service.ts
 ├── stores/           # useContentStore (Zustand)
 ├── types/            # Declarações globais: spotify.d.ts, theme.d.ts, favorites.d.ts, playlist.d.ts, chip.d.ts
