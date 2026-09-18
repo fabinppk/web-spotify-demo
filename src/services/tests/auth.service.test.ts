@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { redirectToSpotifyAuthorize, getToken } from "../auth.service";
+import {
+  redirectToSpotifyAuthorize,
+  getToken,
+  getRefreshToken,
+} from "../auth.service";
 
 // Mock crypto API
 const mockCrypto = {
@@ -255,6 +259,82 @@ describe("auth.service", () => {
       expect(result).toHaveProperty("token_type");
       expect(result.access_token).toBe("mock-access-token");
       expect(result.token_type).toBe("Bearer");
+    });
+  });
+
+  describe("getRefreshToken", () => {
+    const mockTokenResponse = {
+      access_token: "new-access-token",
+      refresh_token: "new-refresh-token",
+      expires_in: 3600,
+      token_type: "Bearer",
+      scope: "user-read-private",
+    };
+
+    it("returns new token on success", async () => {
+      (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockTokenResponse),
+      });
+
+      const result = await getRefreshToken("old-refresh-token");
+
+      expect(result).toEqual(mockTokenResponse);
+    });
+
+    it("sends correct grant_type and refresh_token in body", async () => {
+      (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockTokenResponse),
+      });
+
+      await getRefreshToken("old-refresh-token");
+
+      const body = (globalThis.fetch as ReturnType<typeof vi.fn>).mock
+        .calls[0][1].body as URLSearchParams;
+      expect(body.get("grant_type")).toBe("refresh_token");
+      expect(body.get("refresh_token")).toBe("old-refresh-token");
+      expect(body.get("client_id")).toBeTruthy();
+    });
+
+    it("saves token_scope to localStorage when scope present", async () => {
+      (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockTokenResponse),
+      });
+
+      await getRefreshToken("old-refresh-token");
+
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+        "token_scope",
+        "user-read-private",
+      );
+    });
+
+    it("does not save token_scope when scope absent", async () => {
+      const { scope: _s, ...noScope } = mockTokenResponse;
+      (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(noScope),
+      });
+
+      await getRefreshToken("old-refresh-token");
+
+      expect(mockLocalStorage.setItem).not.toHaveBeenCalledWith(
+        "token_scope",
+        expect.anything(),
+      );
+    });
+
+    it("throws when response not ok", async () => {
+      (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
+        ok: false,
+        status: 400,
+      });
+
+      await expect(getRefreshToken("bad-token")).rejects.toThrow(
+        "Token refresh failed: 400",
+      );
     });
   });
 });

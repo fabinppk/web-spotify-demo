@@ -273,16 +273,72 @@ Tipos: feat | fix | chore | refactor | test | docs | style | perf | ci
 
 ```bash
 npm run test       # watch mode
-npm run coverage   # run + relatório de cobertura
+npm run coverage   # run + relatório de cobertura (abre tabela no terminal)
 ```
 
-- **Framework**: Vitest + jsdom
-- **Utilities**: Testing Library (React, DOM, user-event)
-- **Setup**: `tests/setup.ts` executa `cleanup` após cada teste
-- **Cobertura mínima**: 60% (lines, branches, functions, statements)
-- **Localização**: `src/**/tests/` ou `src/**/__tests__/`
+### Cobertura atual
 
-> **Atenção:** `App.tsx` tem side effects no escopo do módulo (validação de env, `matchMedia`). Testes que importam App devem stubbar `VITE_CLIENT_ID`, `VITE_REDIRECT_URI` e `matchMedia` **antes** do import usando `import()` dinâmico. Ver `src/app/tests/App.test.tsx`.
+| Métrica    | Valor  |
+| ---------- | ------ |
+| Statements | 97.17% |
+| Branches   | 95.87% |
+| Functions  | 84.40% |
+| Lines      | 97.17% |
+
+**65 arquivos de teste · 492 casos**
+
+> Threshold mínimo configurado: **60%** em todas as métricas (bloqueante no pre-commit).
+
+### Stack de testes
+
+| Tecnologia                    | Papel                                      |
+| ----------------------------- | ------------------------------------------ |
+| Vitest + jsdom                | Runner e ambiente de DOM simulado          |
+| Testing Library (React + DOM) | Queries, render e interações com o DOM     |
+| `@testing-library/user-event` | Interações realistas (type, click, submit) |
+| `@testing-library/jest-dom`   | Matchers extras (`toBeInTheDocument`, etc) |
+
+### O que é testado
+
+| Área                     | Arquivos de teste                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Serviços**             | `auth.service` (PKCE, token exchange, refresh, scopes), `i18n.service`                                                                                                                                                                                                                                                                                                             |
+| **API layer**            | `album`, `artist`, `browse`, `playlist`, `search`, `track`, `user` APIs                                                                                                                                                                                                                                                                                                            |
+| **Hooks**                | `useAuthToken`, `useSpotifyApi`, `useNavHeader`, `useCarouselScroll`, `useTheme`, `useAuth`, `useSpotifyMutations`, queries                                                                                                                                                                                                                                                        |
+| **Stores**               | `useContentStore` (Zustand)                                                                                                                                                                                                                                                                                                                                                        |
+| **Utils / helpers**      | `formatDuration`, `stringsUtils`, `themeUtils`, `tokenUtils`                                                                                                                                                                                                                                                                                                                       |
+| **Contextos**            | `AuthProvider`, `ThemeProvider`, `FavoritesProvider`                                                                                                                                                                                                                                                                                                                               |
+| **Páginas**              | `Dashboard`, `Login`, `AlbumDetail`, `ArtistDetail`, `PlaylistDetail`, `Favorites`                                                                                                                                                                                                                                                                                                 |
+| **Layout**               | `Header`, `Sidebar`, `MainPanel`, `SidebarHeader`, `LibraryList`, `LibraryListItem`                                                                                                                                                                                                                                                                                                |
+| **Componentes features** | `TrackRow`, `Search`, `PlaylistHeader`, `PlaylistTrackList`, `PlaylistCard`, `PlaylistCarousel`, `ArtistCard`, `ArtistSection`, `TopArtistsSection`, `NavHeader`, `MadeForYouSection`, `FeaturedPlaylistSection`, `HomeSection`, `TopTracksChart`, `SearchArtistCard`, `SearchAlbumCard`, `AlbumTrackRow`, `ArtistDetailSkeleton`, `AlbumDetailSkeleton`, `PlaylistDetailSkeleton` |
+| **Favorites**            | `AddFavoriteForm` (React Hook Form + Zod), `FavoritesList`                                                                                                                                                                                                                                                                                                                         |
+| **UI**                   | `ErrorState`, `EmptyState`                                                                                                                                                                                                                                                                                                                                                         |
+| **Roteamento**           | `ProtectedRoute`, `App` (rotas lazy-loaded)                                                                                                                                                                                                                                                                                                                                        |
+
+### Localização dos testes
+
+```
+src/
+├── app/tests/                          # App + roteamento
+├── components/
+│   ├── features/<domínio>/tests/       # Componentes de feature
+│   ├── layout/tests/                   # Layout (Header, Sidebar, MainPanel)
+│   ├── layout/sidebar/tests/           # Sidebar items
+│   ├── tests/                          # TrackRow, Search, ProtectedRoute
+│   └── ui/tests/                       # ErrorState, EmptyState
+├── context/tests/                      # AuthProvider, ThemeProvider, FavoritesProvider
+├── hooks/tests/                        # Todos os custom hooks
+├── pages/tests/                        # Páginas
+├── services/tests/                     # auth.service, i18n.service
+└── utils/helpers/tests/                # Helpers utilitários
+```
+
+### Padrões e convenções
+
+- **`vi.mock` hoisting**: mocks sempre declarados antes dos imports; paths relativos ao arquivo de teste, não ao source
+- **App.tsx**: tem side effects no escopo do módulo (validação de env, `matchMedia`). Testes que importam App devem stubbar `VITE_CLIENT_ID`, `VITE_REDIRECT_URI` e `matchMedia` **antes** do import via `import()` dinâmico — ver `src/app/tests/App.test.tsx`
+- **React Hook Form + Zod**: mocks assíncronos com factory `async () => { const { useForm } = await import("react-hook-form"); ... }` para manter integração real com schema de validação
+- **Exclusões de cobertura**: componentes shadcn/ui, arquivos de config, `dist/`, `src/main.tsx`, mocks de API (`src/api/mocks/`) — configurado em `vitest.config.ts`
 
 ---
 
